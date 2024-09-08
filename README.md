@@ -66,17 +66,29 @@ El otro archivo csv llamado movies_datasets.csv lo deje como estaba porque no su
 
 Contiene los notebooks de jupyter con sus modelos y el analisis.
 
-- `src/`: 
-
-Contiene el código fuente del proyecto, los scripts y los modulos.
-
 - `reports/`: 
 
 Contiene los informes y visualizaciones generados.
 
+- `src/`: 
+
+Contiene el código fuente del proyecto, los scripts y los modulos.
+
+- `.gitignore`:
+
+Es el archivo que permite que git no haga un commit de los archivos o carpetas. Esto se logra escribiendo la ubicacion del archivo o de la carpeta. Se comienza a partir de la raíz de la carpeta del proyecto. Por ejemplo: Para que git no haga un commit del entorno virtual se escribe en el archivo .gitignore la ubicacion /venv ya que esta carpeta esta en la raiz de la carpeta del proyecto. 
+
 - `README.md`: 
 
 Es el archivo donde esta la documentación del proyecto.
+
+- `requirements.txt`:
+
+Es el archivo que contiene las librerías que deben estar instaladas en el entorno virtual.
+
+## Ejecución
+
+
 
 ## Datos y Fuentes
 
