@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-movies_df = pd.read_parquet('../data/movies_dataset/movies_ETL.parquet', engine='fastparquet')
+movies_df = pd.read_parquet('../../data/movies_dataset/movies_ETL.parquet', engine='fastparquet')
 
 
 def cantidad_filmaciones_mes(mes):
