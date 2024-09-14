@@ -1,7 +1,29 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from starlette.responses import RedirectResponse
 
 
 app = FastAPI()
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    html_content = """
+    <html>
+        <head>
+            <title>FastAPI App</title>
+        </head>
+        <body>
+            <h1>Servicio de agregación de plataformas de streaming</h1>
+            <ul>
+                <li><a href="/cantidad_mes">Cantidad de Filmaciones por Mes</a></li>
+                <li><a href="/otra_funcion">Otra Función</a></li>
+                <!-- Agrega más enlaces aquí -->
+            </ul>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 
 @app.get("/cantidad_mes")
@@ -13,6 +35,12 @@ async def cantidad_filmaciones_mes():
     }
     print(answer)
     return(answer)
+
+
+@app.get("/otra_funcion")
+async def otra_funcion():
+    return {"message": "Esta es otra función"}
+
 
 """
 @app.get("/cantidad_dia")
