@@ -1,40 +1,19 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from starlette.responses import RedirectResponse
+import src.scripts.query_movies as query
 
 
 app = FastAPI()
 
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    html_content = """
-    <html>
-        <head>
-            <title>FastAPI App</title>
-        </head>
-        <body>
-            <h1>Servicio de agregación de plataformas de streaming</h1>
-            <ul>
-                <li><a href="/cantidad_mes">Cantidad de películas por mes</a></li>
-                <li><a href="/cantidad_dia">Cantidad de películas por día</a></li>
-                <li><a href="/score_titulo">Score de una película</a></li>
-                <li><a href="/votos_titulo">Votos de una pelicula</a></li>
-                <li><a href="/actor">Información de un actor</a></li>
-                <li><a href="/director">Información de un director</a></li>
-            </ul>
-        </body>
-    </html>
-    """
-    return HTMLResponse(content=html_content)
-
-
-@app.get("/cantidad_mes")
-async def cantidad_filmaciones_mes():
+@app.get("/cantidad_mes/{mes}")
+async def cantidad_filmaciones_mes(mes: str):
+    cantidad = query.cantidad_filmaciones_mes(mes)
     answer = {
-        "quantity": 10, 
+        "quantity": cantidad, 
         "words": "peliculas fueron extrenadas en el mes de", 
-        "month": "Octubre"
+        "month": mes
     }
     return(answer)
 
