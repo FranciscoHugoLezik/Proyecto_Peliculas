@@ -7,7 +7,7 @@ app = FastAPI()
 async def cantidad_filmaciones_mes():
     answer = {
         "cantidad": 10, 
-        "sentence": 'peliculas fueron extrenadas en el mes de', 
+        "sentence": "peliculas fueron extrenadas en el mes de", 
         "mes": "Octubre"
     }
     print(answer)
