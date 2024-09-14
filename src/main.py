@@ -3,14 +3,13 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
 @app.get("/cantidad_mes")
 async def cantidad_filmaciones_mes():
-    answer = (10, 'peliculas fueron extrenadas en el mes de', 'Octubre')
+    answer = {
+        "cantidad": 10, 
+        "sentence": 'peliculas fueron extrenadas en el mes de', 
+        "mes": "Octubre"
+    }
     print(answer)
     return(answer)
 
