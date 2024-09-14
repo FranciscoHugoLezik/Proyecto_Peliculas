@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+
 app = FastAPI()
 
 
@@ -13,7 +14,7 @@ async def cantidad_filmaciones_mes():
     print(answer)
     return(answer)
 
-
+"""
 @app.get("/cantidad_dia")
 async def cantidad_filmaciones_dia():
     answer = (2, 'peliculas fueron estrenadas en los días', 'martes')
@@ -57,3 +58,4 @@ async def get_director():
              80000000, 'un costo de', 3000000, 'y una ganancia de', 50000000,'.')
     print(answer)
     return(answer)
+"""
