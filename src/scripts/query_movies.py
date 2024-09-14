@@ -1,7 +1,10 @@
 import pandas as pd
+import os
 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+file_path = os.path.join(base_dir, 'data', 'movies_dataset', 'movies_ETL.parquet')
 
-movies_df = pd.read_parquet('data\movies_dataset\movies_ETL.parquet', engine='fastparquet')
+movies_df = pd.read_parquet(file_path, engine='fastparquet')
 
 
 def cantidad_filmaciones_mes(mes):
