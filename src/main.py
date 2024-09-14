@@ -16,9 +16,12 @@ async def root():
         <body>
             <h1>Servicio de agregación de plataformas de streaming</h1>
             <ul>
-                <li><a href="/cantidad_mes">Cantidad de Filmaciones por Mes</a></li>
-                <li><a href="/otra_funcion">Otra Función</a></li>
-                <!-- Agrega más enlaces aquí -->
+                <li><a href="/cantidad_mes">Cantidad de películas por mes</a></li>
+                <li><a href="/cantidad_dia">Cantidad de películas por día</a></li>
+                <li><a href="/score_titulo">Score de una película</a></li>
+                <li><a href="/votos_titulo">Votos de una pelicula</a></li>
+                <li><a href="/actor">Información de un actor</a></li>
+                <li><a href="/director">Información de un director</a></li>
             </ul>
         </body>
     </html>
@@ -29,61 +32,114 @@ async def root():
 @app.get("/cantidad_mes")
 async def cantidad_filmaciones_mes():
     answer = {
-        "cantidad": 10, 
-        "sentence": "peliculas fueron extrenadas en el mes de", 
-        "mes": "Octubre"
+        "quantity": 10, 
+        "words": "peliculas fueron extrenadas en el mes de", 
+        "month": "Octubre"
     }
-    print(answer)
     return(answer)
 
 
-@app.get("/otra_funcion")
-async def otra_funcion():
-    return {"message": "Esta es otra función"}
-
-
-"""
 @app.get("/cantidad_dia")
 async def cantidad_filmaciones_dia():
-    answer = (2, 'peliculas fueron estrenadas en los días', 'martes')
-    print(answer)
+    answer = {
+        "quantity": 2, 
+        "words": "peliculas fueron estrenadas en los días", 
+        "day": "martes"
+    }
     return(answer)
 
 
 @app.get("/score_titulo")
 async def score_titulo():
-    answer = ('La película', 'Star Wars, La Venganza de los Sith', 'fue estrenada en el año', \
-             2005, 'con un score/popularidad de', 85.5)
-    print(answer)
+    answer = {
+        "words_1": "La película", 
+        "movie": "Star Wars, La Venganza de los Sith,", 
+        "words_2": "fue estrenada en el año", 
+        "year": 2005, 
+        "words_3": "con un score/popularidad de", 
+        "score": 85.5
+    }
     return(answer)
+
 
 @app.get("/votos_titulo")
 async def votos_titulo():
-    answer = ('La película', 'Star Wars, La Venganza de los Sith', 
-             'fue estrenada en el año', 2005, '.', 'La misma cuenta con un total de', 
-             1000, 'valoraciones, con un promedio de', 9.3)
-    print(answer)
+    answer = {
+        "words_1": "La película", 
+        "movie": "Star Wars, La Venganza de los Sith,", 
+        "words_2": "fue estrenada en el año", 
+        "year": 2005, 
+        "words_3": ". La misma cuenta con un total de", 
+        "vote_count": 1000, 
+        "words_4": "valoraciones, con un promedio de", 
+        "vote_average": 9.3
+    }
     return(answer)
 
 
 @app.get("/actor")
 async def get_actor():
-    answer = ('El actor', 'Pedro', 'ha participado en', 20, 
-             'películas. Logró un retorno de', 20000000, 
-             'de dolares con un promedio de', 1000000, 'de dolares por película.')
-    print(answer)
+    answer = {
+        "words_1": "El actor", 
+        "actor": "Pedro", 
+        "words_2": "ha participado en", 
+        "movies_number": 20, 
+        "words_3": "películas.", 
+        "words_4": "Logró un retorno de", 
+        "return": 20000000, 
+        "words_5": "de dolares con un promedio de", 
+        "mean": 1000000, 
+        "words_6": "de dolares por película."
+    }
     return(answer)
+
 
 @app.get("/director")
 async def get_director():
-    answer = ('El director', 'Juan', 'que ha obtenido un exito que medido en dolares es de', 
-             12000000, 'de dolares. Las películas que dirigio son:','\n',
-             'La Pelicula', 'estrenada en el año', 2000, 'con un retorno de', 
-             40000000, 'un costo de', 1000000, 'y una ganancia de', 30000000,'.','\n',
-             'La Pelicula 2', 'estrenada en el año', 2003, 'con un retorno de', 
-             70000000, 'un costo de', 2000000, 'y una ganancia de', 40000000,'.','\n',
-             'La Pelicula 3', 'estrenada en el año', 2007, 'con un retorno de', 
-             80000000, 'un costo de', 3000000, 'y una ganancia de', 50000000,'.')
-    print(answer)
-    return(answer)
-"""
+    director = {
+        "words_1": "El director", 
+        "director": "Juan", 
+        "words_2": "con todas sus peliculas a tenido un retorno de", 
+        "total_revenue": 190000000, 
+        "words_3": "de dolares.",
+        "words_4": "Las películas que dirigio son:", 
+        "movies": {
+            "movie_1": {
+                "title": "La Pelicula", 
+                "words_1": "estrenada en el año", 
+                "year": 2000,
+                "words_2": "con un retorno de", 
+                "revenue": 40000000, 
+                "words_3": "tuvo un costo de", 
+                "budget": 1000000, 
+                "words_4": "y una ganancia de", 
+                "benefit": 30000000, 
+                "words_5": "."
+            }, 
+            "movie_2": {
+                "title": "La Pelicula 2", 
+                "words_1": "estrenada en el año", 
+                "year": 2003,
+                "words_2": "con un retorno de", 
+                "revenue": 70000000, 
+                "words_3": "tuvo un costo de", 
+                "budget": 2000000, 
+                "words_4": "y una ganancia de", 
+                "benefit": 40000000, 
+                "words_5": "."
+            },
+            "movie_3": {
+                "title": "La Pelicula 3", 
+                "words_1": "estrenada en el año", 
+                "year": 2007,
+                "words_2": "con un retorno de", 
+                "revenue": 80000000, 
+                "words_3": "tuvo un costo de", 
+                "budget": 3000000, 
+                "words_4": "y una ganancia de", 
+                "benefit": 50000000, 
+                "words_5": "."
+            }
+        }
+    }
+    return(director)
