@@ -27,15 +27,16 @@ async def cantidad_filmaciones_dia(dia: str):
     return(answer)
 
 
-@app.get("/score_titulo")
-async def score_titulo():
+@app.get("/score_titulo/{titulo_de_la_filmacion}")
+async def score_titulo(titulo_de_la_filmacion: str):
+    año, score = query.score_titulo(titulo_de_la_filmacion)
     answer = {
         "words_1": "La película", 
-        "movie": "Star Wars, La Venganza de los Sith,", 
+        "movie": titulo_de_la_filmacion, 
         "words_2": "fue estrenada en el año", 
-        "year": 2005, 
+        "year": año, 
         "words_3": "con un score/popularidad de", 
-        "score": 85.5
+        "score": score
     }
     return(answer)
 

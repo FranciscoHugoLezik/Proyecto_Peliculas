@@ -47,3 +47,13 @@ def cantidad_filmaciones_dia(dia):
     nombre_de_dia_list = date['nombre_de_dia'].tolist()
     cantidad = nombre_de_dia_list.count(day)
     return (cantidad)
+
+
+def score_titulo(titulo_de_la_filmación):
+    title_year_popularity_df = pd.DataFrame(movies_df[['title','release_year','popularity']])
+    title_year_popularity_df.set_index('title', inplace=True)
+    year_popularity_series = title_year_popularity_df.loc[titulo_de_la_filmación]
+    año = year_popularity_series['release_year']
+    año = int(año)
+    popularidad = year_popularity_series['popularity']
+    return (año, popularidad)
