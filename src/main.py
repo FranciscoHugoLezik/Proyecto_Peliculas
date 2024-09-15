@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from starlette.responses import RedirectResponse
 import src.scripts.query_movies as query
 
 
@@ -12,18 +10,19 @@ async def cantidad_filmaciones_mes(mes: str):
     cantidad = query.cantidad_filmaciones_mes(mes)
     answer = {
         "quantity": cantidad, 
-        "words": "peliculas fueron extrenadas en el mes de", 
+        "words": "peliculas fueron estrenadas en el mes de", 
         "month": mes
     }
     return(answer)
 
 
-@app.get("/cantidad_dia")
-async def cantidad_filmaciones_dia():
+@app.get("/cantidad_dia/{dia}")
+async def cantidad_filmaciones_dia(dia: str):
+    cantidad = query.cantidad_filmaciones_dia(dia)
     answer = {
-        "quantity": 2, 
+        "quantity": cantidad, 
         "words": "peliculas fueron estrenadas en los días", 
-        "day": "martes"
+        "day": dia
     }
     return(answer)
 
