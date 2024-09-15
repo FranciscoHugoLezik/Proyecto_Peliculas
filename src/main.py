@@ -41,18 +41,27 @@ async def score_titulo(titulo_de_la_filmacion: str):
     return(answer)
 
 
-@app.get("/votos_titulo")
-async def votos_titulo():
-    answer = {
-        "words_1": "La película", 
-        "movie": "Star Wars, La Venganza de los Sith,", 
-        "words_2": "fue estrenada en el año", 
-        "year": 2005, 
-        "words_3": ". La misma cuenta con un total de", 
-        "vote_count": 1000, 
-        "words_4": "valoraciones, con un promedio de", 
-        "vote_average": 9.3
-    }
+@app.get("/votos_titulo/{titulo_de_la_filmacion}")
+async def votos_titulo(titulo_de_la_filmacion: str):
+    año, cantidad_de_votos, promedio_de_votos = query.votos_titulo(titulo_de_la_filmacion)
+    if cantidad_de_votos >= 2000:
+        answer = {
+            "words_1": "La película", 
+            "movie": titulo_de_la_filmacion, 
+            "words_2": "fue estrenada en el año", 
+            "year": año, 
+            "words_3": ". La misma cuenta con un total de", 
+            "vote_count": cantidad_de_votos, 
+            "words_4": "valoraciones, con un promedio de", 
+            "vote_average": promedio_de_votos
+        }
+    else:
+        answer = {
+            "words_1": "La película tiene que tener 2000 o mas votos para devolver los valores solicitados.",
+            "words_2": "La película",
+            "movie": titulo_de_la_filmacion,
+            "words_3": "no cumple con la cantidad minima de votos para devolver valores."
+        }
     return(answer)
 
 

@@ -50,10 +50,26 @@ def cantidad_filmaciones_dia(dia):
 
 
 def score_titulo(titulo_de_la_filmación):
-    title_year_popularity_df = pd.DataFrame(movies_df[['title','release_year','popularity']])
+    title_year_popularity_df = pd.DataFrame(movies_df[['title',
+                                                       'release_year',
+                                                       'popularity']])
     title_year_popularity_df.set_index('title', inplace=True)
     year_popularity_series = title_year_popularity_df.loc[titulo_de_la_filmación]
     año = year_popularity_series['release_year']
     año = int(año)
     popularidad = year_popularity_series['popularity']
     return (año, popularidad)
+
+
+def votos_titulo(titulo_de_la_filmación):
+    title_year_count_average_df = pd.DataFrame(movies_df[['title',
+                                                          'release_year',
+                                                          'vote_count',
+                                                          'vote_average']])
+    title_year_count_average_df.set_index('title', inplace=True)
+    title_year_count_average_series = title_year_count_average_df.loc[titulo_de_la_filmación]
+    año = title_year_count_average_series['release_year']
+    año = int(año)
+    cantidad_de_votos = title_year_count_average_series['vote_count']
+    promedio_de_votos = title_year_count_average_series['vote_average']
+    return (año, cantidad_de_votos, promedio_de_votos)
