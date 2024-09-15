@@ -1,8 +1,6 @@
 import pandas as pd
 import os
-import locale
 
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 base_dir = os.path.dirname(os.path.dirname(current_dir))
@@ -34,8 +32,18 @@ def cantidad_filmaciones_mes(mes):
 
 
 def cantidad_filmaciones_dia(dia):
+    dias = {
+        'lunes': 'Monday', 
+        'martes': 'Tuesday', 
+        'miercoles': 'Wednesday', 
+        'jueves': 'Thursday', 
+        'viernes': 'Friday', 
+        'sabado': 'Saturday', 
+        'domingo': 'Sunday'
+    }
+    day = dias.get(dia)
     date = pd.DataFrame(movies_df['release_date'])
     date['nombre_de_dia'] = (date['release_date'].dt.strftime('%A'))
     nombre_de_dia_list = date['nombre_de_dia'].tolist()
-    cantidad = nombre_de_dia_list.count(dia)
+    cantidad = nombre_de_dia_list.count(day)
     return (cantidad)
