@@ -73,3 +73,30 @@ def votos_titulo(titulo_de_la_filmación):
     cantidad_de_votos = title_year_count_average_series['vote_count']
     promedio_de_votos = title_year_count_average_series['vote_average']
     return (año, cantidad_de_votos, promedio_de_votos)
+
+
+def get_actor(nombre_actor):
+    
+    
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.dirname(current_dir))
+    file_path = os.path.join(base_dir, 'data', 'credits', 'cast_ETL.parquet')
+
+    cast_df = pd.read_parquet(file_path, engine='fastparquet')
+    
+    
+    name_movieId = cast_df[['name', 'movie_id']]
+    nombreActor_movieId = name_movieId[name_movieId['name'] == nombre_actor]
+    nombreActor_movieId = nombreActor_movieId.drop_duplicates(subset=['movie_id'])
+    cantidad_peliculas = len(nombreActor_movieId['movie_id'])
+    movieId_title_return = pd.DataFrame(movies_df[['id','title','return']])
+    movieId_title_return.rename(columns={'id': 'movie_id'}, inplace=True)
+    nombreActor_peliculas = pd.merge(nombreActor_movieId, movieId_title_return)
+    nombreActor_peliculas = nombreActor_peliculas[nombreActor_peliculas['return'] != 0]
+    nombreActor_peliculas.reset_index(inplace=True)
+    cantidad_peliculas_con_retorno = len(nombreActor_peliculas['movie_id'])
+    total_retorno = nombreActor_peliculas["return"].sum()
+    total_retorno = round(total_retorno, 2)
+    promedio_retorno = nombreActor_peliculas["return"].mean()
+    promedio_retorno = round(promedio_retorno, 2)
+    return (cantidad_peliculas, cantidad_peliculas_con_retorno, total_retorno, promedio_retorno)

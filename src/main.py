@@ -5,32 +5,42 @@ import src.scripts.query_movies as query
 app = FastAPI()
 
 
+@app.get("/")
+async def root():
+    respuesta = {
+        "proyecto": "Proyecto individual de recomendación de películas",
+        "autor": "Francisco Hugo Lezik",
+        "curso": "Curso de Ciencia de Datos de Henry, cohorte 10"
+    }
+    return (respuesta)
+
+
 @app.get("/cantidad_mes/{mes}")
 async def cantidad_filmaciones_mes(mes: str):
     cantidad = query.cantidad_filmaciones_mes(mes)
-    answer = {
+    respuesta = {
         "quantity": cantidad, 
         "words": "peliculas fueron estrenadas en el mes de", 
         "month": mes
     }
-    return(answer)
+    return(respuesta)
 
 
 @app.get("/cantidad_dia/{dia}")
 async def cantidad_filmaciones_dia(dia: str):
     cantidad = query.cantidad_filmaciones_dia(dia)
-    answer = {
+    respuesta = {
         "quantity": cantidad, 
         "words": "peliculas fueron estrenadas en los días", 
         "day": dia
     }
-    return(answer)
+    return(respuesta)
 
 
 @app.get("/score_titulo/{titulo_de_la_filmacion}")
 async def score_titulo(titulo_de_la_filmacion: str):
     año, score = query.score_titulo(titulo_de_la_filmacion)
-    answer = {
+    respuesta = {
         "words_1": "La película", 
         "movie": titulo_de_la_filmacion, 
         "words_2": "fue estrenada en el año", 
@@ -38,14 +48,14 @@ async def score_titulo(titulo_de_la_filmacion: str):
         "words_3": "con un score/popularidad de", 
         "score": score
     }
-    return(answer)
+    return(respuesta)
 
 
 @app.get("/votos_titulo/{titulo_de_la_filmacion}")
 async def votos_titulo(titulo_de_la_filmacion: str):
     año, cantidad_de_votos, promedio_de_votos = query.votos_titulo(titulo_de_la_filmacion)
     if cantidad_de_votos >= 2000:
-        answer = {
+        respuesta = {
             "words_1": "La película", 
             "movie": titulo_de_la_filmacion, 
             "words_2": "fue estrenada en el año", 
@@ -56,30 +66,38 @@ async def votos_titulo(titulo_de_la_filmacion: str):
             "vote_average": promedio_de_votos
         }
     else:
-        answer = {
+        respuesta = {
             "words_1": "La película tiene que tener 2000 o mas votos para devolver los valores solicitados.",
             "words_2": "La película",
             "movie": titulo_de_la_filmacion,
             "words_3": "no cumple con la cantidad minima de votos para devolver valores."
         }
-    return(answer)
+    return(respuesta)
 
 
-@app.get("/actor")
-async def get_actor():
-    answer = {
+@app.get("/actor/{nombre_actor}")
+async def get_actor(nombre_actor: str):
+    (total_peliculas, 
+    peliculas_con_datos, 
+    total,
+    promedio) = query.get_actor(nombre_actor)
+    respuesta = {
         "words_1": "El actor", 
-        "actor": "Pedro", 
+        "actor": nombre_actor, 
         "words_2": "ha participado en", 
-        "movies_number": 20, 
-        "words_3": "películas.", 
-        "words_4": "Logró un retorno de", 
-        "return": 20000000, 
-        "words_5": "de dolares con un promedio de", 
-        "mean": 1000000, 
-        "words_6": "de dolares por película."
+        "total_movies": total_peliculas, 
+        "words_3": "películas.",
+        "words_4": "Solo hay datos de retorno de",
+        "movies_with_return": peliculas_con_datos,
+        "words_5": "peliculas.",
+        "words_6": "Por lo tanto solo se usara esta cantidad de peliculas para los calculos.",
+        "words_7": "El actor logró un retorno de", 
+        "total": total, 
+        "words_8": "con un promedio de", 
+        "mean": promedio, 
+        "words_9": "por película."
     }
-    return(answer)
+    return(respuesta)
 
 
 @app.get("/director")
