@@ -100,52 +100,16 @@ async def get_actor(nombre_actor: str):
     return(respuesta)
 
 
-@app.get("/director")
-async def get_director():
+@app.get("/director/{nombre_director}")
+async def get_director(nombre_director: str):
+    (cantidad, 
+     cantidad_con_retorno, 
+     total_retorno, 
+     peliculas) = query.get_director(nombre_director)
     director = {
-        "words_1": "El director", 
-        "director": "Juan", 
-        "words_2": "con todas sus peliculas a tenido un retorno de", 
-        "total_revenue": 190000000, 
-        "words_3": "de dolares.",
-        "words_4": "Las películas que dirigio son:", 
-        "movies": {
-            "movie_1": {
-                "title": "La Pelicula", 
-                "words_1": "estrenada en el año", 
-                "year": 2000,
-                "words_2": "con un retorno de", 
-                "revenue": 40000000, 
-                "words_3": "tuvo un costo de", 
-                "budget": 1000000, 
-                "words_4": "y una ganancia de", 
-                "benefit": 30000000, 
-                "words_5": "."
-            }, 
-            "movie_2": {
-                "title": "La Pelicula 2", 
-                "words_1": "estrenada en el año", 
-                "year": 2003,
-                "words_2": "con un retorno de", 
-                "revenue": 70000000, 
-                "words_3": "tuvo un costo de", 
-                "budget": 2000000, 
-                "words_4": "y una ganancia de", 
-                "benefit": 40000000, 
-                "words_5": "."
-            },
-            "movie_3": {
-                "title": "La Pelicula 3", 
-                "words_1": "estrenada en el año", 
-                "year": 2007,
-                "words_2": "con un retorno de", 
-                "revenue": 80000000, 
-                "words_3": "tuvo un costo de", 
-                "budget": 3000000, 
-                "words_4": "y una ganancia de", 
-                "benefit": 50000000, 
-                "words_5": "."
-            }
-        }
+        "Director": nombre_director, 
+        "Cantidad de peliculas dirigidas": cantidad,
+        "Cantidad de peliculas dirigidas con datos de retorno registrados en el dataset": cantidad_con_retorno,
+        "Exito total a traves del retorno": total_retorno
     }
-    return(director)
+    return(director, {f"Peliculas dirigidas por {nombre_director} con retorno registrado en el dataset": peliculas})

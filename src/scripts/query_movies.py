@@ -100,3 +100,34 @@ def get_actor(nombre_actor):
     promedio_retorno = nombreActor_peliculas["return"].mean()
     promedio_retorno = round(promedio_retorno, 2)
     return (cantidad_peliculas, cantidad_peliculas_con_retorno, total_retorno, promedio_retorno)
+
+
+def get_director(nombre_director):
+    
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.dirname(current_dir))
+    file_path = os.path.join(base_dir, 'data', 'credits', 'crew_ETL.parquet')
+
+    crew_df = pd.read_parquet(file_path, engine='fastparquet')
+    
+    name_job_movieId = crew_df[['name', 'job', 'movie_id']]
+    name_job_movieId = name_job_movieId[name_job_movieId['job'] == 'Director']
+    nombreDirector_movieId = name_job_movieId[name_job_movieId['name'] == nombre_director]
+    cantidad_peliculas = len(nombreDirector_movieId['movie_id'])
+    movieId_title_dateRelease_return_budget_revenue = pd.DataFrame(movies_df[['id','title','release_date','return','budget','revenue']])
+    movieId_title_dateRelease_return_budget_revenue.rename(columns={'id': 'movie_id'}, inplace=True)
+    nombreDirector_peliculas = pd.merge(nombreDirector_movieId, movieId_title_dateRelease_return_budget_revenue)
+    nombreDirector_peliculas = pd.DataFrame(nombreDirector_peliculas[nombreDirector_peliculas['return'] != 0])
+    cantidad_peliculas_con_retorno = len(nombreDirector_peliculas['movie_id'])
+    nombreDirector_peliculas.drop(columns=["movie_id","name","job"], inplace=True)
+    nombreDirector_peliculas.reset_index(drop=True, inplace=True)
+    total_retorno = nombreDirector_peliculas["return"].sum()
+    nombreDirector_peliculas['release_date'] = nombreDirector_peliculas['release_date'].dt.date
+    nombreDirector_peliculas['release_date'] = nombreDirector_peliculas['release_date'].astype(str)
+    nombreDirector_peliculas.rename(columns={'title': 'Titulo'}, inplace=True)
+    nombreDirector_peliculas.rename(columns={'release_date': 'Fecha_de_estreno'}, inplace=True)
+    nombreDirector_peliculas.rename(columns={'return': 'Retorno'}, inplace=True)
+    nombreDirector_peliculas.rename(columns={'budget': 'Presupuesto'}, inplace=True)
+    nombreDirector_peliculas.rename(columns={'revenue': 'Ganancia'}, inplace=True)
+    peliculas_dict = nombreDirector_peliculas.to_dict(orient="records")
+    return (cantidad_peliculas, cantidad_peliculas_con_retorno, total_retorno, peliculas_dict)
