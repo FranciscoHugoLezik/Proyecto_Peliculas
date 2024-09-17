@@ -2,6 +2,8 @@
 <b>Proyecto MVP de un sistema de recomendación de películas</b>
 </h1>
 
+## Autor: Francisco Hugo Lezik
+
 ## Tabla de contenido
 
 1. [Introducción](#introducción)
@@ -21,16 +23,28 @@ El objetivo de este proyecto de MVP (Minimum Viable Product) es crear un sistema
 En primer lugar se crea una API con endpoints que satisfagan las siguientes necesidades de los usuarios:
 
 - La cantidad de filmaciones por mes.
+
 - La cantidad de filmaciones por día.
+
 - El estreno y el score de una película en particular.
+
 - El año, la cantidad de votos y el promedio de los votos de una película en particular.
-- La cantidad de filmaciones, el exito (retorno) y el promedio del retorno de un actor en particular.
-- El exito total (retorno) y todas las películas (por cada una la fecha de lanzamiento, el retorno, el costo y la ganancia) de un director en particular.
+
+- La cantidad de peliculas, el exito o retorno (suma del retorno de todas las peliculas) y el promedio del retorno de todas las peliculas de un actor en particular. (1)
+
+- El exito total (retorno) y todas las películas (por cada una: la fecha de lanzamiento, el retorno, el presupuesto y los ingresos) de un director en particular. (2)
+
+
+(1) Durante el proceso de la elaboracion de este endpoint se descubrio que faltaban datos del retorno de varias peliculas por lo que se opto por incluir la cantidad total de peliculas y la cantidad de las peliculas que poseen datos sobre el retorno. Se uso el retorno de las peliculas que lo tenian. Por ejemplo:
+
+Si el actor participo de 10 peliculas y 5 de ellas tienen el dato del retorno, entonces, se usaran los datos del retorno de estas últimas 5.
+
+(2) El problema del anterior endpoint afecta tambien a este endpoint. Por lo tanto se decidio usar la solucion dada en el punto anterior (2).
 
 Por último se va a agregar un nuevo endpoint a la API que es el sistema de recomendación. 
 
 ## Requisitos
-- Python 3.11 o superior
+- Python 3.8.10 o superior
 - numpy
 - pandas
 - matplotlib
@@ -54,17 +68,146 @@ Por último se va a agregar un nuevo endpoint a la API que es el sistema de reco
 
 - `data/`: 
 
-Contiene los archivos de datos utilizados en el proyecto. Adentro hay una carpeta llamada credits y un archivo csv llamado 'movies_dataset.csv'. Dentro de la carpeta credits hay dos archivos parquet. Uno se llama cast.parquet y el otro se llama crew.parquet. 
+En un principio los archivos en crudo también iban a estar en esta carpeta. El proyecto se carga en Render. Uso la version gratuita que tiene un RAM de 512 Mb. Por este motivo los tuve que poner en otro repositorio de github llamado Movies_data. Los archivos ETL descargan los archivos de ese repositorio. En el readme de ese repositorio explico el proceso que tuve que hacer para poder exportalos a GitHub.
 
-Originalmente los datos de los dos archivo parquet estaban en un archivo csv llamado credits.csv. Este archivo supera el maximo de 100 Mb que puede tener un archivo para subirse a GitHub. En otra carpeta, distinta del proyecto, cree una notebook, lo converti en un dataframe y luego lo exporte a un archivo parquet llamado credits.parquet. Pero surgio otro problema, aunque menos grave. GitHub recomienda que los archivos no superen los 50 Mb y credits.parquet lo superaba.
+El GitHub del repositorio de los archivos en crudo es:
 
-Aunque lo puedo subir a GitHub quiero cumplir con el tamaño recomendado de los archivos. El archivo credits.csv tiene tres columnas: cast, crew y id. Lo dividi en dos dataframes. El primero contiene la columna cast y la columna id. El segundo contiene la columna crew y la columna id. Luego exporte ambos dataframe para convertirlos en archivos parquet. Comparten la misma columna id para que no se pierda la relacion entre la columna cast y crew.
+https://github.com/FranciscoHugoLezik/Movies_data.git
 
-El otro archivo csv llamado movies_datasets.csv lo deje como estaba porque no supera los 50 Mb.
+En esta carpeta se guardan los archivos que son el resultado del proceso ETL de los archivos en crudo. Dentro de esta carpeta se encuentran dos subcarpetas: 
+
+    - credits
+    - movies_dataset
+
+Carpeta credits: Contiene dos archivos que estaban anidados en el archivo en crudo original llamado credits.parquet.
+
+Estos archivos son los siguientes:
+
+    - cast_ETL.parquet
+    - crew_ETL.parquet
+
+Descripcion de cada una:
+
+    - cast_ETL.parquet
+
+        Este archivo contiene los datos de los actores que participaron en cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
+
+            - cast_id
+            - character
+            - credit_id
+            - gender
+            - id
+            - name
+            - order
+            - profile_path
+            - movie_id
+
+        Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
+
+    - crew_ETL.parquet
+
+        Este archivo contiene los datos de los miembros del equipo de produccion de cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
+
+            - credit_id
+            - department
+            - gender
+            - id
+            - job
+            - name
+            - profile_path
+            - movie_id
+
+        Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
+
+Carpeta movies_dataset: Contiene una carpeta y un archivo. Originalmente los datos de estos archivos se encontraban en el archivo original en crudo llamado movies_dataset.parquet.
+
+La carpeta y el archivo son:
+
+    - Carpeta extracted_tables
+    - movies_ETL.parquet:
+
+Descripción de cada una:
+
+    - Carpeta extracted_tables: Contiene cinco archivos. Los datos de estos archivos estaban anidados. Fueron extraidos para poder acceder a estos datos de forma rapida y sin complicaciones.
+
+    Los archivos son:
+
+        - belongs_to_collection_ETL.parquet : Contiene los datos de cada franquicia.
+        
+        Sus columnas son:
+
+            - id
+            - name
+            - backdrop_path
+            - movie_id
+
+            Todas de tipos object(str).
+
+        - genres_ETL.parquet : Contiene los datos de cada genero.
+
+        Sus columnas son:
+
+            - id
+            - name
+            - movie_id
+
+            Todas son de tipo object(str).
+
+        - production_companies_ETL.parquet : Contiene los datos de cada compañia.
+
+        Sus columnas son:
+
+            - name
+            - id
+            - movie_id
+
+            Todas son de tipo object(str).
+
+        - production_countries_ETL.parquet : Contiene los datos de cada pais.
+
+        Sus columnas son:
+
+            - iso_3166_1
+            - name
+            - movie_id
+
+            Todas son de tipo object(str).
+
+        - spoken_language_ETL.parquet : Contiene los datos de cada idioma.
+
+        Sus columnas son:
+
+            - iso_639_1
+            - name
+            - movie_id
+
+            Todas son de tipo object(str).
+
+    - movies_ETL.parquet: Este archivo contiene los datos de cada pelicula sin los datos anidados.
+    Dentro de este archivo se encuentran las siguientes columnas:
+
+        - budget: tipo int64.
+        - id: tipo object.
+        - original_language: tipo object.
+        - overview: tipo object.
+        - popularity: tipo float64.
+        - release_date: tipo datetime64[ns].
+        - revenue:    tipo int64.
+        - runtime: tipo float64.
+        - status: tipo object.
+        - tagline: tipo object.
+        - title: tipo object.
+        - vote_average: tipo float64.
+        - vote_count: tipo int32.
+        - release_year: tipo int32.
+        - return: tipo float64.
+
 
 - `notebooks/`: 
 
-Contiene los notebooks de jupyter con sus modelos y el analisis.
+Contiene los notebooks de jupyter con sus modelos y el ETL.
+
+
 
 - `reports/`: 
 
