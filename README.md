@@ -76,136 +76,158 @@ https://github.com/FranciscoHugoLezik/Movies_data.git
 
 En esta carpeta se guardan los archivos que son el resultado del proceso ETL de los archivos en crudo. Dentro de esta carpeta se encuentran dos subcarpetas: 
 
-    - credits
-    - movies_dataset
+- credits
+- movies_dataset
 
 Carpeta credits: Contiene dos archivos que estaban anidados en el archivo en crudo original llamado credits.parquet.
 
 Estos archivos son los siguientes:
 
-    - cast_ETL.parquet
-    - crew_ETL.parquet
+- cast_ETL.parquet
+- crew_ETL.parquet
 
 Descripcion de cada una:
 
-    - cast_ETL.parquet
+- cast_ETL.parquet
 
-        Este archivo contiene los datos de los actores que participaron en cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
+Este archivo contiene los datos de los actores que participaron en cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
 
-            - cast_id
-            - character
-            - credit_id
-            - gender
-            - id
-            - name
-            - order
-            - profile_path
-            - movie_id
+- cast_id
+- character
+- credit_id
+- gender
+- id
+- name
+- order
+- profile_path
+- movie_id
 
-        Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
+Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
 
-    - crew_ETL.parquet
+- crew_ETL.parquet
 
-        Este archivo contiene los datos de los miembros del equipo de produccion de cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
+Este archivo contiene los datos de los miembros del equipo de produccion de cada pelicula. Dentro de este archivo se encuentran las siguientes columnas:
 
-            - credit_id
-            - department
-            - gender
-            - id
-            - job
-            - name
-            - profile_path
-            - movie_id
+- credit_id
+- department
+- gender
+- id
+- job
+- name
+- profile_path
+- movie_id
 
-        Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
+Todas estas columnas tienen valores de tipo object (pandas llama object al tipo str).
 
 Carpeta movies_dataset: Contiene una carpeta y un archivo. Originalmente los datos de estos archivos se encontraban en el archivo original en crudo llamado movies_dataset.parquet.
 
 La carpeta y el archivo son:
 
-    - Carpeta extracted_tables
-    - movies_ETL.parquet:
+- Carpeta extracted_tables
+- movies_ETL.parquet:
 
 Descripción de cada una:
 
-    - Carpeta extracted_tables: Contiene cinco archivos. Los datos de estos archivos estaban anidados. Fueron extraidos para poder acceder a estos datos de forma rapida y sin complicaciones.
+- Carpeta extracted_tables: Contiene cinco archivos. Los datos de estos archivos estaban anidados. Fueron extraidos para poder acceder a estos datos de forma rapida y sin complicaciones.
 
-    Los archivos son:
+Los archivos son:
 
-        - belongs_to_collection_ETL.parquet : Contiene los datos de cada franquicia.
-        
-        Sus columnas son:
+- belongs_to_collection_ETL.parquet : Contiene los datos de cada franquicia.
 
-            - id
-            - name
-            - backdrop_path
-            - movie_id
+Sus columnas son:
 
-            Todas de tipos object(str).
+- id
+- name
+- backdrop_path
+- movie_id
 
-        - genres_ETL.parquet : Contiene los datos de cada genero.
+Todas de tipos object(str).
 
-        Sus columnas son:
+- genres_ETL.parquet : Contiene los datos de cada genero.
 
-            - id
-            - name
-            - movie_id
+Sus columnas son:
 
-            Todas son de tipo object(str).
+- id
+- name
+- movie_id
 
-        - production_companies_ETL.parquet : Contiene los datos de cada compañia.
+Todas son de tipo object(str).
 
-        Sus columnas son:
+- production_companies_ETL.parquet : Contiene los datos de cada compañia.
 
-            - name
-            - id
-            - movie_id
+Sus columnas son:
 
-            Todas son de tipo object(str).
+- name
+- id
+- movie_id
 
-        - production_countries_ETL.parquet : Contiene los datos de cada pais.
+Todas son de tipo object(str).
 
-        Sus columnas son:
+- production_countries_ETL.parquet : Contiene los datos de cada pais.
 
-            - iso_3166_1
-            - name
-            - movie_id
+Sus columnas son:
 
-            Todas son de tipo object(str).
+- iso_3166_1
+- name
+- movie_id
 
-        - spoken_language_ETL.parquet : Contiene los datos de cada idioma.
+Todas son de tipo object(str).
 
-        Sus columnas son:
+- spoken_language_ETL.parquet : Contiene los datos de cada idioma.
 
-            - iso_639_1
-            - name
-            - movie_id
+Sus columnas son:
 
-            Todas son de tipo object(str).
+- iso_639_1
+- name
+- movie_id
 
-    - movies_ETL.parquet: Este archivo contiene los datos de cada pelicula sin los datos anidados.
-    Dentro de este archivo se encuentran las siguientes columnas:
+Todas son de tipo object(str).
 
-        - budget: tipo int64.
-        - id: tipo object.
-        - original_language: tipo object.
-        - overview: tipo object.
-        - popularity: tipo float64.
-        - release_date: tipo datetime64[ns].
-        - revenue:    tipo int64.
-        - runtime: tipo float64.
-        - status: tipo object.
-        - tagline: tipo object.
-        - title: tipo object.
-        - vote_average: tipo float64.
-        - vote_count: tipo int32.
-        - release_year: tipo int32.
-        - return: tipo float64.
+- movies_ETL.parquet: Este archivo contiene los datos de cada pelicula sin los datos anidados.
+Dentro de este archivo se encuentran las siguientes columnas:
+
+- budget: tipo int64.
+- id: tipo object.
+- original_language: tipo object.
+- overview: tipo object.
+- popularity: tipo float64.
+- release_date: tipo datetime64[ns].
+- revenue:    tipo int64.
+- runtime: tipo float64.
+- status: tipo object.
+- tagline: tipo object.
+- title: tipo object.
+- vote_average: tipo float64.
+- vote_count: tipo int32.
+- release_year: tipo int32.
+- return: tipo float64.
+
 
 
 - `notebooks/`: 
 
-Contiene los notebooks de jupyter con sus modelos y el ETL.
+Contiene los archivos jupyter para el ETL de los archivos en crudo. Los archivos en crudo son extraidos de un repositorio en GitHub llamado Movies_data. El link esta mas arriba. Las carpetas que contiene son las siguientes:
+
+- Carpeta ETL_credits : Contiene el ETL de los archivos en crudo extraidos de un archivo en crudo original llamado credits.csv. Estos archivos en crudo son cast_id.parquet y crew_id.parquet.
+
+Se hicieron dos ETL en archivos jupyter:
+
+- Archivo ETL_cast_id.ipynb
+- Archivo ETL_crew_id.ipynb
+
+- Carpeta ETL_movies_dataset : Contiene el ETL del archivo original llamado movies_dataset.parquet.
+
+Se hicieron seis ETL en archivo jupyter de los cuales cinco estan en una carpeta:
+
+- Carpeta ETL_nested_value : Contiene el ETL de cada una de las columnas del dataset original:
+
+    Archivo ETL_belongs_to_collection.ipynb : Contiene los valores de la columna belongs_to_collection.
+    Archivo ETL_genres.ipynb : Contiene los valores de la columna genres.
+    Archivo ETL_production_companies.ipynb : Contiene los valores de la columna production_companies.
+    Archivo ETL_production_countries.ipynb : Contiene los valores de la columna production_countries.
+    Archivo ETL_spoken_languages.ipynb : Contiene los valores de la columna spoken_languages.
+
+- Archivo ETL_movies.ipynb : Este archivo estrajo los datos de las peliculas sin los valores anidados.
 
 
 
@@ -215,7 +237,15 @@ Contiene los informes y visualizaciones generados.
 
 - `src/`: 
 
-Contiene el código fuente del proyecto, los scripts y los modulos.
+Contiene el código fuente del proyecto. Dentro se encuentran dos carpetas y un archivo:
+
+    Carpeta __pycache__ : contiene archivos con el bytecode compilado de los módulos Python. Es generado automaticamente.
+
+    Carpeta Scrips: contiene otra carpeta __pycache y un archivo script. El archivo es el siguiente:
+
+        Script query_movies.py : Contiene las funciones que hacen el procesamiento requerido por los endpoint alojados en el main.py
+
+    Archivo main.py : Contiene la API y sus funciones o endpoints. Estos endpoints llaman a las funciones alojadas en el script query_movies.py para hacer el procesamiento.
 
 - `.gitignore`:
 
