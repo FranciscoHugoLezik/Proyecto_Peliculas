@@ -84,10 +84,15 @@ __crew_ETL.parquet__
 Carpeta __movies_dataset/__
 
 __belongs_to_collection_ETL.parquet__
+
 __genres_ETL.parquet__
+
 __movies_ETL.parquet__
+
 __production_companies_ETL.parquet__
+
 __production_countries_ETL.parquet__
+
 __spoken_language_ETL.parquet__
 
 - `notebooks/`: 
@@ -113,10 +118,15 @@ Carpeta __ETL_movies_dataset/__ : Contiene el ETL del archivo en crudo llamado m
 Se hicieron seis ETL:
 
 __ETL_belongs_to_collection.ipynb__
+
 __ETL_genres.ipynb__
+
 __ETL_movies.ipynb__
+
 __ETL_production_companies.ipynb__
+
 __ETL_production_countries.ipynb__
+
 __ETL_spoken_languages.ipynb__
 
 - `reports/`: 
@@ -129,7 +139,7 @@ Contiene el código fuente del proyecto. Dentro se encuentran dos carpetas y un 
 
 Carpeta __pycache__ : contiene archivos con el bytecode compilado de los módulos Python. Es generado automaticamente.
 
-Carpeta __Scrips__: contiene otra pycache y un archivo script. El script es el siguiente:
+Carpeta __Scrips__ : contiene otra pycache y un archivo script. El script es el siguiente:
 
 __query_movies.py__ : Contiene las funciones que hacen el procesamiento requerido por los endpoints alojados en el main.py.
 
