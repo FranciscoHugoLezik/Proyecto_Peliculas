@@ -24,6 +24,7 @@ El URL de mi linkedin es: https://www.linkedin.com/in/francisco-hugo-lezik-7b425
 10. [Licencia](#licencia)
 
 ## Introducción
+
 El objetivo de este proyecto de MVP (Minimum Viable Product) es crear un sistema de recomendación de películas. El objetivo es que este sistema recomiende películas similares a una película en particular vista por cada usuario particular. La cantidad de películas a recomendar son cinco. Estas películas deben ser similares en puntuación a la película usada para recomendar. Se mostraran sus títulos ordenadas de mayor puntaje a menor puntaje.
 
 En primer lugar se crea una API con endpoints que satisfagan las siguientes necesidades de los usuarios:
@@ -50,6 +51,7 @@ Si el actor participo de 10 peliculas y 5 de ellas tienen el dato del retorno, e
 Por último se va a agregar un nuevo endpoint a la API que es el sistema de recomendación. 
 
 ## Requisitos
+
 - Python 3.8.10 o superior
 - numpy
 - pandas
@@ -57,7 +59,10 @@ Por último se va a agregar un nuevo endpoint a la API que es el sistema de reco
 - seaborn
 - scikit-learn
 
+#
+
 ## Instalación
+
 1. Clonar el repositorio: 
     `git clone https://github.com/FranciscoHugoLezik/Proyecto_Peliculas.git` 
 
@@ -70,6 +75,8 @@ Por último se va a agregar un nuevo endpoint a la API que es el sistema de reco
 
 4. Instalar las dependencias: `pip install -r requirements.txt`
 
+#
+
 ## Estructura
 
 - `data/`: 
@@ -78,22 +85,25 @@ En la carpeta data/ se guardan los archivos que son el resultado del proceso ETL
 
 Carpeta __credits/__
 
-__cast_ETL.parquet__
-__crew_ETL.parquet__
+- cast_ETL.parquet
+
+- crew_ETL.parquet
 
 Carpeta __movies_dataset/__
 
-__belongs_to_collection_ETL.parquet__
+- belongs_to_collection_ETL.parquet
 
-__genres_ETL.parquet__
+- genres_ETL.parquet
 
-__movies_ETL.parquet__
+- movies_ETL.parquet
 
-__production_companies_ETL.parquet__
+- production_companies_ETL.parquet
 
-__production_countries_ETL.parquet__
+- production_countries_ETL.parquet
 
-__spoken_language_ETL.parquet__
+- spoken_language_ETL.parquet
+
+#
 
 - `notebooks/`: 
 
@@ -109,29 +119,33 @@ Carpeta __ETL_credits/__ : Contiene el ETL de los archivos en crudo llamados cas
 
 Se hicieron dos ETL:
 
-__ETL_cast_id.ipynb__
+- ETL_cast_id.ipynb
 
-__ETL_crew_id.ipynb__
+- ETL_crew_id.ipynb
 
 Carpeta __ETL_movies_dataset/__ : Contiene el ETL del archivo en crudo llamado movies_dataset.parquet.
 
 Se hicieron seis ETL:
 
-__ETL_belongs_to_collection.ipynb__
+- ETL_belongs_to_collection.ipynb
 
-__ETL_genres.ipynb__
+- ETL_genres.ipynb
 
-__ETL_movies.ipynb__
+- ETL_movies.ipynb
 
-__ETL_production_companies.ipynb__
+- ETL_production_companies.ipynb
 
-__ETL_production_countries.ipynb__
+- ETL_production_countries.ipynb
 
-__ETL_spoken_languages.ipynb__
+- ETL_spoken_languages.ipynb
+
+#
 
 - `reports/`: 
 
 Contiene los informes y visualizaciones generados.
+
+#
 
 - `src/`: 
 
@@ -141,25 +155,35 @@ Carpeta __pycache__ : contiene archivos con el bytecode compilado de los módulo
 
 Carpeta __Scrips__ : contiene otra pycache y un archivo script. El script es el siguiente:
 
-__query_movies.py__ : Contiene las funciones que hacen el procesamiento requerido por los endpoints alojados en el main.py.
+query_movies.py : Contiene las funciones que hacen el procesamiento requerido por los endpoints alojados en el main.py.
 
-__main.py__ : Contiene la API y los endpoints. Estos endpoints llaman a las funciones alojadas en el script query_movies.py para hacer el procesamiento.
+main.py : Contiene la API y los endpoints. Estos endpoints llaman a las funciones alojadas en el script query_movies.py para hacer el procesamiento.
+
+#
 
 - `.gitignore`:
 
 Es el archivo que permite que git no haga un commit de los archivos o carpetas. Esto se logra escribiendo la ubicacion del archivo o de la carpeta. Se comienza a partir de la raíz de la carpeta del proyecto. Por ejemplo: Para que git no haga un commit del entorno virtual se escribe en el archivo .gitignore la ubicacion /venv ya que esta carpeta esta en la raiz de la carpeta del proyecto. 
 
+#
+
 - `README.md`: 
 
 Es el archivo donde esta la documentación del proyecto.
+
+#
 
 - `requirements.txt`:
 
 Es el archivo que contiene las librerías que deben estar instaladas en el entorno virtual.
 
+#
+
 ## Ejecución
 
 En la carpeta notebooks se encuentran los ETL. Se los puede ejecutar para producir los archivos requeridos que se guardan en la carpeta data/. Es opcional porque ya estan ejecutadas. 
+
+#
 
 ## Datos y Fuentes
 
@@ -196,6 +220,8 @@ __production_companies_ETL.parquet__ : era una columna en el dataset movies_data
 __production_countries_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada pais en donde se produjo la pelicula. Se puede repetir por el id de las peliculas porque un país tiene muchas peliculas.
 
 __spoken_language_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada idioma hablado en cada pelicula. Se puede repetir por el id de las peliculas porque un país tiene muchas peliculas.
+
+#
 
 ## Metodología
 
