@@ -52,12 +52,7 @@ Por último se va a agregar un nuevo endpoint a la API que es el sistema de reco
 
 ## Requisitos
 
-- Python 3.8.10 o superior
-- numpy
-- pandas
-- matplotlib
-- seaborn
-- scikit-learn
+Use python 3.8.10 y las librerias necesarias estan en libraries.txt.
 
 #
 
@@ -73,7 +68,9 @@ Por último se va a agregar un nuevo endpoint a la API que es el sistema de reco
 
     - macOS/Linux: `source venv/bin/activate`
 
-4. Instalar las dependencias: `pip install -r requirements.txt`
+4. Instalar las dependencias: `pip install -r libraries.txt`
+
+La libreria requirements.txt es para Render.
 
 #
 
@@ -173,9 +170,15 @@ Es el archivo donde esta la documentación del proyecto.
 
 #
 
+- `libraries.txt`: 
+
+Es el archivo que contiene las librerias que use en mi entorno virtual. Decidi tener este archivo separado porque Render me daba muchos problemas con las versiones de las librerias.
+
+#
+
 - `requirements.txt`:
 
-Es el archivo que contiene las librerías que deben estar instaladas en el entorno virtual.
+Es el archivo que contiene las librerías que le indican a Render que versiones usar. Ya esta probada. No deberia dar error.
 
 #
 
@@ -224,8 +227,6 @@ __spoken_language_ETL.parquet__ : era una columna en el dataset movies_dataset. 
 #
 
 ## Metodología
-
-
 
 ## Resultados y Conclusiones
 
