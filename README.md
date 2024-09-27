@@ -224,7 +224,7 @@ __production_countries_ETL.parquet__ : era una columna en el dataset movies_data
 
 __spoken_language_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada idioma hablado en cada pelicula. Se puede repetir por el id de las peliculas porque un país tiene muchas peliculas.
 
-#
+# 
 
 ## Metodología
 
