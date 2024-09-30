@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import src.scripts.query_movies as query
+import src.scripts.querymovies as query
 
 
 app = FastAPI()
