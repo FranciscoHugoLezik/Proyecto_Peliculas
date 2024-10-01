@@ -16,8 +16,6 @@ movies = importar_archivo('data',
                           'ETL_data', 
                           'movies_dataset', 
                           'movies.parquet')
-movies.set_index('title', 
-                 inplace=True)
 
 
 def cantidad_filmaciones_mes(mes):
@@ -66,6 +64,8 @@ def cantidad_filmaciones_dia(dia):
 
 
 def score_titulo(titulo_de_la_filmación):
+    movies.set_index('title', 
+                     inplace=True)
     filmación = movies.loc[titulo_de_la_filmación]
     
     año = int(filmación['release_year'])
@@ -75,6 +75,8 @@ def score_titulo(titulo_de_la_filmación):
 
 
 def votos_titulo(titulo_de_la_filmación): 
+    movies.set_index('title', 
+                     inplace=True)
     filmación = movies.loc[titulo_de_la_filmación]
     
     año = int(filmación['release_year'])
@@ -91,14 +93,21 @@ def get_actor(nombre_actor):
                             'cast.parquet')
     
     actor = cast[cast['name'] == nombre_actor]
-    actor = actor[['name', 'movie_id']].copy()
-    actor.drop_duplicates(subset=['movie_id'], inplace=True)
+    actor = actor[['name', 
+                   'movie_id']].copy()
+    actor.drop_duplicates(subset=['movie_id'], 
+                          inplace=True)
     
-    cantidad = len(actor)
+    cantidad = len(actor['movie_id'])
     
-    peliculas = movies[['id', 'return']].copy()
-    peliculas.rename(columns={'id': 'movie_id'}, inplace=True)
-    peliculas = pd.merge(actor, peliculas, on='movie_id')
+    movies.reset_index(inplace=True)
+    peliculas = movies[['id', 
+                        'return']].copy()
+    peliculas.rename(columns={'id': 'movie_id'}, 
+                     inplace=True)
+    peliculas = pd.merge(actor, 
+                         peliculas, 
+                         on='movie_id')
     
     peliculas_con_retorno = peliculas[peliculas['return'] != 0]
     
@@ -117,30 +126,55 @@ def get_actor(nombre_actor):
 
 
 def get_director(nombre_director):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_dir = os.path.dirname(os.path.dirname(current_dir))
-    file_path = os.path.join(base_dir, 'data', 'credits', 'crew_ETL.parquet')
-
-    crew_df = pd.read_parquet(file_path, engine='fastparquet')
+    crew = importar_archivo('data', 
+                            'ETL_data', 
+                            'credits', 
+                            'crew.parquet')
     
-    name_job_movieId = crew_df[['name', 'job', 'movie_id']]
-    name_job_movieId = name_job_movieId[name_job_movieId['job'] == 'Director']
-    nombreDirector_movieId = name_job_movieId[name_job_movieId['name'] == nombre_director]
-    cantidad_peliculas = len(nombreDirector_movieId['movie_id'])
-    movieId_title_dateRelease_return_budget_revenue = pd.DataFrame(movies[['id','title','release_date','return','budget','revenue']])
-    movieId_title_dateRelease_return_budget_revenue.rename(columns={'id': 'movie_id'}, inplace=True)
-    nombreDirector_peliculas = pd.merge(nombreDirector_movieId, movieId_title_dateRelease_return_budget_revenue)
-    nombreDirector_peliculas = pd.DataFrame(nombreDirector_peliculas[nombreDirector_peliculas['return'] != 0])
-    cantidad_peliculas_con_retorno = len(nombreDirector_peliculas['movie_id'])
-    nombreDirector_peliculas.drop(columns=["movie_id","name","job"], inplace=True)
-    nombreDirector_peliculas.reset_index(drop=True, inplace=True)
-    total_retorno = nombreDirector_peliculas["return"].sum()
-    nombreDirector_peliculas['release_date'] = nombreDirector_peliculas['release_date'].dt.date
-    nombreDirector_peliculas['release_date'] = nombreDirector_peliculas['release_date'].astype(str)
-    nombreDirector_peliculas.rename(columns={'title': 'Titulo'}, inplace=True)
-    nombreDirector_peliculas.rename(columns={'release_date': 'Fecha_de_estreno'}, inplace=True)
-    nombreDirector_peliculas.rename(columns={'return': 'Retorno'}, inplace=True)
-    nombreDirector_peliculas.rename(columns={'budget': 'Presupuesto'}, inplace=True)
-    nombreDirector_peliculas.rename(columns={'revenue': 'Ganancia'}, inplace=True)
-    peliculas_dict = nombreDirector_peliculas.to_dict(orient="records")
-    return (cantidad_peliculas, cantidad_peliculas_con_retorno, total_retorno, peliculas_dict)
+    director = crew[crew['job'] == 'Director']
+    director = director[director['name'] == nombre_director]
+    director = director[['name', 
+                         'movie_id']].copy()
+    
+    cantidad = len(director['movie_id'])
+    
+    movies.reset_index(inplace=True)
+    peliculas = movies[['id', 
+                        'title', 
+                        'release_date', 
+                        'return', 
+                        'budget', 
+                        'revenue']].copy()
+    peliculas.rename(columns={'id': 'movie_id'}, 
+                     inplace=True)
+    peliculas = pd.merge(director, 
+                         peliculas, 
+                         on='movie_id')
+    
+    peliculas = peliculas[peliculas['return'] != 0]
+    
+    cantidad_con_retorno = len(peliculas['movie_id'])
+    
+    total = peliculas['return'].sum()
+    total = round(total, 2)
+    
+    peliculas.drop(columns=['movie_id', 
+                            'name'], inplace=True)
+
+    
+    peliculas['release_date'] = peliculas['release_date'].dt.date
+    peliculas['release_date'] = peliculas['release_date'].astype(str)
+
+    peliculas.rename(columns={'title': 'Titulo', 
+                              'release_date': 'Fecha_de_estreno', 
+                              'return': 'Retorno', 
+                              'budget': 'Presupuesto', 
+                              'revenue': 'Ganancia'}, 
+                     inplace=True)
+    
+    peliculas_dict = peliculas.to_dict(orient="records")
+    
+    return (cantidad, 
+            cantidad_con_retorno, 
+            total, 
+            peliculas_dict)
