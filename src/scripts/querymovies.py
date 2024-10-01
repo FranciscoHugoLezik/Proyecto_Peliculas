@@ -3,17 +3,19 @@ import os
 import pandas as pd
 
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-base_dir = os.path.dirname(os.path.dirname(current_dir))
-file_path = os.path.join(base_dir, 
-                         'data', 
-                         'ETL_data', 
-                         'movies_dataset', 
-                         'movies.parquet')
+def importar_archivo(*args):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(os.path.dirname(current_dir))
+    file_path = os.path.join(base_dir, *args)
+    archivo = pd.read_parquet(file_path, 
+                              engine='fastparquet')
+    return(archivo)
 
 
-movies = pd.read_parquet(file_path, 
-                         engine='fastparquet')
+movies = importar_archivo('data', 
+                          'ETL_data', 
+                          'movies_dataset', 
+                          'movies.parquet')
 movies.set_index('title', 
                  inplace=True)
 
@@ -83,28 +85,35 @@ def votos_titulo(titulo_de_la_filmación):
 
 
 def get_actor(nombre_actor):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_dir = os.path.dirname(os.path.dirname(current_dir))
-    file_path = os.path.join(base_dir, 'data', 'credits', 'cast_ETL.parquet')
-
-    cast_df = pd.read_parquet(file_path, engine='fastparquet')
+    cast = importar_archivo('data', 
+                            'ETL_data', 
+                            'credits', 
+                            'cast.parquet')
     
+    actor = cast[cast['name'] == nombre_actor]
+    actor = actor[['name', 'movie_id']].copy()
+    actor.drop_duplicates(subset=['movie_id'], inplace=True)
     
-    name_movieId = cast_df[['name', 'movie_id']]
-    nombreActor_movieId = name_movieId[name_movieId['name'] == nombre_actor]
-    nombreActor_movieId = nombreActor_movieId.drop_duplicates(subset=['movie_id'])
-    cantidad_peliculas = len(nombreActor_movieId['movie_id'])
-    movieId_title_return = pd.DataFrame(movies[['id','title','return']])
-    movieId_title_return.rename(columns={'id': 'movie_id'}, inplace=True)
-    nombreActor_peliculas = pd.merge(nombreActor_movieId, movieId_title_return)
-    nombreActor_peliculas = nombreActor_peliculas[nombreActor_peliculas['return'] != 0]
-    nombreActor_peliculas.reset_index(inplace=True)
-    cantidad_peliculas_con_retorno = len(nombreActor_peliculas['movie_id'])
-    total_retorno = nombreActor_peliculas["return"].sum()
-    total_retorno = round(total_retorno, 2)
-    promedio_retorno = nombreActor_peliculas["return"].mean()
-    promedio_retorno = round(promedio_retorno, 2)
-    return (cantidad_peliculas, cantidad_peliculas_con_retorno, total_retorno, promedio_retorno)
+    cantidad = len(actor)
+    
+    peliculas = movies[['id', 'return']].copy()
+    peliculas.rename(columns={'id': 'movie_id'}, inplace=True)
+    peliculas = pd.merge(actor, peliculas, on='movie_id')
+    
+    peliculas_con_retorno = peliculas[peliculas['return'] != 0]
+    
+    cantidad_con_retorno = len(peliculas_con_retorno)
+    
+    total = peliculas_con_retorno['return'].sum()
+    total = round(total, 2)
+    
+    promedio = peliculas_con_retorno['return'].mean()
+    promedio = round(promedio, 2)
+    
+    return(cantidad, 
+           cantidad_con_retorno, 
+           total, 
+           promedio)
 
 
 def get_director(nombre_director):
