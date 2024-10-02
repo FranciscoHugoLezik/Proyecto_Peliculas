@@ -1,42 +1,18 @@
-import os
-
 import pandas as pd
 
-
-def importar_archivo(*args):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_dir = os.path.dirname(os.path.dirname(current_dir))
-    file_path = os.path.join(base_dir, *args)
-    archivo = pd.read_parquet(file_path, 
-                              engine='fastparquet')
-    return(archivo)
-
-
-movies = importar_archivo('data', 
-                          'ETL_data', 
-                          'movies_dataset', 
-                          'movies.parquet')
+if __name__ == "__main__":
+    import constant as c
+    import auxiliary as aux
+else:
+    from src.scripts import constant as c
+    from src.scripts import auxiliary as aux
 
 
 def cantidad_filmaciones_mes(mes):
-    solo_meses = movies['release_date'].dt.month
+    solo_meses = c.MOVIES['release_date'].dt.month
     cantidad_por_mes = solo_meses.value_counts()
     
-    meses = {
-        'enero': '1', 
-        'febrero': '2', 
-        'marzo': '3', 
-        'abril': '4', 
-        'mayo': '5', 
-        'junio': '6', 
-        'julio': '7', 
-        'agosto': '8', 
-        'septiembre': '9', 
-        'octubre': '10', 
-        'noviembre': '11', 
-        'diciembre': '12'
-    }
-    mes = int(meses.get(mes))
+    mes = int(c.MESES.get(mes))
     
     cantidad = int(cantidad_por_mes[mes])
     
@@ -44,53 +20,49 @@ def cantidad_filmaciones_mes(mes):
 
 
 def cantidad_filmaciones_dia(dia):
-    solo_dias = movies['release_date'].dt.strftime('%A')
+    solo_dias = c.MOVIES['release_date'].dt.strftime('%A')
     cantidad_por_dia = solo_dias.value_counts()
     
-    dias = {
-        'lunes': 'Monday', 
-        'martes': 'Tuesday', 
-        'miercoles': 'Wednesday', 
-        'jueves': 'Thursday', 
-        'viernes': 'Friday', 
-        'sabado': 'Saturday', 
-        'domingo': 'Sunday'
-    }
-    dia = dias.get(dia)
+    dia = c.DIAS.get(dia)
     
     cantidad = int(cantidad_por_dia[dia])
     
     return (cantidad)
 
 
-def score_titulo(titulo_de_la_filmación):
+def score_titulo(titulo):
+    movies = c.MOVIES.copy()
     movies.set_index('title', 
                      inplace=True)
-    filmación = movies.loc[titulo_de_la_filmación]
+    filmación = movies.loc[titulo]
     
     año = int(filmación['release_year'])
     popularidad = float(filmación['popularity'])
     
-    return (año, popularidad)
+    return (año, 
+            popularidad)
 
 
-def votos_titulo(titulo_de_la_filmación): 
+def votos_titulo(titulo): 
+    movies = c.MOVIES.copy()
     movies.set_index('title', 
                      inplace=True)
-    filmación = movies.loc[titulo_de_la_filmación]
+    filmación = movies.loc[titulo]
     
     año = int(filmación['release_year'])
-    cantidad_de_votos = int(filmación['vote_count'])
-    promedio_de_votos = float(filmación['vote_average'])
+    cantidad = int(filmación['vote_count'])
+    promedio = float(filmación['vote_average'])
     
-    return (año, cantidad_de_votos, promedio_de_votos)
+    return (año, 
+            cantidad, 
+            promedio)
 
 
 def get_actor(nombre_actor):
-    cast = importar_archivo('data', 
-                            'ETL_data', 
-                            'credits', 
-                            'cast.parquet')
+    cast = aux.importar_archivo('data', 
+                                'ETL_data', 
+                                'credits', 
+                                'cast.parquet')
     
     actor = cast[cast['name'] == nombre_actor]
     actor = actor[['name', 
@@ -100,9 +72,8 @@ def get_actor(nombre_actor):
     
     cantidad = len(actor['movie_id'])
     
-    movies.reset_index(inplace=True)
-    peliculas = movies[['id', 
-                        'return']].copy()
+    peliculas = c.MOVIES[['id', 
+                          'return']].copy()
     peliculas.rename(columns={'id': 'movie_id'}, 
                      inplace=True)
     peliculas = pd.merge(actor, 
@@ -126,10 +97,10 @@ def get_actor(nombre_actor):
 
 
 def get_director(nombre_director):
-    crew = importar_archivo('data', 
-                            'ETL_data', 
-                            'credits', 
-                            'crew.parquet')
+    crew = aux.importar_archivo('data', 
+                                'ETL_data', 
+                                'credits', 
+                                'crew.parquet')
     
     director = crew[crew['job'] == 'Director']
     director = director[director['name'] == nombre_director]
@@ -138,13 +109,12 @@ def get_director(nombre_director):
     
     cantidad = len(director['movie_id'])
     
-    movies.reset_index(inplace=True)
-    peliculas = movies[['id', 
-                        'title', 
-                        'release_date', 
-                        'return', 
-                        'budget', 
-                        'revenue']].copy()
+    peliculas = c.MOVIES[['id', 
+                          'title', 
+                          'release_date', 
+                          'return', 
+                          'budget', 
+                          'revenue']].copy()
     peliculas.rename(columns={'id': 'movie_id'}, 
                      inplace=True)
     peliculas = pd.merge(director, 
