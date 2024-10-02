@@ -1,7 +1,7 @@
 if __name__ == "__main__":
-    from df_import import importar_archivo
+    from import_file import importar_archivo
 else:
-    from src.scripts.df_import import importar_archivo
+    from src.scripts.import_file import importar_archivo
 
 
 MOVIES = importar_archivo('data', 

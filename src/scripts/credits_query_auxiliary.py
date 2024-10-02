@@ -1,37 +1,9 @@
 if __name__ == "__main__":
-    import constant as c
-    from df_import import importar_archivo
+    import constants as c
+    from import_file import importar_archivo
 else:
-    from src.scripts import constant as c
-    from src.scripts.df_import import importar_archivo
-
-
-def get_meses():
-    solo_meses = c.MOVIES['release_date'].dt.month
-    return(solo_meses)
-
-
-def get_numero_mes(mes):
-    numero_de_mes = int(c.MESES.get(mes))
-    return(numero_de_mes)
-
-
-def get_dias():
-    solo_dias = c.MOVIES['release_date'].dt.strftime('%A')
-    return(solo_dias)
-
-
-def get_dia_en_ingles(dia):
-    dia_en_ingles = c.DIAS_EN_INGLES.get(dia)
-    return(dia_en_ingles)
-
-
-def get_filmacion(titulo):
-    movies = c.MOVIES.copy()
-    movies.set_index('title', 
-                     inplace=True)
-    filmación = movies.loc[titulo]
-    return(filmación)
+    from src.scripts import constants as c
+    from src.scripts.import_file import importar_archivo
 
 
 def get_movies_id(nombre, archivo):
@@ -54,7 +26,7 @@ def get_peliculas(*columnas):
     return(peliculas)
 
 
-def filtrar_por_retorno(peliculas_df):
+def filtrar_con_retorno(peliculas_df):
     filtrado = peliculas_df[peliculas_df['return'] != 0]
     return(filtrado)
 

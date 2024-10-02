@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
-from src.scripts import query as q
+from src.scripts import movies_query as m
+from src.scripts import credits_query as c
 
 
 app = FastAPI()
@@ -34,7 +35,7 @@ async def cantidad_filmaciones_mes(mes: str):
         Proposito: devuelve la cantidad de películas que fueron estrenadas en el mes dado como argumento.
         Precondicion: el mes dado como argumento debe estar en español sino da error.
     """
-    cantidad = q.cantidad_filmaciones_mes(mes)
+    cantidad = m.cantidad_filmaciones_mes(mes)
     respuesta = {
         "Cantidad de peliculas": cantidad, 
         "Fueron estrenadas en el mes de": mes
@@ -48,7 +49,7 @@ async def cantidad_filmaciones_dia(dia: str):
         Proposito: devuelve la cantidad de películas que fueron estrenadas en el dia dado como argumento.
         Precondicion: el dia dado como argumento debe estar en español sino da error.
     """
-    cantidad = q.cantidad_filmaciones_dia(dia)
+    cantidad = m.cantidad_filmaciones_dia(dia)
     respuesta = {
         "Cantidad de peliculas": cantidad, 
         "Fueron estrenadas en los días": dia
@@ -65,7 +66,7 @@ async def score_titulo(titulo_de_la_filmacion: str):
         Si se conoce el nombre de una pelicula hecha en un pais no hispano se debe 
         introducir su nombre en el idioma original.
     """
-    año, score = q.score_titulo(titulo_de_la_filmacion)
+    año, score = m.score_titulo(titulo_de_la_filmacion)
     respuesta = {
         "La película": titulo_de_la_filmacion, 
         "Fue estrenada en el año": año, 
@@ -85,7 +86,7 @@ async def votos_titulo(titulo_de_la_filmacion: str):
         Si se conoce el nombre de una pelicula hecha en un pais no hispano se debe 
         introducir su nombre en el idioma original.
     """
-    año, cantidad_de_votos, promedio_de_votos = q.votos_titulo(titulo_de_la_filmacion)
+    año, cantidad_de_votos, promedio_de_votos = m.votos_titulo(titulo_de_la_filmacion)
     if cantidad_de_votos >= 2000:
         respuesta = {
             "La película": titulo_de_la_filmacion, 
@@ -112,7 +113,7 @@ async def get_actor(nombre_actor: str):
     (total_peliculas, 
     peliculas_con_datos, 
     total,
-    promedio) = q.get_actor(nombre_actor)
+    promedio) = c.get_actor(nombre_actor)
     respuesta = {
         "El actor": nombre_actor, 
         "Ha participado en": f"{total_peliculas} peliculas", 
@@ -136,7 +137,7 @@ async def get_director(nombre_director: str):
     (cantidad, 
      cantidad_con_retorno, 
      total_retorno, 
-     peliculas) = q.get_director(nombre_director)
+     peliculas) = c.get_director(nombre_director)
     director = {
         "Director": nombre_director, 
         "Cantidad de peliculas dirigidas": cantidad,
