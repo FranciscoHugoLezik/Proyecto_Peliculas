@@ -1,18 +1,17 @@
 import sys
 import os
 
-main_file = os.path.basename(sys.argv[0])
 
-if main_file in ["query.py", "constant.py"]:
-    import auxiliary as aux
+if __name__ == "__main__":
+    from df_import import importar_archivo
 else:
-    from src.scripts import auxiliary as aux
+    from src.scripts.df_import import importar_archivo
 
 
-MOVIES = aux.importar_archivo('data', 
-                              'ETL_data', 
-                              'movies_dataset', 
-                              'movies.parquet')
+MOVIES = importar_archivo('data', 
+                          'ETL_data', 
+                          'movies_dataset', 
+                          'movies.parquet')
 
 
 MESES = {

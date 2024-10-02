@@ -58,37 +58,26 @@ def votos_titulo(titulo):
             promedio)
 
 
-def get_actor(nombre_actor):
-    cast = aux.importar_archivo('data', 
-                                'ETL_data', 
-                                'credits', 
-                                'cast.parquet')
+def get_actor(nombre):
+    sus_peliculas = aux.get_movies_id(nombre, 
+                                      'cast')
     
-    actor = cast[cast['name'] == nombre_actor]
-    actor = actor[['name', 
-                   'movie_id']].copy()
-    actor.drop_duplicates(subset=['movie_id'], 
-                          inplace=True)
+    cantidad = len(sus_peliculas)
     
-    cantidad = len(actor['movie_id'])
+    detalles = aux.get_peliculas('id', 
+                                 'return')
     
-    peliculas = c.MOVIES[['id', 
-                          'return']].copy()
-    peliculas.rename(columns={'id': 'movie_id'}, 
-                     inplace=True)
-    peliculas = pd.merge(actor, 
-                         peliculas, 
+    peliculas = pd.merge(sus_peliculas, 
+                         detalles, 
                          on='movie_id')
     
-    peliculas_con_retorno = peliculas[peliculas['return'] != 0]
+    con_retorno = aux.filtrar_por_retorno(peliculas)
     
-    cantidad_con_retorno = len(peliculas_con_retorno)
+    cantidad_con_retorno = len(con_retorno)
     
-    total = peliculas_con_retorno['return'].sum()
-    total = round(total, 2)
+    total = con_retorno['return'].sum().round(2)
     
-    promedio = peliculas_con_retorno['return'].mean()
-    promedio = round(promedio, 2)
+    promedio = con_retorno['return'].mean().round(2)
     
     return(cantidad, 
            cantidad_con_retorno, 
@@ -96,55 +85,32 @@ def get_actor(nombre_actor):
            promedio)
 
 
-def get_director(nombre_director):
-    crew = aux.importar_archivo('data', 
-                                'ETL_data', 
-                                'credits', 
-                                'crew.parquet')
+def get_director(nombre):
+    sus_peliculas = aux.get_movies_id(nombre, 
+                                      'crew')
+    sus_peliculas = sus_peliculas.query('job == "Director"')
     
-    director = crew[crew['job'] == 'Director']
-    director = director[director['name'] == nombre_director]
-    director = director[['name', 
-                         'movie_id']].copy()
+    cantidad = len(sus_peliculas)
     
-    cantidad = len(director['movie_id'])
+    detalles = aux.get_peliculas('id', 
+                                 'title', 
+                                 'release_date', 
+                                 'return', 
+                                 'budget', 
+                                 'revenue')
     
-    peliculas = c.MOVIES[['id', 
-                          'title', 
-                          'release_date', 
-                          'return', 
-                          'budget', 
-                          'revenue']].copy()
-    peliculas.rename(columns={'id': 'movie_id'}, 
-                     inplace=True)
-    peliculas = pd.merge(director, 
-                         peliculas, 
+    peliculas = pd.merge(sus_peliculas, 
+                         detalles, 
                          on='movie_id')
     
-    peliculas = peliculas[peliculas['return'] != 0]
+    con_retorno = aux.filtrar_por_retorno(peliculas)
     
-    cantidad_con_retorno = len(peliculas['movie_id'])
+    cantidad_con_retorno = len(con_retorno)
+    total = con_retorno['return'].sum().round(2)
     
-    total = peliculas['return'].sum()
-    total = round(total, 2)
-    
-    peliculas.drop(columns=['movie_id', 
-                            'name'], inplace=True)
-
-    
-    peliculas['release_date'] = peliculas['release_date'].dt.date
-    peliculas['release_date'] = peliculas['release_date'].astype(str)
-
-    peliculas.rename(columns={'title': 'Titulo', 
-                              'release_date': 'Fecha_de_estreno', 
-                              'return': 'Retorno', 
-                              'budget': 'Presupuesto', 
-                              'revenue': 'Ganancia'}, 
-                     inplace=True)
-    
-    peliculas_dict = peliculas.to_dict(orient="records")
+    peliculas = aux.procesar_peliculas(peliculas)
     
     return (cantidad, 
             cantidad_con_retorno, 
             total, 
-            peliculas_dict)
+            peliculas)
