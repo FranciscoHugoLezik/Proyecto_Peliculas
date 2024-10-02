@@ -1,7 +1,3 @@
-import sys
-import os
-
-
 if __name__ == "__main__":
     from df_import import importar_archivo
 else:
@@ -30,7 +26,7 @@ MESES = {
 }
 
 
-DIAS = {
+DIAS_EN_INGLES = {
     'lunes': 'Monday', 
     'martes': 'Tuesday', 
     'miercoles': 'Wednesday', 
