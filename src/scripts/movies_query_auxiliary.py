@@ -1,4 +1,8 @@
-if __name__ == "__main__":
+import sys
+import os
+
+if (__name__ == "__main__" 
+    or "movies_query" in os.path.basename(sys.argv[0])):
     import constants as c
 else:
     from src.scripts import constants as c

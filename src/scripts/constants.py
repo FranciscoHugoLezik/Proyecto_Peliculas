@@ -1,4 +1,9 @@
-if __name__ == "__main__":
+import sys
+import os
+
+if (__name__ == "__main__" 
+    or "movies_query" in os.path.basename(sys.argv[0])
+    or "credits_query" in os.path.basename(sys.argv[0])):
     from import_file import importar_archivo
 else:
     from src.scripts.import_file import importar_archivo

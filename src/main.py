@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -58,7 +63,6 @@ async def root():
         
     html_content += f"<p><strong>Precondicion:</strong> {precondicion['Precondicion']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -74,7 +78,6 @@ async def default_cantidad_filmaciones_mes():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -104,7 +107,6 @@ async def default_cantidad_filmaciones_dia():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -134,7 +136,6 @@ async def default_score_titulo():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -168,7 +169,6 @@ async def default_votos_titulo():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -210,7 +210,6 @@ async def default_get_actor():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
@@ -249,7 +248,6 @@ async def default_get_director():
     html_content = "<html><body>"
     html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 

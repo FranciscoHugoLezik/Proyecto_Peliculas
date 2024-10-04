@@ -1,4 +1,8 @@
-if __name__ == "__main__":
+import sys
+import os
+
+if (__name__ == "__main__" 
+    or "credits_query" in os.path.basename(sys.argv[0])):
     import constants as c
     from import_file import importar_archivo
 else:
