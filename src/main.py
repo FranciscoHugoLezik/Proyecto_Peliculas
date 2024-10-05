@@ -1,7 +1,7 @@
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+if __name__ == '__main__':
+    import sys
+    import os
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -13,89 +13,124 @@ from src.scripts import credits_query as c
 app = FastAPI()
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", 
+         response_class=HTMLResponse)
 async def root():
-    informacion = {
-        "Proyecto": """Proyecto individual MVP de un sistema de 
-                       recomendación de películas""",
+    datos_del_autor = {
         "Autor": "Francisco Hugo Lezik",
         "Curso": "Curso de Ciencia de Datos de Henry, cohorte 10"
     }
-    
     mapa_del_sitio = {
         "/": "Pagina principal",
-        "/cantidad_mes/mes_en_español": """Devuelve la cantidad de peliculas 
-                                           estrenadas en un determinado mes 
-                                           escrito en español.""",
-        "/cantidad_dia/dia_en_español": """Devuelve la cantidad de peliculas 
-                                           estrenadas en un determinado dia 
-                                           escrito en español.""",
-        "/score_titulo/titulo_de_la_filmacion": """Devuelve el año en que fue 
-                                                   estrenada una pelicula y su 
-                                                   popularidad.""",
-        "/votos_titulo/titulo_de_la_filmacion": """Devuelve el año en que fue 
-                                                   estrenada una pelicula, la 
-                                                   cantidad de votos y el 
-                                                   promedio de votos.""",
-        "/actor/nombre_del_actor": """Devuelve la cantidad de peliculas en las 
-                                      que participo un actor, la cantidad que 
-                                      tiene retorno, el retorno total y el 
-                                      retorno promedio""",
-        "/director/nombre_del_director": """Devuelve la cantidad de peliculas 
-                                            que dirigio un director, la cantidad 
-                                            que tiene retorno, el retorno total 
-                                            y cada pelicula con su fecha de 
-                                            estreno, su retorno individual, 
-                                            costo y ganancia."""
-    }
-        
+        "/cantidad_mes/mes": """Retorna la cantidad de peliculas 
+                             estrenadas en un determinado mes 
+                             escrito en español.""",
+        "/cantidad_dia/dia": """Retorna la cantidad de peliculas 
+                             estrenadas en un determinado dia 
+                             escrito en español.""",
+        "/score_titulo/titulo": """Retorna el titulo de la pelicula, 
+                                el año en que fue estrenada y su 
+                                popularidad.""",
+        "/votos_titulo/titulo": """Retorna el titulo de la pelicula, 
+                                el año en que fue estrenada, la 
+                                cantidad de votos y el promedio 
+                                de votos.""",
+        "/actor/nombre": """Retorna el nombre del actor, la cantidad de 
+                         peliculas en las que participo, la cantidad 
+                         que tiene retorno, el retorno total y el 
+                         retorno promedio.""",
+        "/director/nombre": """Retorna el nombre del director, la 
+                            cantidad de peliculas que dirigio, la 
+                            cantidad que tiene retorno y el retorno 
+                            total. Ademas retorna el nombre de cada 
+                            pelicula, su fecha de estreno, su retorno 
+                            individual, su costo y su ganancia."""
+    } 
     precondicion = {
         "Precondicion": """Los titulos y nombres deben estar escritos, respetando 
-                           las mayusculas y minusculas, como estan en el dataset."""
+                        las mayusculas y minusculas, como estan en el dataset."""
     }
 
     html_content = "<html><body>"
-    for key, value in informacion.items():
+    html_content += "<p><strong>Proyecto Individual MVP de un Sistema \n"
+    html_content += "de Recomendación de Peliculas</strong></p>"
+    html_content += "<br><br>"
+    
+    for key, value in datos_del_autor.items():
         html_content += f"<p><strong>{key}:</strong> {value}</p>"
-        
+    html_content += "<br><br>"
+    
+    html_content += "<p><strong>Mapa del sitio:</strong></p>"
     for key, value in mapa_del_sitio.items():
         html_content += f"<p><strong>{key}:</strong> {value}</p>"
-        
-    html_content += f"<p><strong>Precondicion:</strong> {precondicion['Precondicion']}</p>"
+    html_content += "<br><br>"        
+
+    html_content += f"<p><strong>Precondicion:</strong> \n"
+    html_content += f"{precondicion['Precondicion']}</p>"
     html_content += "</body></html>"
+    
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/cantidad_mes", response_class=HTMLResponse)
-async def default_cantidad_filmaciones_mes():
+@app.get("/cantidad_mes", 
+         response_class=HTMLResponse)
+async def default_cantidad_filmaciones_mes() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona un mes en la URL.
+    
+    Returns:
+        respuesta (HTMLResponse): Es un texto con la 
+        explicacion del proposito de la funcion y de su uso.
     """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona un mes.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL un mes, en español, 
-                      por ejemplo: /cantidad_mes/marzo"""
+    respuesta = {
+        "Proposito": """Retorna la cantidad de peliculas 
+                     que fueron estrenadas en un determinado 
+                     mes en español.""",
+        "Uso": """Tenes que agregarle a esta URL un mes 
+               en español. Por ejemplo: /cantidad_mes/enero"""
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
     html_content += "</body></html>"
+    
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/cantidad_mes/{mes}")
-async def cantidad_filmaciones_mes(mes: str):
-    """
-        Proposito: devuelve la cantidad de películas que fueron estrenadas en el mes dado como argumento.
-        Precondicion: el mes dado como argumento debe estar en español sino da error.
+@app.get("/cantidad_mes/{mes}", 
+         response_class=HTMLResponse)
+async def cantidad_filmaciones_mes(mes: str) -> HTMLResponse:
+    """Retorna la cantidad de filmaciones que 
+    fueron estrenadas en el mes dado como argumento.
+    
+    Args: 
+        mes (str): es un mes en español.
+        
+    Returns:
+        respuesta (HTMLResponse): Es un texto con la 
+        cantidad de filmaciones estrenadas en un mes 
+        en particular.
     """
     cantidad = m.cantidad_filmaciones_mes(mes)
+    cantidad = str(cantidad)
+    respuesta = ("Fueron estrenadas", 
+                 cantidad, 
+                 "peliculas en el mes de", 
+                 mes)
+    respuesta = ' '.join(respuesta)
     respuesta = {
-        "Cantidad de peliculas": cantidad, 
-        "Fueron estrenadas en el mes de": mes
+        "Respuesta": respuesta
     }
-    return(respuesta)
+    html_content = "<html><body>"
+    html_content += f"<p><strong>Respuesta:</strong> \n"
+    html_content += f"{respuesta['Respuesta']}</p>"
+    html_content += "</body></html>"
+
+    return (HTMLResponse(content=html_content))
 
 
-@app.get("/cantidad_dia", response_class=HTMLResponse)
+@app.get("/cantidad_dia", 
+         response_class=HTMLResponse)
 async def default_cantidad_filmaciones_dia():
     """
     Propósito: devuelve un mensaje predeterminado cuando no se proporciona un dia.
