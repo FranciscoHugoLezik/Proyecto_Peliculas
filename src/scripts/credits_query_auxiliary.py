@@ -11,16 +11,14 @@ else:
 
 
 def get_movies_id(nombre, archivo):
-    cast = importar_archivo('data', 
-                            'ETL_data', 
-                            'credits', 
-                            f'{archivo}.parquet')
-    actor = cast[cast['name'] == nombre]
-    actor = actor[['name', 
-                   'movie_id']].copy()
-    actor.drop_duplicates(subset=['movie_id'], 
-                          inplace=True)
-    return(actor)
+    dataset = importar_archivo('data', 
+                               'ETL_data', 
+                               'credits', 
+                               f'{archivo}.parquet')
+    persona = dataset[dataset['name'] == nombre].copy()
+    persona.drop_duplicates(subset=['movie_id'], 
+                            inplace=True)
+    return(persona)
 
 
 def get_peliculas(*columnas):
@@ -36,8 +34,7 @@ def filtrar_con_retorno(peliculas_df):
 
 
 def procesar_peliculas(peliculas):
-    peliculas.drop(columns=['movie_id', 
-                            'name'], 
+    peliculas.drop(columns=['movie_id'], 
                             inplace=True)
     peliculas['release_date'] = peliculas['release_date'].dt.date
     peliculas['release_date'] = peliculas['release_date'].astype(str)

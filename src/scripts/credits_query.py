@@ -29,8 +29,9 @@ def get_actor(nombre):
 
 def get_director(nombre):
     sus_peliculas = q.get_movies_id(nombre, 
-                                      'crew')
+                                    'crew')
     sus_peliculas = sus_peliculas.query('job == "Director"')
+    sus_peliculas = sus_peliculas['movie_id'].copy()
     detalles = q.get_peliculas('id', 
                                'title', 
                                'release_date', 
@@ -40,14 +41,14 @@ def get_director(nombre):
     peliculas = pd.merge(sus_peliculas, 
                          detalles, 
                          on='movie_id')
-    con_retorno = q.filtrar_por_retorno(peliculas)
+    con_retorno = q.filtrar_con_retorno(peliculas)
     
     cantidad = len(sus_peliculas)
     cantidad_con_retorno = len(con_retorno)
     total = con_retorno['return'].sum().round(2)
-    peliculas = q.procesar_peliculas(peliculas)
+    con_retorno = q.procesar_peliculas(con_retorno)
     
     return (cantidad, 
             cantidad_con_retorno, 
             total, 
-            peliculas)
+            con_retorno)

@@ -42,7 +42,7 @@ def cantidad_filmaciones_dia(dia: str) -> int:
     return (cantidad)
 
 
-def score_titulo(titulo: str) -> Tuple[int, 
+def score_titulo(titulo: str) -> Tuple[str, 
                                        float]:
     """Retorna el año en que fue estrenada una pelicula
     y su popularidad.
@@ -52,11 +52,11 @@ def score_titulo(titulo: str) -> Tuple[int,
         pelicula.
 
     Returns:
-        int: Es el año de estreno.
+        str: Es el año de estreno.
         float: Es la popularidad.
     """
     filmacion = q.get_filmacion(titulo)
-    año = int(filmacion['release_year'])
+    año = filmacion['release_year']
     popularidad = float(filmacion['popularity'])
     
     return (año, 
@@ -79,7 +79,7 @@ def votos_titulo(titulo: str) -> Tuple[int,
         float: Es el promedio de votos.
     """
     filmacion = q.get_filmacion(titulo)
-    año = int(filmacion['release_year'])
+    año = filmacion['release_year']
     cantidad = int(filmacion['vote_count'])
     promedio = float(filmacion['vote_average'])
     

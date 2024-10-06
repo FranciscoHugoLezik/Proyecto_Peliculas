@@ -76,7 +76,7 @@ async def root():
          response_class=HTMLResponse)
 async def default_cantidad_filmaciones_mes() -> HTMLResponse:
     """Retorna una explicacion de la funcion y de su uso 
-    cuando no se proporciona un mes en la URL.
+    cuando no se proporciona un mes, en español, en la URL.
     
     Returns:
         respuesta (HTMLResponse): Es un texto con la 
@@ -84,8 +84,8 @@ async def default_cantidad_filmaciones_mes() -> HTMLResponse:
     """
     respuesta = {
         "Proposito": """Retorna la cantidad de peliculas 
-                     que fueron estrenadas en un determinado 
-                     mes en español.""",
+                     que fueron estrenadas en un mes 
+                     escrito en español.""",
         "Uso": """Tenes que agregarle a esta URL un mes 
                en español. Por ejemplo: /cantidad_mes/enero"""
     }
@@ -131,179 +131,358 @@ async def cantidad_filmaciones_mes(mes: str) -> HTMLResponse:
 
 @app.get("/cantidad_dia", 
          response_class=HTMLResponse)
-async def default_cantidad_filmaciones_dia():
+async def default_cantidad_filmaciones_dia() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona un dia, en español, en la URL.
+    
+    Returns:
+        respuesta (HTMLResponse): Es un texto con la 
+        explicacion del proposito de la funcion y de su uso.
     """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona un dia.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL un dia, en español, 
-                      por ejemplo: /cantidad_dia/lunes"""
+    respuesta = {
+        "Proposito": """Retorna la cantidad de peliculas 
+                     que fueron estrenadas en un dia 
+                     escrito en español.""",
+        "Uso": """Tenes que agregarle a esta URL un dia 
+               en español. Por ejemplo: /cantidad_dia/lunes"""
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
     html_content += "</body></html>"
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/cantidad_dia/{dia}")
-async def cantidad_filmaciones_dia(dia: str):
-    """
-        Proposito: devuelve la cantidad de películas que fueron estrenadas en el dia dado como argumento.
-        Precondicion: el dia dado como argumento debe estar en español sino da error.
+@app.get("/cantidad_dia/{dia}", 
+         response_class=HTMLResponse)
+async def cantidad_filmaciones_dia(dia: str) -> HTMLResponse:
+    """Retorna la cantidad de filmaciones que 
+    fueron estrenadas en el dia dado como argumento.
+    
+    Args: 
+        dia (str): es un dia en español.
+        
+    Returns:
+        respuesta (HTMLResponse): Es un texto con la 
+        cantidad de filmaciones estrenadas en un dia 
+        en particular.
     """
     cantidad = m.cantidad_filmaciones_dia(dia)
+    cantidad = str(cantidad)
+    respuesta = ("Fueron estrenadas", 
+                 cantidad, 
+                 "peliculas en el dia", 
+                 dia)
+    respuesta = ' '.join(respuesta)
     respuesta = {
-        "Cantidad de peliculas": cantidad, 
-        "Fueron estrenadas en los días": dia
-    }
-    return(respuesta)
-
-
-@app.get("/score_titulo", response_class=HTMLResponse)
-async def default_score_titulo():
-    """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona un titulo.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL el titulo, en ingles, 
-                      de una pelicula. Por ejemplo: /score_titulo/lunes"""
+        "Respuesta": respuesta
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    html_content += f"<p><strong>Respuesta:</strong> \n"
+    html_content += f"{respuesta['Respuesta']}</p>"
+    html_content += "</body></html>"
+
+    return (HTMLResponse(content=html_content))
+
+
+@app.get("/score_titulo", 
+         response_class=HTMLResponse)
+async def default_score_titulo() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona el titulo de una filmacion 
+    en la URL.
+    
+    Returns:
+        respuesta (HTMLResponse): Es un texto con la 
+        explicacion del proposito de la funcion y de su uso.
+    """
+    respuesta = {
+        "Proposito": """Retorna el titulo, el año y la 
+                     popularidad de una pelicula.""",
+        "Uso": """Tenes que agregarle a esta URL el titulo 
+               de una pelicula. Por ejemplo: 
+               /score_titulo/Toy Story"""
+    }
+    html_content = "<html><body>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
     html_content += "</body></html>"
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/score_titulo/{titulo_de_la_filmacion}")
-async def score_titulo(titulo_de_la_filmacion: str):
+@app.get("/score_titulo/{titulo}", 
+         response_class=HTMLResponse)
+async def score_titulo(titulo: str) -> HTMLResponse:
+    """Retorna el titulo, el año y la popularidad de 
+    una pelicula.
+    
+    Args: 
+        titulo (str): es un titulo de una filmacion.
+        
+    Returns:
+        HTMLResponse: Es un texto con los resultados.
     """
-        Proposito: devuelve el año y la popularidad de la pelicula dada como argumento.
-        Precondicion: el titulo de la pelicula debe estar en el dataset y estar 
-        escrito respetando las minusculas y mayusculas del titulo sino da error. 
-        Si se conoce el nombre de una pelicula hecha en un pais no hispano se debe 
-        introducir su nombre en el idioma original.
-    """
-    año, score = m.score_titulo(titulo_de_la_filmacion)
+    año, score = m.score_titulo(titulo)
+    score = str(score)
+    
+    respuesta = ("La película", 
+                 titulo, 
+                 "fue estrenada en el año", 
+                 año, 
+                 "y tiene un score/popularidad de", 
+                 score)
+    respuesta = ' '.join(respuesta)
     respuesta = {
-        "La película": titulo_de_la_filmacion, 
-        "Fue estrenada en el año": año, 
-        "Tiene un score/popularidad de": score
-    }
-    return(respuesta)
-
-
-@app.get("/votos_titulo", response_class=HTMLResponse)
-async def default_votos_titulo():
-    """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona un titulo.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL el titulo, en ingles, 
-                      de una pelicula. Por ejemplo: /votos_titulo/lunes"""
+        "Respuesta": respuesta
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
+    html_content += "</body></html>"
+
+    return (HTMLResponse(content=html_content))
+
+
+@app.get("/votos_titulo", 
+         response_class=HTMLResponse)
+async def default_votos_titulo() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona el titulo de una filmacion 
+    en la URL.
+    
+    Returns:
+        HTMLResponse: Es un texto con la explicacion 
+        del proposito de la funcion y de su uso.
+    """
+    respuesta = {
+        "Proposito": """Retorna el titulo, el año, la 
+                     cantidad de votos y el promedio de 
+                     votos de una pelicula. Si la cantidad 
+                     de votos es menor a 2000 no devuelve 
+                     ningun valor.""",
+        "Uso": """Tenes que agregarle a esta URL el titulo 
+               de una pelicula. Por ejemplo: 
+               /votos_titulo/Toy Story"""
+    }
+    html_content = "<html><body>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
     html_content += "</body></html>"
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/votos_titulo/{titulo_de_la_filmacion}")
-async def votos_titulo(titulo_de_la_filmacion: str):
+@app.get("/votos_titulo/{titulo}", 
+         response_class=HTMLResponse)
+async def votos_titulo(titulo: str) -> HTMLResponse:
+    """Retorna el titulo, el año, la cantidad de votos 
+    y el promedio de los votos de una pelicula. Retorna 
+    si la cantidad de votos es igual o mayor a 2000.
+    
+    Args:
+        titulo (str): es un titulo de una filmacion.
+        
+    Returns:
+        HTMLResponse: Es un texto con los resultados.
     """
-        Proposito: devuelve el año, la cantidad de votos y el promedio de los votos
-        de la pelicula dada como argumento. Si la cantidad de votos es menor a 2000 
-        no devuelve ningun valor.
-        Precondicion: el titulo de la pelicula debe estar en el dataset y estar 
-        escrito respetando las minusculas y mayusculas del titulo sino da error.
-        Si se conoce el nombre de una pelicula hecha en un pais no hispano se debe 
-        introducir su nombre en el idioma original.
-    """
-    año, cantidad_de_votos, promedio_de_votos = m.votos_titulo(titulo_de_la_filmacion)
-    if cantidad_de_votos >= 2000:
-        respuesta = {
-            "La película": titulo_de_la_filmacion, 
-            "Fue estrenada en el año": año, 
-            "Cuenta con un total de votos de": cantidad_de_votos, 
-            "Con un promedio de": promedio_de_votos
-        }
+    (año, 
+     cantidad, 
+     promedio) = m.votos_titulo(titulo)
+    
+    if cantidad >= 2000:
+        cantidad = str(cantidad)
+        promedio = str(promedio)
+        respuesta = (
+            "La película", 
+            titulo, 
+            "fue estrenada en el año", 
+            año, 
+            ", tiene un total de", 
+            cantidad, 
+            "votos y su promedio es", 
+            promedio
+        )
     else:
-        respuesta = {
-            "La película": f"{titulo_de_la_filmacion} tiene que tener 2000 o mas votos para devolver los valores solicitados."
-        }
-    return(respuesta)
-
-
-@app.get("/actor", response_class=HTMLResponse)
-async def default_get_actor():
-    """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona el nombre de un actor.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL el nombre de un actor. 
-                      Por ejemplo: /actor/Tom Hanks"""
+        respuesta = (
+            "No se retorna valores.",
+            "La película", 
+            titulo, 
+            "tiene menos de 2000 votos."
+        )
+    respuesta = ' '.join(respuesta)
+    respuesta = {
+        "Respuesta": respuesta
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    html_content += f"<p><strong>Respuesta:</strong> \n"
+    html_content += f"{respuesta['Respuesta']}</p>"
     html_content += "</body></html>"
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/actor/{nombre_actor}")
-async def get_actor(nombre_actor: str):
+@app.get("/actor", 
+         response_class=HTMLResponse)
+async def default_get_actor() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona el titulo de una filmacion 
+    en la URL.
+    
+    Returns:
+        HTMLResponse: Es un texto con la explicacion 
+        del proposito de la funcion y de su uso.
     """
-        Proposito: devuelve el total de peliculas en las que participo el actor, 
-        el total de peliculas que tienen dato de retorno, el total de retorno y el 
-        promedio de retorno por pelicula.
-        Precondicion: el nombre del actor debe estar en el dataset y estar 
-        escrito respetando las minusculas y mayusculas del nombre sino da error.
+    respuesta = {
+        "Proposito": """Retorna el nombre del actor, el total 
+                     de peliculas en las que participo, la 
+                     cantidad que tiene datos de retorno, el 
+                     total de retorno y su promedio.""",
+        "Uso": """Tenes que agregarle a esta URL el 
+               nombre de un actor. Por ejemplo: 
+               /actor/Tom Hanks"""
+    }
+    html_content = "<html><body>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
+    html_content += "</body></html>"
+    return (HTMLResponse(content=html_content))
+
+
+@app.get("/actor/{nombre}", 
+         response_class=HTMLResponse)
+async def get_actor(nombre: str) -> HTMLResponse:
+    """Retorna el nombre del actor, la cantidad de 
+    peliculas en las que participo, la cantidad 
+    que tiene datos de retorno, el total de 
+    retorno y su promedio.
+    
+    Args:
+        nombre (str): es el nombre de un actor.
+        
+    Returns:
+        HTMLResponse: Es un texto con los resultados.
     """
     (total_peliculas, 
-    peliculas_con_datos, 
-    total,
-    promedio) = c.get_actor(nombre_actor)
+    total_con_retorno, 
+    total_retorno,
+    promedio_retorno) = c.get_actor(nombre)
+    
+    total_peliculas = str(total_peliculas)
+    total_con_retorno = str(total_con_retorno)
+    total_retorno = str(total_retorno)
+    promedio_retorno = str(promedio_retorno)
+    
+    respuesta = (
+        "El actor", 
+        nombre, 
+        "ha participado en", 
+        total_peliculas, 
+        "peliculas.", 
+        "Hay", 
+        total_con_retorno, 
+        "peliculas con datos de retorno. "
+        "El actor logró un retorno total de", 
+        total_retorno, 
+        "y su promedio es de", 
+        promedio_retorno, 
+        "por pelicula."
+    )
+    respuesta = ' '.join(respuesta)
     respuesta = {
-        "El actor": nombre_actor, 
-        "Ha participado en": f"{total_peliculas} peliculas", 
-        "Solo hay datos de retorno de": f"{peliculas_con_datos} peliculas",
-        "El actor logró un retorno total de las peliculas, cuyo retorno figura en el dataset, de": total, 
-        "Tiene un promedio de": f"{promedio} por película cuyo retorno figura en el dataset."
-    }
-    return(respuesta)
-
-
-@app.get("/director", response_class=HTMLResponse)
-async def default_get_director():
-    """
-    Propósito: devuelve un mensaje predeterminado cuando no se proporciona el nombre de un director.
-    """
-    explicacion = {
-        "Mensaje": """Tenes que proporcionar en la URL el nombre de un director. 
-                      Por ejemplo: /director/John Lasseter"""
+        "Respuesta": respuesta
     }
     html_content = "<html><body>"
-    html_content += f"<p><strong>Mensaje:</strong> {explicacion['Mensaje']}</p>"
+    html_content += f"<p><strong>Respuesta:</strong> \n"
+    html_content += f"{respuesta['Respuesta']}</p>"
     html_content += "</body></html>"
     return (HTMLResponse(content=html_content))
 
 
-@app.get("/director/{nombre_director}")
-async def get_director(nombre_director: str):
+@app.get("/director", 
+         response_class=HTMLResponse)
+async def default_get_director() -> HTMLResponse:
+    """Retorna una explicacion de la funcion y de su uso 
+    cuando no se proporciona el titulo de una filmacion 
+    en la URL.
+    
+    Returns:
+        HTMLResponse: Es un texto con la explicacion 
+        del proposito de la funcion y de su uso.
     """
-        Proposito: devuelve el total de peliculas que dirigio el director, 
-        el total de peliculas que tienen dato de retorno y el total de retorno. 
-        Ademas devuelve el nombre de cada pelicula con la fecha de lanzamiento, 
-        el retorno individual, el costo y la ganancia.
-        Precondicion: el nombre del director debe estar en el dataset y estar 
-        escrito respetando las minusculas y mayusculas del nombre sino da error.
-    """
-    (cantidad, 
-     cantidad_con_retorno, 
-     total_retorno, 
-     peliculas) = c.get_director(nombre_director)
-    director = {
-        "Director": nombre_director, 
-        "Cantidad de peliculas dirigidas": cantidad,
-        "Cantidad de peliculas dirigidas con datos de retorno registrados en el dataset": cantidad_con_retorno,
-        "Exito total a traves del retorno": total_retorno
+    respuesta = {
+        "Proposito": """Retorna el nombre del director, el total 
+                     de peliculas que dirigio, la cantidad que 
+                     tiene datos de retorno y el total de retorno. 
+                     Ademas retorna el titulo de cada pelicula, 
+                     la fecha de estreno, el retorno individual, 
+                     el costo y la ganancia.""",
+        "Uso": """Tenes que agregarle a esta URL el 
+               nombre de un director. Por ejemplo: 
+               /director/John Lasseter"""
     }
-    return(director, {f"Peliculas dirigidas por {nombre_director} con retorno registrado en el dataset": peliculas})
+    html_content = "<html><body>"
+    for key, value in respuesta.items():
+        html_content += f"<p><strong>{key}:</strong> {value}</p>"
+    html_content += "</body></html>"
+    return (HTMLResponse(content=html_content))
+
+
+@app.get("/director/{nombre}", 
+         response_class=HTMLResponse)
+async def get_director(nombre: str) -> HTMLResponse:
+    """Retorna el nombre del director, el total 
+    de peliculas que dirigio, la cantidad que 
+    tiene datos de retorno y el total de retorno. 
+    Ademas retorna el titulo de cada pelicula, 
+    la fecha de estreno, el retorno individual, 
+    el costo y la ganancia.
+    
+    Args:
+        nombre (str): es el nombre de un director.
+        
+    Returns:
+        HTMLResponse: Es un texto con los resultados.
+    """
+    (total_peliculas, 
+     total_con_retorno, 
+     total_retorno, 
+     peliculas) = c.get_director(nombre)
+    total_peliculas = str(total_peliculas)
+    total_con_retorno = str(total_con_retorno)
+    total_retorno = str(total_retorno)
+    director = (
+        "El director", 
+        nombre, 
+        "ha dirigido", 
+        total_peliculas, 
+        "peliculas.",
+        "Hay", 
+        total_con_retorno, 
+        "peliculas con datos de retorno.", 
+        "El retorno total es", 
+        total_retorno,
+        "."
+    )
+    introduccion = (
+        "Las peliculas con retorno dirigidas por", 
+        nombre, 
+        "son las siguientes:"
+    )
+    director = ' '.join(director)
+    introduccion = ' '.join(introduccion)
+    respuesta = {
+        "Director": director, 
+        "Introduccion": introduccion, 
+        "Peliculas": peliculas
+    }
+    html_content = "<html><body>"
+    html_content += f"<p><strong>Respuesta:</strong></p>"
+    html_content += "<br><br>"
+    html_content += f"<p>{respuesta['Director']}</p>"
+    html_content += "<br><br>"
+    html_content += f"<p>{respuesta['Introduccion']}</p>"
+    html_content += "<br><br>"
+    for pelicula in peliculas:
+        for key, value in pelicula.items():
+            html_content += f"<p><strong>{key}:</strong> {value}</p>"
+        html_content += "<br><br>"
+    html_content += "</body></html>"
+    return (HTMLResponse(content=html_content))
