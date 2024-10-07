@@ -7,14 +7,17 @@ else:
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
-    """Retorna la cantidad de filmaciones estrenadas en un 
-    mes en particular, a lo largo de los años.
+    """Se obtiene la cantidad de estrenos de 
+    filmaciones de cada mes del año, a lo largo 
+    de los años, y se selecciona la cantidad 
+    del mes pedido.
 
     Args:
-        mes (str): Es un mes en español.
+        mes (pd.Series): es un mes en español.
 
     Returns:
-        cantidad (int): Es la cantidad de peliculas estrenadas.
+        int: es la cantidad de peliculas 
+        estrenadas en el mes pedido.
     """
     meses = q.get_meses()
     cantidades = meses.value_counts()
@@ -25,14 +28,17 @@ def cantidad_filmaciones_mes(mes: str) -> int:
 
 
 def cantidad_filmaciones_dia(dia: str) -> int:
-    """Retorna la cantidad de filmaciones estrenadas en un 
-    dia en particular, a lo largo de los años.
+    """Se obtiene la cantidad de estrenos de las 
+    filmaciones de cada dia de la semana, a lo 
+    largo de los años, y se selecciona la 
+    cantidad del dia pedido.
 
     Args:
-        dia (str): Es un dia en español.
+        dia (str): es un dia en español.
 
     Returns:
-        int: Es la cantidad de peliculas estrenadas.
+        int: es la cantidad de peliculas 
+        estrenadas en el dia pedido.
     """
     dias = q.get_dias()
     cantidades = dias.value_counts()
@@ -44,16 +50,16 @@ def cantidad_filmaciones_dia(dia: str) -> int:
 
 def score_titulo(titulo: str) -> Tuple[str, 
                                        float]:
-    """Retorna el año en que fue estrenada una pelicula
-    y su popularidad.
+    """Se obtiene el año de estreno y la 
+    popularidad de una pelicula.
 
     Args:
-        titulo (str): Es el titulo en ingles de una 
+        titulo (str): es el titulo de una 
         pelicula.
 
     Returns:
-        str: Es el año de estreno.
-        float: Es la popularidad.
+        str: es el año de estreno.
+        float: es la popularidad.
     """
     filmacion = q.get_filmacion(titulo)
     año = filmacion['release_year']
@@ -66,17 +72,18 @@ def score_titulo(titulo: str) -> Tuple[str,
 def votos_titulo(titulo: str) -> Tuple[int, 
                                        int, 
                                        float]:
-    """Retorna el año en que fue estrenada una pelicula
-    la cantidad de votos y el promedio de votos.
+    """Se obtiene el año de estreno, la 
+    cantidad de votos y el promedio de 
+    votos de una pelicula.
 
     Args:
-        titulo (str): Es el titulo en ingles de una 
+        titulo (str): es el titulo de una 
         pelicula.
 
     Returns:
-        int: Es el año de estreno.
-        int: Es la cantidad de votos.
-        float: Es el promedio de votos.
+        int: es el año de estreno.
+        int: es la cantidad de votos.
+        float: es el promedio de votos.
     """
     filmacion = q.get_filmacion(titulo)
     año = filmacion['release_year']

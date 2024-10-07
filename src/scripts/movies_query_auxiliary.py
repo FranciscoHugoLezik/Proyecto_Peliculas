@@ -1,6 +1,8 @@
 import sys
 import os
 
+import pandas as pd
+
 if (__name__ == "__main__" 
     or "movies_query" in os.path.basename(sys.argv[0])):
     import constants as c
@@ -8,13 +10,29 @@ else:
     from src.scripts import constants as c
     
 
-def get_meses():
+def get_meses() -> pd.Series:
+    """Se obtiene los meses de la columna  
+    'release date' (fecha de estreno) del 
+    dataset MOVIES.
+
+    Returns:
+        pd.Series: son los meses.
+    """
     solo_meses = c.MOVIES['release_date'].dt.month
     
     return(solo_meses)
 
 
-def get_numero_mes(mes):
+def get_numero_mes(mes: str) -> int:
+    """Se obtiene el numero del mes 
+    solicitado.
+
+    Args:
+        mes (str): es un mes en español.
+
+    Returns:
+        int: es el numero del mes.
+    """
     numero_de_mes = int(c.MESES.get(mes))
     
     return(numero_de_mes)

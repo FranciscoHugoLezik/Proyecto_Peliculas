@@ -1,15 +1,15 @@
 import os
+from typing import Tuple
 
 import pandas as pd
 
 
-def importar_archivo(*args: tuple) -> pd.DataFrame:
+def importar_archivo(*args: Tuple[str]) -> pd.DataFrame:
     """Retorna un dataframe extraido de un dataset 
     guardado en la ruta de acceso pasado como tupla.
 
     Args:
-        *args (tuple): Es una tupla cuyos elementos 
-        son cadenas. La ultima cadena es el nombre 
+        *args (Tuple[str]): La ultima cadena es el nombre 
         del archivo y el resto son carpetas.
     
     Returns:
