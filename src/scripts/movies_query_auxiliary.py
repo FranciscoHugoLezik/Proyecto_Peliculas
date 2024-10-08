@@ -11,12 +11,12 @@ else:
     
 
 def get_meses() -> pd.Series:
-    """Se obtiene los meses de la columna  
-    'release date' (fecha de estreno) del 
-    dataset MOVIES.
+    """Se obtienen los numeros de los meses de 
+    la columna 'release date' (fecha de estreno) 
+    del dataset MOVIES.
 
     Returns:
-        pd.Series: son los meses.
+        pd.Series: son los numeros de los meses.
     """
     solo_meses = c.MOVIES['release_date'].dt.month
     
@@ -38,19 +38,45 @@ def get_numero_mes(mes: str) -> int:
     return(numero_de_mes)
 
 
-def get_dias():
+def get_dias() -> pd.Series:
+    """Se obtienen los dias en ingles de la 
+    columna 'release date' (fecha de estreno) 
+    del dataset MOVIES.
+
+    Returns:
+        pd.Series: son los dias en ingles.
+    """
     solo_dias = c.MOVIES['release_date'].dt.strftime('%A')
     
     return(solo_dias)
 
 
-def get_dia_en_ingles(dia):
+def get_dia_en_ingles(dia: str) -> str:
+    """Se obtiene el dia en ingles del dia 
+    solicitado.
+
+    Args:
+        dia (str): es un dia en español.
+
+    Returns:
+        str: es el dia en ingles.
+    """
     dia_en_ingles = c.DIAS_EN_INGLES.get(dia)
     
     return(dia_en_ingles)
 
 
-def get_filmacion(titulo):
+def get_filmacion(titulo: str) -> pd.Series:
+    """Selecciona una pelicula.
+
+    Args:
+        titulo (str): es el titulo de la 
+        pelicula.
+
+    Returns:
+        pd.Series: son los datos de la 
+        pelicula.
+    """
     movies = c.MOVIES.copy()
     movies.set_index('title', 
                      inplace=True)

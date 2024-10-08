@@ -282,7 +282,7 @@ async def votos_titulo(titulo: str) -> HTMLResponse:
         titulo (str): es un titulo de una filmacion.
         
     Returns:
-        HTMLResponse: Es un texto con los resultados.
+        HTMLResponse: es un texto con los resultados.
     """
     (año, 
      cantidad, 
@@ -327,7 +327,7 @@ async def default_get_actor() -> HTMLResponse:
     en la URL.
     
     Returns:
-        HTMLResponse: Es un texto con la explicacion 
+        HTMLResponse: es un texto con la explicacion 
         del proposito de la funcion y de su uso.
     """
     respuesta = {
@@ -349,7 +349,7 @@ async def default_get_actor() -> HTMLResponse:
 @app.get("/actor/{nombre}", 
          response_class=HTMLResponse)
 async def get_actor(nombre: str) -> HTMLResponse:
-    """Retorna el nombre del actor, la cantidad de 
+    """Obtiene el nombre del actor, la cantidad de 
     peliculas en las que participo, la cantidad 
     que tiene datos de retorno, el total de 
     retorno y su promedio.
@@ -358,7 +358,7 @@ async def get_actor(nombre: str) -> HTMLResponse:
         nombre (str): es el nombre de un actor.
         
     Returns:
-        HTMLResponse: Es un texto con los resultados.
+        HTMLResponse: es un texto con los resultados.
     """
     (total_peliculas, 
     total_con_retorno, 
@@ -404,7 +404,7 @@ async def default_get_director() -> HTMLResponse:
     en la URL.
     
     Returns:
-        HTMLResponse: Es un texto con la explicacion 
+        HTMLResponse: es un texto con la explicacion 
         del proposito de la funcion y de su uso.
     """
     respuesta = {
@@ -428,9 +428,9 @@ async def default_get_director() -> HTMLResponse:
 @app.get("/director/{nombre}", 
          response_class=HTMLResponse)
 async def get_director(nombre: str) -> HTMLResponse:
-    """Retorna el nombre del director, el total 
+    """Obtiene el nombre del director, el total 
     de peliculas que dirigio, la cantidad que 
-    tiene datos de retorno y el total de retorno. 
+    tiene retorno registrado y el total de retorno. 
     Ademas retorna el titulo de cada pelicula, 
     la fecha de estreno, el retorno individual, 
     el costo y la ganancia.
@@ -439,7 +439,7 @@ async def get_director(nombre: str) -> HTMLResponse:
         nombre (str): es el nombre de un director.
         
     Returns:
-        HTMLResponse: Es un texto con los resultados.
+        HTMLResponse: es un texto con los resultados.
     """
     (total_peliculas, 
      total_con_retorno, 
@@ -456,21 +456,17 @@ async def get_director(nombre: str) -> HTMLResponse:
         "peliculas.",
         "Hay", 
         total_con_retorno, 
-        "peliculas con datos de retorno.", 
+        "peliculas con retorno registrado.", 
         "El retorno total es", 
         total_retorno,
         "."
     )
-    introduccion = (
-        "Las peliculas con retorno dirigidas por", 
-        nombre, 
-        "son las siguientes:"
-    )
+    
     director = ' '.join(director)
-    introduccion = ' '.join(introduccion)
     respuesta = {
         "Director": director, 
-        "Introduccion": introduccion, 
+        "Introduccion": """Las peliculas, con retorno 
+                        registrado, son las siguientes:""", 
         "Peliculas": peliculas
     }
     html_content = "<html><body>"

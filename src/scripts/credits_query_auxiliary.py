@@ -1,6 +1,6 @@
 import sys
 import os
-from typing import Tuple
+from typing import Tuple, List
 
 import pandas as pd
 
@@ -70,7 +70,7 @@ def filtrar_con_retorno(peliculas: pd.DataFrame) -> pd.DataFrame:
     return(con_retorno)
 
 
-def procesar_peliculas(peliculas: pd.DataFrame) -> list[dict]:
+def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
     """Renombra las columnas y modifica los datos de 
     la columna 'Fecha_de_estreno'. Por último, lo 
     convierte en una lista de diccionarios.
@@ -82,15 +82,16 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> list[dict]:
     Returns:
         list[dict]: cada diccionario es una pelicula.
     """
-    peliculas.rename(columns={'title': 'Titulo', 
-                              'release_date': 'Fecha_de_estreno', 
-                              'return': 'Retorno', 
-                              'budget': 'Presupuesto', 
-                              'revenue': 'Ganancia'}, 
-                     inplace=True)
+    peliculas_copia = peliculas.copy()
+    peliculas_copia.rename(columns={'title': 'Titulo', 
+                                    'release_date': 'Fecha_de_estreno', 
+                                    'return': 'Retorno', 
+                                    'budget': 'Presupuesto', 
+                                    'revenue': 'Ganancia'}, 
+                           inplace=True)
     
-    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].dt.date
-    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].astype(str)
+    peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].dt.date
+    peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].astype(str)
     
-    peliculas = peliculas.to_dict(orient="records")
+    peliculas = peliculas_copia.to_dict(orient="records")
     return(peliculas)

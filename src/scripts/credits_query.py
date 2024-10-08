@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 
 import pandas as pd
 
@@ -52,7 +52,7 @@ def get_actor(nombre: str) -> Tuple[int,
 def get_director(nombre: str) -> Tuple[int, 
                                        int, 
                                        float, 
-                                       list[dict]]:
+                                       List[dict]]:
     """Selecciona las peliculas que dirigio 
     el director y las peliculas que tienen 
     retorno registrado. Calcula la cantidad 

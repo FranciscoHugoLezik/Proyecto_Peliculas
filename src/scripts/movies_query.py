@@ -62,8 +62,8 @@ def score_titulo(titulo: str) -> Tuple[str,
         float: es la popularidad.
     """
     filmacion = q.get_filmacion(titulo)
-    año = filmacion['release_year']
-    popularidad = float(filmacion['popularity'])
+    año = int(filmacion['release_year'])
+    popularidad = float(filmacion['popularity'].round(2))
     
     return (año, 
             popularidad)
@@ -86,7 +86,7 @@ def votos_titulo(titulo: str) -> Tuple[int,
         float: es el promedio de votos.
     """
     filmacion = q.get_filmacion(titulo)
-    año = filmacion['release_year']
+    año = int(filmacion['release_year'])
     cantidad = int(filmacion['vote_count'])
     promedio = float(filmacion['vote_average'])
     
