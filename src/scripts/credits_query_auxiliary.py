@@ -83,6 +83,7 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
         list[dict]: cada diccionario es una pelicula.
     """
     peliculas_copia = peliculas.copy()
+    peliculas_copia.drop(columns='movie_id', inplace=True)
     peliculas_copia.rename(columns={'title': 'Titulo', 
                                     'release_date': 'Fecha_de_estreno', 
                                     'return': 'Retorno', 

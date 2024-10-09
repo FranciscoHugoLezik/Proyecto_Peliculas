@@ -78,8 +78,7 @@ def get_filmacion(titulo: str) -> pd.Series:
         pelicula.
     """
     movies = c.MOVIES.copy()
-    movies.set_index('title', 
-                     inplace=True)
-    filmación = movies.loc[titulo]
+    filmacion = movies[movies['title'] == titulo]
+    filmacion = filmacion.squeeze()
     
-    return(filmación)
+    return(filmacion)
