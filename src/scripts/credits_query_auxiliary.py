@@ -50,7 +50,7 @@ def get_columnas(*columnas: Tuple[str]) -> pd.DataFrame:
         pd.DataFrame: contiene las columnas 
         seleccionadas.
     """
-    peliculas = c.MOVIES[[*columnas]].copy()
+    peliculas = c.MOVIES[[*columnas]]
     return(peliculas)
 
 
@@ -90,7 +90,6 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
                                     'budget': 'Presupuesto', 
                                     'revenue': 'Ganancia'}, 
                            inplace=True)
-    
     peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].dt.date
     peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].astype(str)
     
