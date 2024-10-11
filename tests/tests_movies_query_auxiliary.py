@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.movies_query_auxiliary as m
+import src.scripts.movies.auxiliary_movies as aux
 
 
 class TestMoviesQueryAuxiliary(unittest.TestCase):
@@ -8,7 +8,7 @@ class TestMoviesQueryAuxiliary(unittest.TestCase):
         numeros_de_meses = (
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
         )
-        meses = m.get_meses()
+        meses = aux.get_meses()
         meses = tuple(meses.to_list())
         son_meses = True
         for mes in meses:
@@ -17,19 +17,28 @@ class TestMoviesQueryAuxiliary(unittest.TestCase):
                 break
         self.assertTrue(son_meses)
         
+        
     def test_get_numero_mes(self):
-        self.assertEqual(m.get_numero_mes('enero'), 1)
-        self.assertEqual(m.get_numero_mes('febrero'), 2)
-        self.assertEqual(m.get_numero_mes('marzo'), 3)
-        self.assertEqual(m.get_numero_mes('abril'), 4)
-        self.assertEqual(m.get_numero_mes('mayo'), 5)
-        self.assertEqual(m.get_numero_mes('junio'), 6)
-        self.assertEqual(m.get_numero_mes('julio'), 7)
-        self.assertEqual(m.get_numero_mes('agosto'), 8)
-        self.assertEqual(m.get_numero_mes('septiembre'), 9)
-        self.assertEqual(m.get_numero_mes('octubre'), 10)
-        self.assertEqual(m.get_numero_mes('noviembre'), 11)
-        self.assertEqual(m.get_numero_mes('diciembre'), 12)
+        meses = (
+            'enero', 
+            'febrero', 
+            'marzo', 
+            'abril', 
+            'mayo', 
+            'junio', 
+            'julio', 
+            'agosto', 
+            'septiembre', 
+            'octubre', 
+            'noviembre', 
+            'diciembre'
+        )
+        numero = 0
+        for mes in meses:
+            numero += 1
+            self.assertEqual(aux.get_numero_mes(mes), 
+                             numero)
+
 
     def test_get_dias(self):
         dias_en_ingles = (
@@ -41,7 +50,7 @@ class TestMoviesQueryAuxiliary(unittest.TestCase):
             'Saturday', 
             'Sunday'
         )
-        english_days = m.get_dias()
+        english_days = aux.get_dias()
         english_days = tuple(english_days.to_list())
         son_dias_en_ingles = True
         for day in english_days:
@@ -50,27 +59,40 @@ class TestMoviesQueryAuxiliary(unittest.TestCase):
                 break
         self.assertTrue(son_dias_en_ingles)
 
+
     def test_get_dia_en_ingles(self):
-        self.assertEqual(m.get_dia_en_ingles('lunes'), 
-                         'Monday')
-        self.assertEqual(m.get_dia_en_ingles('martes'), 
-                         'Tuesday')
-        self.assertEqual(m.get_dia_en_ingles('miercoles'), 
-                         'Wednesday')
-        self.assertEqual(m.get_dia_en_ingles('jueves'), 
-                         'Thursday')
-        self.assertEqual(m.get_dia_en_ingles('viernes'), 
-                         'Friday')
-        self.assertEqual(m.get_dia_en_ingles('sabado'), 
-                         'Saturday')
-        self.assertEqual(m.get_dia_en_ingles('domingo'), 
-                         'Sunday')
+        dias_en_español = (
+            'lunes', 
+            'martes', 
+            'miercoles', 
+            'jueves', 
+            'viernes', 
+            'sabado', 
+            'domingo'
+        )
+        dias_en_ingles = (
+            'Monday', 
+            'Tuesday', 
+            'Wednesday', 
+            'Thursday', 
+            'Friday', 
+            'Saturday', 
+            'Sunday'
+        )
+        for (dia_en_español, 
+             dia_en_ingles) in zip(dias_en_español, 
+                                   dias_en_ingles):
+            self.assertEqual(aux.get_dia_en_ingles(dia_en_español), 
+                             dia_en_ingles)
+        
         
     def test_get_filmacion(self):
         import pandas as pd
-        toy_story = m.get_filmacion('Toy Story')
-        self.assertEqual(type(toy_story), pd.Series)
-        self.assertEqual(toy_story['title'], 'Toy Story')
+        toy_story = aux.get_filmacion('Toy Story')
+        self.assertEqual(type(toy_story), 
+                         pd.Series)
+        self.assertEqual(toy_story['title'], 
+                         'Toy Story')
 
 
 if __name__ == '__main__':

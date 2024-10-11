@@ -2,10 +2,7 @@ from typing import Tuple, List
 
 import pandas as pd
 
-if __name__ == "__main__":
-    import credits_query_auxiliary as q
-else:
-    from src.scripts import credits_query_auxiliary as q
+import src.scripts.credits.auxiliary_credits as aux
 
 
 def get_actor(nombre: str) -> Tuple[int, 
@@ -29,14 +26,14 @@ def get_actor(nombre: str) -> Tuple[int,
         participo, la cantidad de peliculas con retorno, 
         el retorno total y el retorno promedio.
     """
-    sus_creditos = q.get_creditos(nombre, 
-                                  'cast')
-    peliculas = q.get_columnas('movie_id', 
-                              'return')
+    from src.modules.constants import MOVIES
+    
+    sus_creditos = aux.get_creditos(nombre, 
+                                    'cast')
     sus_peliculas = pd.merge(sus_creditos, 
-                             peliculas, 
+                             MOVIES, 
                              on='movie_id')
-    con_retorno = q.filtrar_con_retorno(sus_peliculas)
+    con_retorno = aux.filtrar_con_retorno(sus_peliculas)
     
     cantidad = len(sus_peliculas)
     cantidad_con_retorno = len(con_retorno)
@@ -70,25 +67,21 @@ def get_director(nombre: str) -> Tuple[int,
         (el titulo, la fecha de estreno, el retorno, 
         el presupuesto y el ingreso)
     """
-    sus_creditos = q.get_creditos(nombre, 
-                                  'crew')
+    from src.modules.constants import MOVIES
+    
+    sus_creditos = aux.get_creditos(nombre, 
+                                    'crew')
     sus_creditos = sus_creditos.query('job == "Director"')
-    sus_creditos = sus_creditos['movie_id'].copy()
-    peliculas = q.get_columnas('movie_id', 
-                               'title', 
-                               'release_date', 
-                               'return', 
-                               'budget', 
-                               'revenue')
-    sus_peliculas = pd.merge(sus_creditos, 
-                             peliculas, 
+    movies_id = sus_creditos['movie_id'].copy()
+    sus_peliculas = pd.merge(movies_id, 
+                             MOVIES, 
                              on='movie_id')
-    peliculas_con_retorno = q.filtrar_con_retorno(sus_peliculas)
+    peliculas_con_retorno = aux.filtrar_con_retorno(sus_peliculas)
     
     cantidad = len(sus_peliculas)
     cantidad_con_retorno = len(peliculas_con_retorno)
     retorno_total = peliculas_con_retorno['return'].sum().round(2)
-    peliculas_con_retorno = q.procesar_peliculas(peliculas_con_retorno)
+    peliculas_con_retorno = aux.procesar_peliculas(peliculas_con_retorno)
     
     return (cantidad, 
             cantidad_con_retorno, 

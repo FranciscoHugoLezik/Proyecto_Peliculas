@@ -1,17 +1,7 @@
-import sys
-import os
-
 import pandas as pd
 
 import src.modules.constants as c
 
-"""
-if (__name__ == "__main__" 
-    or "query" in os.path.basename(sys.argv[0])):
-    from src.modules import constants as c
-else:
-    from src.modules import constants as c
-"""
 
 def get_meses() -> pd.Series:
     """Se obtienen los numeros de los meses de 

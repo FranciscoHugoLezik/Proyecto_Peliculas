@@ -4,13 +4,8 @@ from typing import Tuple, List
 
 import pandas as pd
 
-if (__name__ == "__main__" 
-    or "credits_query" in os.path.basename(sys.argv[0])):
-    import constants as c
-    from import_file import importar_archivo
-else:
-    from src.scripts import constants as c
-    from src.scripts.import_file import importar_archivo
+import src.modules.constants as c
+from src.modules.import_file import importar_archivo
 
 
 def get_creditos(persona: str, 
@@ -36,22 +31,6 @@ def get_creditos(persona: str,
     sus_creditos.drop_duplicates(subset=['movie_id'], 
                                  inplace=True)
     return(sus_creditos)
-
-
-def get_columnas(*columnas: Tuple[str]) -> pd.DataFrame:
-    """Selecciona unas columnas del dataframe 
-    MOVIES.
-    
-    Args:
-        *columnas (Tuple[str]): es una tupla del 
-        nombre de una o mas columnas.
-
-    Returns:
-        pd.DataFrame: contiene las columnas 
-        seleccionadas.
-    """
-    peliculas = c.MOVIES[[*columnas]]
-    return(peliculas)
 
 
 def filtrar_con_retorno(peliculas: pd.DataFrame) -> pd.DataFrame:
@@ -82,16 +61,19 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
     Returns:
         list[dict]: cada diccionario es una pelicula.
     """
-    peliculas_copia = peliculas.copy()
-    peliculas_copia.drop(columns='movie_id', inplace=True)
-    peliculas_copia.rename(columns={'title': 'Titulo', 
-                                    'release_date': 'Fecha_de_estreno', 
-                                    'return': 'Retorno', 
-                                    'budget': 'Presupuesto', 
-                                    'revenue': 'Ganancia'}, 
-                           inplace=True)
-    peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].dt.date
-    peliculas_copia['Fecha_de_estreno'] = peliculas_copia['Fecha_de_estreno'].astype(str)
+    peliculas = peliculas[['title', 
+                           'release_date', 
+                           'return', 
+                           'budget', 
+                           'revenue']]
+    peliculas.rename(columns={'title': 'Titulo', 
+                              'release_date': 'Fecha_de_estreno', 
+                              'return': 'Retorno', 
+                              'budget': 'Presupuesto', 
+                              'revenue': 'Ganancia'}, 
+                     inplace=True)
+    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].dt.date
+    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].astype(str)
     
-    peliculas = peliculas_copia.to_dict(orient="records")
+    peliculas = peliculas.to_dict(orient="records")
     return(peliculas)

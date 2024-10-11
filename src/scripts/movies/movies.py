@@ -1,12 +1,6 @@
 from typing import Tuple
 
-import src.scripts.movies.auxiliary as aux
-"""
-if __name__ == "__main__":
-    import auxiliary as aux
-else:
-    from src.scripts.movies import auxiliary as aux
-"""
+import src.scripts.movies.auxiliary_movies as aux
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:

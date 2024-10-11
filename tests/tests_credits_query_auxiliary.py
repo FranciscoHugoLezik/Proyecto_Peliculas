@@ -1,12 +1,12 @@
 import unittest
 
-import src.scripts.credits_query_auxiliary as c
+import src.scripts.credits.auxiliary_credits as aux
 
 
 class TestsCreditsQueryAuxiliary(unittest.TestCase):
     def test_get_creditos_cast(self):
-        tom_hanks = c.get_creditos('Tom Hanks', 
-                                   'cast')
+        tom_hanks = aux.get_creditos('Tom Hanks', 
+                                     'cast')
         columnas = (
             'cast_id', 
             'character', 
@@ -27,8 +27,8 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_get_creditos_crew(self):
-        john_lasseter = c.get_creditos('John Lasseter', 
-                                       'crew')
+        john_lasseter = aux.get_creditos('John Lasseter', 
+                                         'crew')
         columnas = (
             'credit_id', 
             'department', 
@@ -48,10 +48,10 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_get_columnas(self):
-        columnas = c.get_columnas('movie_id', 
-                                  'title', 
-                                  'tagline', 
-                                  'overview')
+        columnas = aux.get_columnas('movie_id', 
+                                    'title', 
+                                    'tagline', 
+                                    'overview')
         atributos = (
             'movie_id', 
             'title', 
@@ -67,9 +67,9 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_filtrar_con_retorno(self):
-        from src.scripts.constants import MOVIES
+        from src.modules.constants import MOVIES
         
-        peliculas_con_retorno = c.filtrar_con_retorno(MOVIES)
+        peliculas_con_retorno = aux.filtrar_con_retorno(MOVIES)
         cantidad = 0
         for retorno in MOVIES['return']:
             if retorno > 0:
@@ -78,16 +78,16 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_procesar_peliculas(self):
-        from src.scripts.constants import MOVIES
+        from src.modules.constants import MOVIES
         
         peliculas_a_procesar = MOVIES.head()
-        peliculas_a_procesar = c.get_columnas('movie_id', 
-                                              'title', 
-                                              'release_date', 
-                                              'return', 
-                                              'budget', 
-                                              'revenue')
-        peliculas_procesadas = c.procesar_peliculas(peliculas_a_procesar)
+        peliculas_a_procesar = aux.get_columnas('movie_id', 
+                                                'title', 
+                                                'release_date', 
+                                                'return', 
+                                                'budget', 
+                                                'revenue')
+        peliculas_procesadas = aux.procesar_peliculas(peliculas_a_procesar)
         atributos_buscados = (
             'Titulo', 
             'Fecha_de_estreno', 
