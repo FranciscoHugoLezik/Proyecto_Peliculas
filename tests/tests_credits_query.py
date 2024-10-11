@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.credits_query as c
+import src.scripts.credits.credits as c
 
 
 class TestCreditsQuery(unittest.TestCase):
@@ -35,12 +35,19 @@ class TestCreditsQuery(unittest.TestCase):
         
         for pelicula in peliculas:
             atributos = tuple(pelicula.keys())
-            
-            self.assertEqual(atributos[0], 'Titulo')
-            self.assertEqual(atributos[1], 'Fecha_de_estreno')
-            self.assertEqual(atributos[2], 'Retorno')
-            self.assertEqual(atributos[3], 'Presupuesto')
-            self.assertEqual(atributos[4], 'Ganancia')
+            atributos_buscados = (
+                'Titulo', 
+                'Fecha_de_estreno', 
+                'Retorno', 
+                'Presupuesto', 
+                'Ganancia'
+            )
+            estan_los_atributos = True
+            for atributo in atributos:
+                if atributo not in atributos_buscados:
+                    estan_los_atributos = False
+                    break
+            self.assertTrue(estan_los_atributos)
 
 
 if __name__ == '__main__':

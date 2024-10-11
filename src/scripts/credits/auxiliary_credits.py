@@ -65,7 +65,7 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
                            'release_date', 
                            'return', 
                            'budget', 
-                           'revenue']]
+                           'revenue']].copy()
     peliculas.rename(columns={'title': 'Titulo', 
                               'release_date': 'Fecha_de_estreno', 
                               'return': 'Retorno', 

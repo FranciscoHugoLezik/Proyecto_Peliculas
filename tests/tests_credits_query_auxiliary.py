@@ -47,25 +47,6 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         self.assertTrue(estan_las_columnas)
         
         
-    def test_get_columnas(self):
-        columnas = aux.get_columnas('movie_id', 
-                                    'title', 
-                                    'tagline', 
-                                    'overview')
-        atributos = (
-            'movie_id', 
-            'title', 
-            'tagline', 
-            'overview'
-        )
-        estan_las_columnas = True
-        for columna in columnas:
-            if columna not in atributos:
-                estan_las_columnas = False
-                break
-        self.assertTrue(estan_las_columnas)
-        
-        
     def test_filtrar_con_retorno(self):
         from src.modules.constants import MOVIES
         
@@ -81,12 +62,6 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         from src.modules.constants import MOVIES
         
         peliculas_a_procesar = MOVIES.head()
-        peliculas_a_procesar = aux.get_columnas('movie_id', 
-                                                'title', 
-                                                'release_date', 
-                                                'return', 
-                                                'budget', 
-                                                'revenue')
         peliculas_procesadas = aux.procesar_peliculas(peliculas_a_procesar)
         atributos_buscados = (
             'Titulo', 
