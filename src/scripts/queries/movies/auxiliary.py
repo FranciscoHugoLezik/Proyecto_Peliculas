@@ -4,10 +4,10 @@ import os
 import pandas as pd
 
 if (__name__ == "__main__" 
-    or "movies_query" in os.path.basename(sys.argv[0])):
-    import constants as c
+    or "movies" in os.path.basename(sys.argv[0])):
+    from src.scripts.others import constants as c
 else:
-    from src.scripts import constants as c
+    from src.scripts.others import constants as c
     
 
 def get_meses() -> pd.Series:

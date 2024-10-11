@@ -1,9 +1,11 @@
 from typing import Tuple
 
 if __name__ == "__main__":
-    import movies_query_auxiliary as q
+    import auxiliary as q
 else:
-    from src.scripts import movies_query_auxiliary as q
+    from src.scripts.movies_query import auxiliary as q
+    
+print('Todo bien')
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
