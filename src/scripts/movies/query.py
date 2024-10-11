@@ -1,11 +1,12 @@
 from typing import Tuple
 
+import src.scripts.movies.auxiliary as aux
+"""
 if __name__ == "__main__":
-    import auxiliary as q
+    import auxiliary as aux
 else:
-    from src.scripts.movies_query import auxiliary as q
-    
-print('Todo bien')
+    from src.scripts.movies import auxiliary as aux
+"""
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
@@ -21,9 +22,9 @@ def cantidad_filmaciones_mes(mes: str) -> int:
         int: es la cantidad de peliculas 
         estrenadas en el mes pedido.
     """
-    meses = q.get_meses()
+    meses = aux.get_meses()
     cantidades = meses.value_counts()
-    numero_mes = q.get_numero_mes(mes)
+    numero_mes = aux.get_numero_mes(mes)
     cantidad = int(cantidades[numero_mes])
     
     return (cantidad)
@@ -42,9 +43,9 @@ def cantidad_filmaciones_dia(dia: str) -> int:
         int: es la cantidad de peliculas 
         estrenadas en el dia pedido.
     """
-    dias = q.get_dias()
+    dias = aux.get_dias()
     cantidades = dias.value_counts()
-    dia_en_ingles = q.get_dia_en_ingles(dia)
+    dia_en_ingles = aux.get_dia_en_ingles(dia)
     cantidad = int(cantidades[dia_en_ingles])
     
     return (cantidad)
@@ -63,7 +64,7 @@ def score_titulo(titulo: str) -> Tuple[str,
         str: es el año de estreno.
         float: es la popularidad.
     """
-    filmacion = q.get_filmacion(titulo)
+    filmacion = aux.get_filmacion(titulo)
     año = int(filmacion['release_year'])
     popularidad = float(filmacion['popularity'].round(2))
     
@@ -87,7 +88,7 @@ def votos_titulo(titulo: str) -> Tuple[int,
         int: es la cantidad de votos.
         float: es el promedio de votos.
     """
-    filmacion = q.get_filmacion(titulo)
+    filmacion = aux.get_filmacion(titulo)
     año = int(filmacion['release_year'])
     cantidad = int(filmacion['vote_count'])
     promedio = float(filmacion['vote_average'])
