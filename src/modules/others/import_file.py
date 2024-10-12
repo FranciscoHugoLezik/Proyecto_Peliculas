@@ -16,7 +16,7 @@ def importar_archivo(*args: Tuple[str]) -> pd.DataFrame:
         pd.DataFrame: Contiene una tabla.
     """
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_dir = os.path.dirname(os.path.dirname(current_dir))
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
     file_path = os.path.join(base_dir, 
                              *args)
     

@@ -3,7 +3,7 @@ import unittest
 import src.modules.credits.auxiliary_credits as aux
 
 
-class TestsCreditsQueryAuxiliary(unittest.TestCase):
+class TestsAuxiliaryCredits(unittest.TestCase):
     def test_get_creditos_cast(self):
         tom_hanks = aux.get_creditos('Tom Hanks', 
                                      'cast')

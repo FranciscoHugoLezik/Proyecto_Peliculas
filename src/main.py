@@ -1,13 +1,8 @@
-if __name__ == '__main__':
-    import sys
-    import os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-from src.scripts import movies_query as m
-from src.scripts import credits_query as c
+from src.modules.movies import movies as m
+from src.modules.credits import credits as c
 
 
 app = FastAPI()
@@ -50,7 +45,6 @@ async def root():
         "Precondicion": """Los titulos y nombres deben estar escritos, respetando 
                         las mayusculas y minusculas, como estan en el dataset."""
     }
-
     html_content = "<html><body>"
     html_content += "<p><strong>Proyecto Individual MVP de un Sistema \n"
     html_content += "de Recomendación de Peliculas</strong></p>"
@@ -461,7 +455,6 @@ async def get_director(nombre: str) -> HTMLResponse:
         total_retorno,
         "."
     )
-    
     director = ' '.join(director)
     respuesta = {
         "Director": director, 

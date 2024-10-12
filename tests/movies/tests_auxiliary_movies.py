@@ -3,7 +3,7 @@ import unittest
 import src.modules.movies.auxiliary_movies as aux
 
 
-class TestMoviesQueryAuxiliary(unittest.TestCase):
+class TestAuxiliaryMovies(unittest.TestCase):
     def test_get_meses(self):
         numeros_de_meses = (
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12

@@ -3,7 +3,7 @@ import unittest
 import src.modules.credits.credits as c
 
 
-class TestCreditsQuery(unittest.TestCase):
+class TestCredits(unittest.TestCase):
     def test_get_actor(self):
         (cantidad, 
          cantidad_con_retorno, 
@@ -14,6 +14,7 @@ class TestCreditsQuery(unittest.TestCase):
         self.assertEqual(cantidad_con_retorno, 41)
         self.assertEqual(retorno_total, 178.85)
         self.assertEqual(retorno_promedio, 4.36)
+        
         
     def test_get_director(self):
         (cantidad, 

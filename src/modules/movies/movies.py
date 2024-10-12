@@ -1,6 +1,6 @@
 from typing import Tuple
 
-import src.scripts.movies.auxiliary_movies as aux
+import src.modules.movies.auxiliary_movies as aux
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
@@ -59,7 +59,7 @@ def score_titulo(titulo: str) -> Tuple[str,
         float: es la popularidad.
     """
     filmacion = aux.get_filmacion(titulo)
-    año = int(filmacion['release_year'])
+    año = filmacion['release_year']
     popularidad = float(filmacion['popularity'].round(2))
     
     return (año, 
@@ -83,7 +83,7 @@ def votos_titulo(titulo: str) -> Tuple[int,
         float: es el promedio de votos.
     """
     filmacion = aux.get_filmacion(titulo)
-    año = int(filmacion['release_year'])
+    año = filmacion['release_year']
     cantidad = int(filmacion['vote_count'])
     promedio = float(filmacion['vote_average'])
     
