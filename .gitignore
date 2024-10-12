@@ -1,1 +1,10 @@
 /venv
+/src/__pycache__
+/src/modules/__pycache__
+/src/modules/credits/__pycache__
+/src/modules/movies/__pycache__
+/src/modules/others/__pycache__
+/src/scripts/__pycache__
+/tests/__pycache__
+/tests/credits/__pycache__
+/tests/movies/__pycache__
