@@ -1,11 +1,8 @@
-import sys
-import os
-from typing import Tuple, List
+from typing import List
 
 import pandas as pd
 
-import src.modules.constants as c
-from src.modules.import_file import importar_archivo
+from src.modules.others.import_file import importar_archivo
 
 
 def get_creditos(persona: str, 

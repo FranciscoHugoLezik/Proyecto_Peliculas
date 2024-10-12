@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.credits.credits as c
+import src.modules.credits.credits as c
 
 
 class TestCreditsQuery(unittest.TestCase):

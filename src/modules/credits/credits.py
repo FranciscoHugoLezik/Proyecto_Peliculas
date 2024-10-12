@@ -2,7 +2,7 @@ from typing import Tuple, List
 
 import pandas as pd
 
-import src.scripts.credits.auxiliary_credits as aux
+import src.modules.credits.auxiliary_credits as aux
 
 
 def get_actor(nombre: str) -> Tuple[int, 
@@ -26,7 +26,7 @@ def get_actor(nombre: str) -> Tuple[int,
         participo, la cantidad de peliculas con retorno, 
         el retorno total y el retorno promedio.
     """
-    from src.modules.constants import MOVIES
+    from src.modules.others.constants import MOVIES
     
     sus_creditos = aux.get_creditos(nombre, 
                                     'cast')
@@ -67,7 +67,7 @@ def get_director(nombre: str) -> Tuple[int,
         (el titulo, la fecha de estreno, el retorno, 
         el presupuesto y el ingreso)
     """
-    from src.modules.constants import MOVIES
+    from src.modules.others.constants import MOVIES
     
     sus_creditos = aux.get_creditos(nombre, 
                                     'crew')

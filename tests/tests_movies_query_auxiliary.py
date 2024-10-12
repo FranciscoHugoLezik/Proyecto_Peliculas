@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.movies.auxiliary_movies as aux
+import src.modules.movies.auxiliary_movies as aux
 
 
 class TestMoviesQueryAuxiliary(unittest.TestCase):

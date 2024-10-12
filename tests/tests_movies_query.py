@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.movies.movies as m
+import src.modules.movies.movies as m
 
 
 class TestMoviesQuery(unittest.TestCase):

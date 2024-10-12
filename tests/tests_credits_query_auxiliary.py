@@ -1,6 +1,6 @@
 import unittest
 
-import src.scripts.credits.auxiliary_credits as aux
+import src.modules.credits.auxiliary_credits as aux
 
 
 class TestsCreditsQueryAuxiliary(unittest.TestCase):
@@ -48,7 +48,7 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_filtrar_con_retorno(self):
-        from src.modules.constants import MOVIES
+        from src.modules.others.constants import MOVIES
         
         peliculas_con_retorno = aux.filtrar_con_retorno(MOVIES)
         cantidad = 0
@@ -59,7 +59,7 @@ class TestsCreditsQueryAuxiliary(unittest.TestCase):
         
         
     def test_procesar_peliculas(self):
-        from src.modules.constants import MOVIES
+        from src.modules.others.constants import MOVIES
         
         peliculas_a_procesar = MOVIES.head()
         peliculas_procesadas = aux.procesar_peliculas(peliculas_a_procesar)

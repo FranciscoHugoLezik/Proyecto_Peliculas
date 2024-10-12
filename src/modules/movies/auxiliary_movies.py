@@ -1,6 +1,6 @@
 import pandas as pd
 
-import src.modules.constants as c
+import src.modules.others.constants as c
 
 
 def get_meses() -> pd.Series:
