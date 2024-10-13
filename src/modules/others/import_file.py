@@ -20,7 +20,6 @@ def importar_archivo(*args: Tuple[str]) -> pd.DataFrame:
     file_path = os.path.join(base_dir, 
                              *args)
     
-    archivo = pd.read_parquet(file_path, 
-                              engine='fastparquet')
+    archivo = pd.read_parquet(file_path)
     
     return(archivo)
