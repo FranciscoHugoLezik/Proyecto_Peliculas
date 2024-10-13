@@ -2,7 +2,7 @@ from typing import Tuple, List
 
 import pandas as pd
 
-import src.modules.credits.auxiliary_credits as aux
+from src.modules.credits import auxiliary_credits as aux
 
 
 def get_actor(nombre: str) -> Tuple[int, 

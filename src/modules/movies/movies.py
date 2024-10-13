@@ -1,6 +1,6 @@
 from typing import Tuple
 
-import src.modules.movies.auxiliary_movies as aux
+from src.modules.movies import auxiliary_movies as aux
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
