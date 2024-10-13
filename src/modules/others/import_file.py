@@ -21,6 +21,6 @@ def importar_archivo(*args: Tuple[str]) -> pd.DataFrame:
                              *args)
     
     archivo = pd.read_parquet(file_path, 
-                              engine='fastparquet')
+                              engine='pyarrow')
     
     return(archivo)
