@@ -22,10 +22,24 @@ async def default_get_actor() -> HTMLResponse:
         "Proposito": """Retorna el nombre del actor, el total 
                      de peliculas en las que participo, la 
                      cantidad que tiene datos de retorno, el 
-                     total de retorno y su promedio.""",
+                     total de retorno y su promedio.""", 
         "Uso": """Tenes que agregarle a esta URL el 
-               nombre de un actor. Por ejemplo: 
-               /actor/Tom Hanks"""
+               nombre de un actor. La primera letra de cada 
+               nombre y apellido debe estar en mayúscula y el 
+               resto en minúscula. Por ejemplo: 
+               /actor/Tom Hanks""", 
+        "Algunos actores disponibles": (
+            "Tom Hanks", 
+            "Tim Allen", 
+            "Don Rickles", 
+            "Jim Varney", 
+            "Wallace Shawn", 
+            "John Ratzenberger", 
+            "Annie Potts", 
+            "John Morris", 
+            "Erik von Detten", 
+            "Laurie Metcalf"
+        )
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():

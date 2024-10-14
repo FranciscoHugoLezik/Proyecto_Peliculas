@@ -36,10 +36,6 @@ async def root():
                             total. Ademas retorna el nombre de cada 
                             pelicula, su fecha de estreno, su retorno 
                             individual, su costo y su ganancia."""
-    } 
-    precondicion = {
-        "Precondicion": """Los titulos y nombres deben estar escritos, respetando 
-                        las mayusculas y minusculas, como estan en el dataset."""
     }
     html_content = "<html><body>"
     html_content += "<p><strong>Proyecto Individual MVP de un Sistema \n"
@@ -53,10 +49,6 @@ async def root():
     html_content += "<p><strong>Mapa del sitio:</strong></p>"
     for key, value in mapa_del_sitio.items():
         html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "<br><br>"        
-
-    html_content += f"<p><strong>Precondicion:</strong> \n"
-    html_content += f"{precondicion['Precondicion']}</p>"
-    html_content += "</body></html>"
+    html_content += "<br><br>"
     
     return (HTMLResponse(content=html_content))

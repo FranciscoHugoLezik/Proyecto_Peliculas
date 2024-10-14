@@ -22,7 +22,8 @@ async def default_cantidad_filmaciones_dia() -> HTMLResponse:
                      que fueron estrenadas en un dia 
                      escrito en español.""",
         "Uso": """Tenes que agregarle a esta URL un dia 
-               en español. Por ejemplo: /cantidad_dia/lunes"""
+               en español en minúscula. Por ejemplo: 
+               /cantidad_dia/lunes"""
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():

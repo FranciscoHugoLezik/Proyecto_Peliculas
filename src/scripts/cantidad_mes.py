@@ -22,7 +22,8 @@ async def default_cantidad_filmaciones_mes() -> HTMLResponse:
                      que fueron estrenadas en un mes 
                      escrito en español.""",
         "Uso": """Tenes que agregarle a esta URL un mes 
-               en español. Por ejemplo: /cantidad_mes/enero"""
+               en español en minúscula. Por ejemplo: 
+               /cantidad_mes/enero"""
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():

@@ -26,8 +26,22 @@ async def default_get_director() -> HTMLResponse:
                      la fecha de estreno, el retorno individual, 
                      el costo y la ganancia.""",
         "Uso": """Tenes que agregarle a esta URL el 
-               nombre de un director. Por ejemplo: 
-               /director/John Lasseter"""
+               nombre de un director. La primera letra de cada 
+               nombre y apellido debe estar en mayúscula y el 
+               resto en minúscula. Por ejemplo: 
+               /director/John Lasseter""", 
+        "Algunos directores disponibles": (
+            "John Lasseter", 
+            "Joe Johnston", 
+            "Howard Deutch", 
+            "Forest Whitaker", 
+            "Charles Shyer", 
+            "Michael Mann", 
+            "Sydney Pollack", 
+            "Peter Hewitt", 
+            "Peter Hyams", 
+            "Martin Campbell"
+        )
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():

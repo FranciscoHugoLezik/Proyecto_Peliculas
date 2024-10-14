@@ -20,10 +20,26 @@ async def default_score_titulo() -> HTMLResponse:
     """
     respuesta = {
         "Proposito": """Retorna el titulo, el año y la 
-                     popularidad de una pelicula.""",
+                     popularidad de una pelicula.""", 
         "Uso": """Tenes que agregarle a esta URL el titulo 
-               de una pelicula. Por ejemplo: 
-               /score_titulo/Toy Story"""
+               de una pelicula. Las palabras importantes del 
+               titulo deben tener la primer letra en mayúscula 
+               y el resto en minúscula. Las palabras como 'to' 
+               u 'of' siempre en minuscula salvo que sean la 
+               primer palabra del título. Por ejemplo: 
+               /score_titulo/Toy Story""", 
+        "Algunos títulos disponibles": (
+            "Toy Story", 
+            "Jumanji", 
+            "Grumpier Old Men", 
+            "Waiting to Exhale", 
+            "Father of the Bride Part II", 
+            "Heat", 
+            "Sabrina", 
+            "Tom and Huck", 
+            "Sudden Death", 
+            "GoldenEye"
+            )
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():
