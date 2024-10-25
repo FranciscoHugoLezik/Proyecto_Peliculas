@@ -68,8 +68,6 @@ def procesar_peliculas(peliculas: pd.DataFrame) -> List[dict]:
                               'budget': 'Presupuesto', 
                               'revenue': 'Ganancia'}, 
                      inplace=True)
-    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].dt.date
-    peliculas['Fecha_de_estreno'] = peliculas['Fecha_de_estreno'].astype(str)
     
     peliculas = peliculas.to_dict(orient="records")
     return(peliculas)

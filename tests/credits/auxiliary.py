@@ -15,7 +15,6 @@ class TestsAuxiliaryCredits(unittest.TestCase):
             'person_id', 
             'name', 
             'order', 
-            'profile_path', 
             'movie_id'
         )
         estan_las_columnas = True

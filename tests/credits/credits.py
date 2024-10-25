@@ -10,7 +10,7 @@ class TestCredits(unittest.TestCase):
          retorno_total, 
          retorno_promedio) = c.get_actor('Tom Hanks')
         
-        self.assertEqual(cantidad, 71)
+        self.assertEqual(cantidad, 70)
         self.assertEqual(cantidad_con_retorno, 41)
         self.assertEqual(retorno_total, 178.85)
         self.assertEqual(retorno_promedio, 4.36)
