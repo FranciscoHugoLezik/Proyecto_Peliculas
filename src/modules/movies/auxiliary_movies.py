@@ -11,7 +11,10 @@ def get_meses() -> pd.Series:
     Returns:
         pd.Series: son los numeros de los meses.
     """
-    solo_meses = c.MOVIES['release_date'].dt.month
+    solo_meses = (
+        pd.to_datetime(
+            c.MOVIES['release_date'])
+        .dt.month)
     
     return(solo_meses)
 
@@ -39,7 +42,10 @@ def get_dias() -> pd.Series:
     Returns:
         pd.Series: son los dias en ingles.
     """
-    solo_dias = c.MOVIES['release_date'].dt.strftime('%A')
+    solo_dias = (
+        pd.to_datetime(
+            c.MOVIES['release_date'])
+        .dt.strftime('%A'))
     
     return(solo_dias)
 

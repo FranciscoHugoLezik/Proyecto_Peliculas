@@ -21,8 +21,7 @@ def get_creditos(persona: str,
         persona.
     """
     dataset = importar_archivo('data', 
-                               'ETL_data', 
-                               'credits', 
+                               'ETL', 
                                f'{archivo}.parquet')
     sus_creditos = dataset[dataset['name'] == persona].copy()
     sus_creditos.drop_duplicates(subset=['movie_id'], 

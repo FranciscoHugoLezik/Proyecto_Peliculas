@@ -7,13 +7,13 @@ class TestMovies(unittest.TestCase):
     def test_cantidad_filmaciones_mes(self):
         cantidad_enero = m.cantidad_filmaciones_mes('enero')
         self.assertEqual(cantidad_enero, 
-                         5912)
+                         5353)
         
         
     def test_cantidad_filmaciones_dia(self):
         cantidad_lunes = m.cantidad_filmaciones_dia('lunes')
         self.assertEqual(cantidad_lunes, 
-                         3503)
+                         3265)
     
     
     def test_score_titulo(self):

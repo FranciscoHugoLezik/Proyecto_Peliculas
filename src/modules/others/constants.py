@@ -2,9 +2,8 @@ from src.modules.others.import_file import importar_archivo
 
 
 MOVIES = importar_archivo('data', 
-                          'ETL_data', 
-                          'movies_dataset', 
-                          'simple_data.parquet')
+                          'ETL', 
+                          'movies.parquet')
 
 
 MESES = {
