@@ -1,12 +1,8 @@
 from fastapi import FastAPI
 
-from src.scripts import (root, 
-                         cantidad_mes, 
-                         cantidad_dia, 
-                         score_titulo, 
-                         votos_titulo, 
-                         actor, 
-                         director)
+from src.scripts.credits import actor, director
+from src.scripts.movies import cantidad_dia, cantidad_mes, score_titulo, votos_titulo
+from src.scripts import (root)
 
 
 app = FastAPI()
