@@ -48,9 +48,9 @@ async def default_score_titulo() -> HTMLResponse:
     return (HTMLResponse(content=html_content))
 
 
-@router.get("/score_titulo/{titulo}", 
+@router.get("/score_titulo/{titulo_de_la_filmacion}", 
             response_class=HTMLResponse)
-async def score_titulo(titulo: str) -> HTMLResponse:
+async def score_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
     """Retorna el titulo, el año y la popularidad de 
     una pelicula.
     
@@ -60,11 +60,11 @@ async def score_titulo(titulo: str) -> HTMLResponse:
     Returns:
         HTMLResponse: Es un texto con los resultados.
     """
-    año, score = m.score_titulo(titulo)
+    año, score = m.score_titulo(titulo_de_la_filmacion)
     score = str(score)
     
     respuesta = ("La película", 
-                 titulo, 
+                 titulo_de_la_filmacion, 
                  "fue estrenada en el año", 
                  año, 
                  "y tiene un score/popularidad de", 

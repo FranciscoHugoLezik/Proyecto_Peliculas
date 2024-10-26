@@ -51,9 +51,9 @@ async def default_votos_titulo() -> HTMLResponse:
     return (HTMLResponse(content=html_content))
 
 
-@router.get("/votos_titulo/{titulo}", 
+@router.get("/votos_titulo/{titulo_de_la_filmacion}", 
             response_class=HTMLResponse)
-async def votos_titulo(titulo: str) -> HTMLResponse:
+async def votos_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
     """Retorna el titulo, el año, la cantidad de votos 
     y el promedio de los votos de una pelicula. Retorna 
     si la cantidad de votos es igual o mayor a 2000.
@@ -66,14 +66,14 @@ async def votos_titulo(titulo: str) -> HTMLResponse:
     """
     (año, 
      cantidad, 
-     promedio) = m.votos_titulo(titulo)
+     promedio) = m.votos_titulo(titulo_de_la_filmacion)
     
     if cantidad >= 2000:
         cantidad = str(cantidad)
         promedio = str(promedio)
         respuesta = (
             "La película", 
-            titulo, 
+            titulo_de_la_filmacion, 
             "fue estrenada en el año", 
             año, 
             ", tiene un total de", 
@@ -85,7 +85,7 @@ async def votos_titulo(titulo: str) -> HTMLResponse:
         respuesta = (
             "No se retorna valores.",
             "La película", 
-            titulo, 
+            titulo_de_la_filmacion, 
             "tiene menos de 2000 votos."
         )
     respuesta = ' '.join(respuesta)

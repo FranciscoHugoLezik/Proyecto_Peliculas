@@ -7,11 +7,11 @@ from src.modules.movies import movies as m
 router = APIRouter()
 
 
-@router.get("/cantidad_mes", 
+@router.get("/cantidad_filmaciones_dia", 
             response_class=HTMLResponse)
-async def default_cantidad_filmaciones_mes() -> HTMLResponse:
+async def default_cantidad_filmaciones_dia() -> HTMLResponse:
     """Retorna una explicacion de la funcion y de su uso 
-    cuando no se proporciona un mes, en español, en la URL.
+    cuando no se proporciona un dia, en español, en la URL.
     
     Returns:
         respuesta (HTMLResponse): Es un texto con la 
@@ -19,40 +19,39 @@ async def default_cantidad_filmaciones_mes() -> HTMLResponse:
     """
     respuesta = {
         "Proposito": """Retorna la cantidad de peliculas 
-                     que fueron estrenadas en un mes 
+                     que fueron estrenadas en un dia 
                      escrito en español.""",
-        "Uso": """Tenes que agregarle a esta URL un mes 
+        "Uso": """Tenes que agregarle a esta URL un dia 
                en español en minúscula. Por ejemplo: 
-               /cantidad_mes/enero"""
+               /cantidad_dia/lunes"""
     }
     html_content = "<html><body>"
     for key, value in respuesta.items():
         html_content += f"<p><strong>{key}:</strong> {value}</p>"
     html_content += "</body></html>"
-    
     return (HTMLResponse(content=html_content))
 
 
-@router.get("/cantidad_mes/{mes}", 
-         response_class=HTMLResponse)
-async def cantidad_filmaciones_mes(mes: str) -> HTMLResponse:
+@router.get("/cantidad_filmaciones_dia/{dia}", 
+            response_class=HTMLResponse)
+async def cantidad_filmaciones_dia(dia: str) -> HTMLResponse:
     """Retorna la cantidad de filmaciones que 
-    fueron estrenadas en el mes dado como argumento.
+    fueron estrenadas en el dia dado como argumento.
     
     Args: 
-        mes (str): es un mes en español.
+        dia (str): es un dia en español.
         
     Returns:
         respuesta (HTMLResponse): Es un texto con la 
-        cantidad de filmaciones estrenadas en un mes 
+        cantidad de filmaciones estrenadas en un dia 
         en particular.
     """
-    cantidad = m.cantidad_filmaciones_mes(mes)
+    cantidad = m.cantidad_filmaciones_dia(dia)
     cantidad = str(cantidad)
     respuesta = ("Fueron estrenadas", 
                  cantidad, 
-                 "peliculas en el mes de", 
-                 mes)
+                 "peliculas en el dia", 
+                 dia)
     respuesta = ' '.join(respuesta)
     respuesta = {
         "Respuesta": respuesta

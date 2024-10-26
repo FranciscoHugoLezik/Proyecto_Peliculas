@@ -13,29 +13,29 @@ async def root():
     }
     mapa_del_sitio = {
         "/": "Pagina principal",
-        "/cantidad_mes/mes": """Retorna la cantidad de peliculas 
-                             estrenadas en un determinado mes 
-                             escrito en español.""",
-        "/cantidad_dia/dia": """Retorna la cantidad de peliculas 
-                             estrenadas en un determinado dia 
-                             escrito en español.""",
-        "/score_titulo/titulo": """Retorna el titulo de la pelicula, 
-                                el año en que fue estrenada y su 
-                                popularidad.""",
-        "/votos_titulo/titulo": """Retorna el titulo de la pelicula, 
-                                el año en que fue estrenada, la 
-                                cantidad de votos y el promedio 
-                                de votos.""",
-        "/actor/nombre": """Retorna el nombre del actor, la cantidad de 
-                         peliculas en las que participo, la cantidad 
-                         que tiene retorno, el retorno total y el 
-                         retorno promedio.""",
-        "/director/nombre": """Retorna el nombre del director, la 
-                            cantidad de peliculas que dirigio, la 
-                            cantidad que tiene retorno y el retorno 
-                            total. Ademas retorna el nombre de cada 
-                            pelicula, su fecha de estreno, su retorno 
-                            individual, su costo y su ganancia."""
+        "/cantidad_filmaciones_mes/mes": """Retorna la cantidad de peliculas 
+                                         estrenadas en un determinado mes 
+                                         escrito en español.""",
+        "/cantidad_filmaciones_dia/dia": """Retorna la cantidad de peliculas 
+                                         estrenadas en un determinado dia 
+                                         escrito en español.""",
+        "/score_titulo/titulo_de_la_filmacion": """Retorna el titulo de la pelicula, 
+                                                el año en que fue estrenada y su 
+                                                popularidad.""",
+        "/votos_titulo/titulo_de_la_filmacion": """Retorna el titulo de la pelicula, 
+                                                el año en que fue estrenada, la 
+                                                cantidad de votos y el promedio 
+                                                de votos.""",
+        "/get_actor/nombre_actor": """Retorna el nombre del actor, la cantidad de 
+                                   peliculas en las que participo, la cantidad 
+                                   que tiene retorno, el retorno total y el 
+                                   retorno promedio.""",
+        "/get_director/nombre_director": """Retorna el nombre del director, la 
+                                         cantidad de peliculas que dirigio, la 
+                                         cantidad que tiene retorno y el retorno 
+                                         total. Ademas retorna el nombre de cada 
+                                         pelicula, su fecha de estreno, su retorno 
+                                         individual, su costo y su ganancia."""
     }
     html_content = "<html><body>"
     html_content += "<p><strong>Proyecto Individual MVP de un Sistema \n"

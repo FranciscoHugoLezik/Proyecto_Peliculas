@@ -7,7 +7,7 @@ from src.modules.credits import credits as c
 router = APIRouter()
 
 
-@router.get("/actor", 
+@router.get("/get_actor", 
             response_class=HTMLResponse)
 async def default_get_actor() -> HTMLResponse:
     """Retorna una explicacion de la funcion y de su uso 
@@ -48,9 +48,9 @@ async def default_get_actor() -> HTMLResponse:
     return (HTMLResponse(content=html_content))
 
 
-@router.get("/actor/{nombre}", 
+@router.get("/get_actor/{nombre_actor}", 
             response_class=HTMLResponse)
-async def get_actor(nombre: str) -> HTMLResponse:
+async def get_actor(nombre_actor: str) -> HTMLResponse:
     """Obtiene el nombre del actor, la cantidad de 
     peliculas en las que participo, la cantidad 
     que tiene datos de retorno, el total de 
@@ -65,7 +65,7 @@ async def get_actor(nombre: str) -> HTMLResponse:
     (total_peliculas, 
     total_con_retorno, 
     total_retorno,
-    promedio_retorno) = c.get_actor(nombre)
+    promedio_retorno) = c.get_actor(nombre_actor)
     
     total_peliculas = str(total_peliculas)
     total_con_retorno = str(total_con_retorno)
@@ -74,7 +74,7 @@ async def get_actor(nombre: str) -> HTMLResponse:
     
     respuesta = (
         "El actor", 
-        nombre, 
+        nombre_actor, 
         "ha participado en", 
         total_peliculas, 
         "peliculas.", 

@@ -7,7 +7,7 @@ from src.modules.credits import credits as c
 router = APIRouter()
 
 
-@router.get("/director", 
+@router.get("/get_director", 
             response_class=HTMLResponse)
 async def default_get_director() -> HTMLResponse:
     """Retorna una explicacion de la funcion y de su uso 
@@ -50,9 +50,9 @@ async def default_get_director() -> HTMLResponse:
     return (HTMLResponse(content=html_content))
 
 
-@router.get("/director/{nombre}", 
+@router.get("/get_director/{nombre_director}", 
             response_class=HTMLResponse)
-async def get_director(nombre: str) -> HTMLResponse:
+async def get_director(nombre_director: str) -> HTMLResponse:
     """Obtiene el nombre del director, el total 
     de peliculas que dirigio, la cantidad que 
     tiene retorno registrado y el total de retorno. 
@@ -69,13 +69,13 @@ async def get_director(nombre: str) -> HTMLResponse:
     (total_peliculas, 
      total_con_retorno, 
      total_retorno, 
-     peliculas) = c.get_director(nombre)
+     peliculas) = c.get_director(nombre_director)
     total_peliculas = str(total_peliculas)
     total_con_retorno = str(total_con_retorno)
     total_retorno = str(total_retorno)
     director = (
         "El director", 
-        nombre, 
+        nombre_director, 
         "ha dirigido", 
         total_peliculas, 
         "peliculas.",
