@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from modules.movies.functions.votos_titulo import votos_titulo
+from src.modules.movies.functions.votos_titulo import votos_titulo
 
 
 router = APIRouter()

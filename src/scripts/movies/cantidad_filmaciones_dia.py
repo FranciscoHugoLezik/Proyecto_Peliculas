@@ -1,15 +1,15 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from src.modules.movies.functions.cantidad_filmaciones_dia import cantidad_filmaciones_dia
+from src.modules.movies.functions.cantidad_filmaciones_dia \
+    import cantidad_filmaciones_dia as calcular_cantidad
 
 
 router = APIRouter()
 
 
-@router.get("/cantidad_filmaciones_dia", 
-            response_class=HTMLResponse)
-async def default_cantidad_filmaciones_dia() -> HTMLResponse:
+@router.get("/cantidad_filmaciones_dia")
+async def default_cantidad_filmaciones_dia() -> dict:
     """Retorna una explicacion de la funcion y de su uso 
     cuando no se proporciona un dia, en español, en la URL.
     
@@ -18,23 +18,20 @@ async def default_cantidad_filmaciones_dia() -> HTMLResponse:
         explicacion del proposito de la funcion y de su uso.
     """
     respuesta = {
-        "Proposito": """Retorna la cantidad de peliculas 
-                     que fueron estrenadas en un dia 
-                     escrito en español.""",
-        "Uso": """Tenes que agregarle a esta URL un dia 
-               en español en minúscula. Por ejemplo: 
-               /cantidad_dia/lunes"""
+        "Proposito": (
+            "Retorna la cantidad de peliculas " 
+            "que fueron estrenadas en un dia " 
+            "escrito en español."),
+        "Uso": (
+            "Tenes que agregarle a esta URL " 
+            "un dia en español. Por ejemplo: " 
+            "/cantidad_filmaciones_dia/lunes")
     }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+    return respuesta
 
 
-@router.get("/cantidad_filmaciones_dia/{dia}", 
-            response_class=HTMLResponse)
-async def cantidad_filmaciones_dia(dia: str) -> HTMLResponse:
+@router.get("/cantidad_filmaciones_dia/{dia}")
+async def cantidad_filmaciones_dia(dia: str) -> dict:
     """Retorna la cantidad de filmaciones que 
     fueron estrenadas en el dia dado como argumento.
     
@@ -46,19 +43,8 @@ async def cantidad_filmaciones_dia(dia: str) -> HTMLResponse:
         cantidad de filmaciones estrenadas en un dia 
         en particular.
     """
-    cantidad = cantidad_filmaciones_dia(dia)
-    cantidad = str(cantidad)
-    respuesta = ("Fueron estrenadas", 
-                 cantidad, 
-                 "peliculas en el dia", 
-                 dia)
-    respuesta = ' '.join(respuesta)
+    cantidad = calcular_cantidad(dia)
     respuesta = {
-        "Respuesta": respuesta
+        "Respuesta": f'Fueron estrenadas {cantidad} películas en el día {dia}.'
     }
-    html_content = "<html><body>"
-    html_content += f"<p><strong>Respuesta:</strong> \n"
-    html_content += f"{respuesta['Respuesta']}</p>"
-    html_content += "</body></html>"
-
-    return (HTMLResponse(content=html_content))
+    return respuesta

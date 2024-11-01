@@ -18,6 +18,8 @@ def cantidad_filmaciones_dia(dia: str) -> int:
     dias = get_dias()
     cantidades = dias.value_counts()
     dia_en_ingles = get_dia_en_ingles(dia)
-    cantidad = int(cantidades[dia_en_ingles])
     
+    cantidad = cantidades[dia_en_ingles]
+    cantidad = int(cantidad)
+
     return (cantidad)

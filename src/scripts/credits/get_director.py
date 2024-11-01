@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from modules.credits.functions import get_director as c
+from src.modules.credits.functions.get_director import get_director
 
 
 router = APIRouter()
@@ -69,7 +69,7 @@ async def get_director(nombre_director: str) -> HTMLResponse:
     (total_peliculas, 
      total_con_retorno, 
      total_retorno, 
-     peliculas) = c.get_director(nombre_director)
+     peliculas) = get_director(nombre_director)
     total_peliculas = str(total_peliculas)
     total_con_retorno = str(total_con_retorno)
     total_retorno = str(total_retorno)

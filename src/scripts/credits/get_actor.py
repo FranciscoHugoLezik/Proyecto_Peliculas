@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from modules.credits.functions import get_actor as c
+from src.modules.credits.functions.get_actor import get_actor
 
 
 router = APIRouter()
@@ -65,7 +65,7 @@ async def get_actor(nombre_actor: str) -> HTMLResponse:
     (total_peliculas, 
     total_con_retorno, 
     total_retorno,
-    promedio_retorno) = c.get_actor(nombre_actor)
+    promedio_retorno) = await get_actor(nombre_actor)
     
     total_peliculas = str(total_peliculas)
     total_con_retorno = str(total_con_retorno)

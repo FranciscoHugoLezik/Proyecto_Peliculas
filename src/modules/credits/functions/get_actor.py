@@ -2,8 +2,8 @@ from typing import Tuple
 
 import pandas as pd
 
-from src.modules.credits.helpers.get_creditos import get_creditos
 from src.modules.others.constants import MOVIES
+from src.modules.credits.helpers.get_creditos import get_creditos
 from src.modules.credits.helpers.filtrar_con_retorno import filtrar_con_retorno
 
 
