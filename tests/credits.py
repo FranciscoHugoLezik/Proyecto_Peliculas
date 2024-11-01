@@ -1,12 +1,16 @@
 import unittest
 
-import src.modules.credits.auxiliary_credits as aux
+from src.modules.credits.helpers.get_creditos import get_creditos
+from src.modules.others.constants import MOVIES
+from src.modules.credits.helpers.filtrar_con_retorno import filtrar_con_retorno
+from src.modules.credits.helpers.procesar_peliculas import procesar_peliculas
 
 
 class TestsAuxiliaryCredits(unittest.TestCase):
     def test_get_creditos_cast(self):
-        tom_hanks = aux.get_creditos('Tom Hanks', 
-                                     'cast')
+        tom_hanks = get_creditos(
+            'Tom Hanks', 
+            'cast')
         columnas = (
             'cast_id', 
             'character', 
@@ -26,8 +30,9 @@ class TestsAuxiliaryCredits(unittest.TestCase):
         
         
     def test_get_creditos_crew(self):
-        john_lasseter = aux.get_creditos('John Lasseter', 
-                                         'crew')
+        john_lasseter = get_creditos(
+            'John Lasseter', 
+            'crew')
         columnas = (
             'credit_id', 
             'department', 
@@ -47,9 +52,7 @@ class TestsAuxiliaryCredits(unittest.TestCase):
         
         
     def test_filtrar_con_retorno(self):
-        from src.modules.others.constants import MOVIES
-        
-        peliculas_con_retorno = aux.filtrar_con_retorno(MOVIES)
+        peliculas_con_retorno = filtrar_con_retorno(MOVIES)
         cantidad = 0
         for retorno in MOVIES['return']:
             if retorno > 0:
@@ -58,10 +61,8 @@ class TestsAuxiliaryCredits(unittest.TestCase):
         
         
     def test_procesar_peliculas(self):
-        from src.modules.others.constants import MOVIES
-        
         peliculas_a_procesar = MOVIES.head()
-        peliculas_procesadas = aux.procesar_peliculas(peliculas_a_procesar)
+        peliculas_procesadas = procesar_peliculas(peliculas_a_procesar)
         atributos_buscados = (
             'Titulo', 
             'Fecha_de_estreno', 

@@ -1,14 +1,17 @@
 import unittest
 
-import src.modules.movies.auxiliary_movies as aux
-
+from src.modules.movies.helpers.get_meses import get_meses
+from src.modules.movies.helpers.get_numero_mes import get_numero_mes
+from src.modules.movies.helpers.get_dias import get_dias
+from src.modules.movies.helpers.get_dia_en_ingles import get_dia_en_ingles
+from src.modules.movies.helpers.get_filmacion import get_filmacion
 
 class TestAuxiliaryMovies(unittest.TestCase):
     def test_get_meses(self):
         numeros_de_meses = (
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
         )
-        meses = aux.get_meses()
+        meses = get_meses()
         meses = tuple(meses.to_list())
         son_meses = True
         for mes in meses:
@@ -36,7 +39,7 @@ class TestAuxiliaryMovies(unittest.TestCase):
         numero = 0
         for mes in meses:
             numero += 1
-            self.assertEqual(aux.get_numero_mes(mes), 
+            self.assertEqual(get_numero_mes(mes), 
                              numero)
 
 
@@ -50,7 +53,7 @@ class TestAuxiliaryMovies(unittest.TestCase):
             'Saturday', 
             'Sunday'
         )
-        english_days = aux.get_dias()
+        english_days = get_dias()
         english_days = tuple(english_days.to_list())
         son_dias_en_ingles = True
         for day in english_days:
@@ -82,13 +85,13 @@ class TestAuxiliaryMovies(unittest.TestCase):
         for (dia_en_español, 
              dia_en_ingles) in zip(dias_en_español, 
                                    dias_en_ingles):
-            self.assertEqual(aux.get_dia_en_ingles(dia_en_español), 
+            self.assertEqual(get_dia_en_ingles(dia_en_español), 
                              dia_en_ingles)
         
         
     def test_get_filmacion(self):
         import pandas as pd
-        toy_story = aux.get_filmacion('Toy Story')
+        toy_story = get_filmacion('Toy Story')
         self.assertEqual(type(toy_story), 
                          pd.Series)
         self.assertEqual(toy_story['title'], 

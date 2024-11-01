@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from src.modules.movies import movies as m
+from src.modules.movies.functions.score_titulo import score_titulo
 
 
 router = APIRouter()
@@ -60,7 +60,7 @@ async def score_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
     Returns:
         HTMLResponse: Es un texto con los resultados.
     """
-    año, score = m.score_titulo(titulo_de_la_filmacion)
+    año, score = score_titulo(titulo_de_la_filmacion)
     score = str(score)
     
     respuesta = ("La película", 

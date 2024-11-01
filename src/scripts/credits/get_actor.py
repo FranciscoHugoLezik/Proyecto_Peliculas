@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from src.modules.credits import credits as c
+from modules.credits.functions import get_actor as c
 
 
 router = APIRouter()

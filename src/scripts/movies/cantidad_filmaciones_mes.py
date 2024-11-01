@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from src.modules.movies import movies as m
+from src.modules.movies.functions.cantidad_filmaciones_mes import cantidad_filmaciones_mes
 
 
 router = APIRouter()
@@ -47,7 +47,7 @@ async def cantidad_filmaciones_mes(mes: str) -> HTMLResponse:
         cantidad de filmaciones estrenadas en un mes 
         en particular.
     """
-    cantidad = m.cantidad_filmaciones_mes(mes)
+    cantidad = cantidad_filmaciones_mes(mes)
     cantidad = str(cantidad)
     respuesta = ("Fueron estrenadas", 
                  cantidad, 

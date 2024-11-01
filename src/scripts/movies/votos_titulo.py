@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-from src.modules.movies import movies as m
+from modules.movies.functions.votos_titulo import votos_titulo
 
 
 router = APIRouter()
@@ -66,7 +66,7 @@ async def votos_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
     """
     (año, 
      cantidad, 
-     promedio) = m.votos_titulo(titulo_de_la_filmacion)
+     promedio) = votos_titulo(titulo_de_la_filmacion)
     
     if cantidad >= 2000:
         cantidad = str(cantidad)
