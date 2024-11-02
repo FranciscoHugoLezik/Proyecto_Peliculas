@@ -1,34 +1,33 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
 
-from src.modules.movies.functions.score_titulo import score_titulo
+from src.modules.movies.functions.score_titulo \
+    import score_titulo as calcular_score
 
 
 router = APIRouter()
 
 
-@router.get("/score_titulo", 
-            response_class=HTMLResponse)
-async def default_score_titulo() -> HTMLResponse:
+@router.get("/score_titulo")
+async def default_score_titulo() -> dict:
     """Retorna una explicacion de la funcion y de su uso 
     cuando no se proporciona el titulo de una filmacion 
     en la URL.
     
     Returns:
-        respuesta (HTMLResponse): Es un texto con la 
-        explicacion del proposito de la funcion y de su uso.
+        dict: es un texto con la explicacion 
+        del proposito de la funcion y de su uso.
     """
     respuesta = {
-        "Proposito": """Retorna el titulo, el año y la 
-                     popularidad de una pelicula.""", 
-        "Uso": """Tenes que agregarle a esta URL el titulo 
-               de una pelicula. Las palabras importantes del 
-               titulo deben tener la primer letra en mayúscula 
-               y el resto en minúscula. Las palabras como 'to' 
-               u 'of' siempre en minuscula salvo que sean la 
-               primer palabra del título. Por ejemplo: 
-               /score_titulo/Toy Story""", 
-        "Algunos títulos disponibles": (
+        "Proposito": (
+            "Retorna el titulo, el año y "
+            "la popularidad de una pelicula."
+            ), 
+        "Uso": (
+            "Tenes que agregarle a esta URL "
+            "el titulo de una pelicula. "
+            "Por ejemplo: /score_titulo/Toy Story"
+            ), 
+        "Algunos títulos disponibles": [
             "Toy Story", 
             "Jumanji", 
             "Grumpier Old Men", 
@@ -39,18 +38,13 @@ async def default_score_titulo() -> HTMLResponse:
             "Tom and Huck", 
             "Sudden Death", 
             "GoldenEye"
-            )
-    }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+            ]
+        }
+    return respuesta
 
 
-@router.get("/score_titulo/{titulo_de_la_filmacion}", 
-            response_class=HTMLResponse)
-async def score_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
+@router.get("/score_titulo/{titulo_de_la_filmacion}")
+async def score_titulo(titulo_de_la_filmacion: str) -> dict:
     """Retorna el titulo, el año y la popularidad de 
     una pelicula.
     
@@ -58,24 +52,17 @@ async def score_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
         titulo (str): es un titulo de una filmacion.
         
     Returns:
-        HTMLResponse: Es un texto con los resultados.
+        dict: Es un texto con los resultados.
     """
-    año, score = score_titulo(titulo_de_la_filmacion)
-    score = str(score)
+    (titulo, 
+     año, 
+     score) = calcular_score(titulo_de_la_filmacion)
     
-    respuesta = ("La película", 
-                 titulo_de_la_filmacion, 
-                 "fue estrenada en el año", 
-                 año, 
-                 "y tiene un score/popularidad de", 
-                 score)
-    respuesta = ' '.join(respuesta)
     respuesta = {
-        "Respuesta": respuesta
+        "Respuesta": (
+            f'La película {titulo} '
+            f'fue estrenada en el año {año} '
+            f'y tiene un score de {score}'
+            )
     }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-
-    return (HTMLResponse(content=html_content))
+    return respuesta

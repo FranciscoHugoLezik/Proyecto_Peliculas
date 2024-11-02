@@ -1,7 +1,7 @@
 from src.modules.others.constants import MESES
 
 
-def get_numero_mes(mes: str) -> int:
+def get_numero_del_mes(mes: str) -> int:
     """Se obtiene el numero del mes 
     solicitado.
 
@@ -11,6 +11,8 @@ def get_numero_mes(mes: str) -> int:
     Returns:
         int: es el numero del mes.
     """
-    numero_de_mes = int(MESES.get(mes))
+    mes = mes.lower()
+    numero_del_mes = MESES.get(mes)
+    numero_del_mes = int(numero_del_mes)
     
-    return(numero_de_mes)
+    return(numero_del_mes)

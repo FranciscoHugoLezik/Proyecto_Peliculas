@@ -30,23 +30,42 @@ def get_director(nombre: str) -> Tuple[int,
         el presupuesto y el ingreso)
     """
     
-    sus_creditos = get_creditos(nombre, 
-                                    'crew')
-    sus_creditos = sus_creditos.query('job == "Director"')
+    sus_creditos = get_creditos(
+        nombre, 
+        'crew'
+        )
+    sus_creditos = sus_creditos.query(
+        'job == "Director"'
+        )
     movies_id = sus_creditos['movie_id'].copy()
-    sus_peliculas = pd.merge(movies_id, 
-                             MOVIES, 
-                             on='movie_id')
-    peliculas_con_retorno = filtrar_con_retorno(sus_peliculas)
+    sus_peliculas = pd.merge(
+        movies_id, 
+        MOVIES, 
+        on='movie_id'
+        )
+    peliculas_con_retorno = filtrar_con_retorno(
+        sus_peliculas
+        )
+    nombre = sus_creditos['name'].iloc[0]
+    nombre = str(nombre)
     
     cantidad = len(sus_peliculas)
-    cantidad_con_retorno = len(peliculas_con_retorno)
-    retorno_total = peliculas_con_retorno['return'].sum().round(2)
-    peliculas_con_retorno = procesar_peliculas(peliculas_con_retorno)
     
-    return (cantidad, 
-            cantidad_con_retorno, 
-            retorno_total, 
-            peliculas_con_retorno)
+    cantidad_con_retorno = len(peliculas_con_retorno)
+    
+    retorno_total = peliculas_con_retorno['return'].sum()
+    retorno_total = retorno_total.round(2)
+    retorno_total = float(retorno_total)
+    
+    peliculas_con_retorno = procesar_peliculas(
+        peliculas_con_retorno
+        )
+    return(
+        nombre, 
+        cantidad, 
+        cantidad_con_retorno, 
+        retorno_total, 
+        peliculas_con_retorno
+        )
 
 

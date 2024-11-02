@@ -1,7 +1,7 @@
 import pandas as pd
 
 from src.modules.movies.helpers.get_meses import get_meses
-from src.modules.movies.helpers.get_numero_mes import get_numero_mes
+from src.modules.movies.helpers.get_numero_del_mes import get_numero_del_mes
 
 
 def cantidad_filmaciones_mes(mes: str) -> int:
@@ -17,9 +17,11 @@ def cantidad_filmaciones_mes(mes: str) -> int:
         int: es la cantidad de peliculas 
         estrenadas en el mes pedido.
     """
-    meses = get_meses()
-    cantidades = meses.value_counts()
-    numero_mes = get_numero_mes(mes)
-    cantidad = int(cantidades[numero_mes])
+    numeros_de_los_meses = get_meses()
+    cantidades = numeros_de_los_meses.value_counts()
+    numero_del_mes = get_numero_del_mes(mes)
+    
+    cantidad = cantidades[numero_del_mes]
+    cantidad = int(cantidad)
     
     return (cantidad)

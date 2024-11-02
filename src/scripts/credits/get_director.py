@@ -1,15 +1,14 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
 
-from src.modules.credits.functions.get_director import get_director
+from src.modules.credits.functions.get_director \
+    import get_director as calcular_get_director
 
 
 router = APIRouter()
 
 
-@router.get("/get_director", 
-            response_class=HTMLResponse)
-async def default_get_director() -> HTMLResponse:
+@router.get("/get_director")
+async def default_get_director() -> dict:
     """Retorna una explicacion de la funcion y de su uso 
     cuando no se proporciona el titulo de una filmacion 
     en la URL.
@@ -43,16 +42,11 @@ async def default_get_director() -> HTMLResponse:
             "Martin Campbell"
         )
     }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+    return respuesta
 
 
-@router.get("/get_director/{nombre_director}", 
-            response_class=HTMLResponse)
-async def get_director(nombre_director: str) -> HTMLResponse:
+@router.get("/get_director/{nombre_director}")
+async def get_director(nombre_director: str) -> dict:
     """Obtiene el nombre del director, el total 
     de peliculas que dirigio, la cantidad que 
     tiene retorno registrado y el total de retorno. 
@@ -66,43 +60,24 @@ async def get_director(nombre_director: str) -> HTMLResponse:
     Returns:
         HTMLResponse: es un texto con los resultados.
     """
-    (total_peliculas, 
+    (nombre, 
+     total_peliculas, 
      total_con_retorno, 
      total_retorno, 
-     peliculas) = get_director(nombre_director)
-    total_peliculas = str(total_peliculas)
-    total_con_retorno = str(total_con_retorno)
-    total_retorno = str(total_retorno)
-    director = (
-        "El director", 
-        nombre_director, 
-        "ha dirigido", 
-        total_peliculas, 
-        "peliculas.",
-        "Hay", 
-        total_con_retorno, 
-        "peliculas con retorno registrado.", 
-        "El retorno total es", 
-        total_retorno,
-        "."
-    )
-    director = ' '.join(director)
+     peliculas) = calcular_get_director(nombre_director)
+    
     respuesta = {
-        "Director": director, 
-        "Introduccion": """Las peliculas, con retorno 
-                        registrado, son las siguientes:""", 
+        "Director": (
+            f'El director {nombre} '
+            f'ha dirigido {total_peliculas} peliculas. '
+            f'Hay {total_con_retorno} peliculas con '
+            f'retorno registrado. '
+            f'El retorno total es {total_retorno}.' 
+            ), 
+        "Peliculas_con_retorno": (
+            "Las peliculas, con retorno "  
+            "registrado, son las siguientes: "
+            ), 
         "Peliculas": peliculas
-    }
-    html_content = "<html><body>"
-    html_content += f"<p><strong>Respuesta:</strong></p>"
-    html_content += "<br><br>"
-    html_content += f"<p>{respuesta['Director']}</p>"
-    html_content += "<br><br>"
-    html_content += f"<p>{respuesta['Introduccion']}</p>"
-    html_content += "<br><br>"
-    for pelicula in peliculas:
-        for key, value in pelicula.items():
-            html_content += f"<p><strong>{key}:</strong> {value}</p>"
-        html_content += "<br><br>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+        }
+    return respuesta

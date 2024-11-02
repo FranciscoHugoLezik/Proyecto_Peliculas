@@ -1,7 +1,7 @@
 import unittest
 
 from src.modules.movies.helpers.get_meses import get_meses
-from src.modules.movies.helpers.get_numero_mes import get_numero_mes
+from src.modules.movies.helpers.get_numero_del_mes import get_numero_del_mes
 from src.modules.movies.helpers.get_dias import get_dias
 from src.modules.movies.helpers.get_dia_en_ingles import get_dia_en_ingles
 from src.modules.movies.helpers.get_filmacion import get_filmacion
@@ -39,7 +39,7 @@ class TestAuxiliaryMovies(unittest.TestCase):
         numero = 0
         for mes in meses:
             numero += 1
-            self.assertEqual(get_numero_mes(mes), 
+            self.assertEqual(get_numero_del_mes(mes), 
                              numero)
 
 

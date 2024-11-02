@@ -1,37 +1,35 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
 
-from src.modules.movies.functions.votos_titulo import votos_titulo
+from src.modules.movies.functions.votos_titulo \
+    import votos_titulo as calcular_votos
 
 
 router = APIRouter()
 
 
-@router.get("/votos_titulo", 
-            response_class=HTMLResponse)
-async def default_votos_titulo() -> HTMLResponse:
+@router.get("/votos_titulo")
+async def default_votos_titulo() -> dict:
     """Retorna una explicacion de la funcion y de su uso 
     cuando no se proporciona el titulo de una filmacion 
     en la URL.
     
     Returns:
-        HTMLResponse: Es un texto con la explicacion 
+        dict: es un texto con la explicacion 
         del proposito de la funcion y de su uso.
     """
     respuesta = {
-        "Proposito": """Retorna el titulo, el año, la 
-                     cantidad de votos y el promedio de 
-                     votos de una pelicula. Si la cantidad 
-                     de votos es menor a 2000 no devuelve 
-                     ningun valor.""", 
-        "Uso": """Tenes que agregarle a esta URL el titulo 
-               de una pelicula. Las palabras importantes del 
-               titulo deben tener la primer letra en mayúscula 
-               y el resto en minúscula. Las palabras como 'to' 
-               u 'of' siempre en minuscula salvo que sean la 
-               primer palabra del título. Por ejemplo: 
-               /votos_titulo/Toy Story""", 
-        "Algunos títulos disponibles": (
+        "Proposito": (
+            "Retorna el titulo, el año, la cantidad "
+            "de votos y el promedio de votos de una "
+            "pelicula. Si la cantidad de votos es menor "
+            "a 2000 no devuelve ningun valor."
+            ), 
+        "Uso": (
+            "Tenes que agregarle a esta URL "
+            "el titulo de una pelicula. "
+            "Por ejemplo: /votos_titulo/Toy Story"
+            ), 
+        "Algunos títulos disponibles": [
             "Toy Story", 
             "Jumanji", 
             "Grumpier Old Men", 
@@ -42,18 +40,13 @@ async def default_votos_titulo() -> HTMLResponse:
             "Tom and Huck", 
             "Sudden Death", 
             "GoldenEye"
-            )
-    }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+            ]
+        }
+    return respuesta
 
 
-@router.get("/votos_titulo/{titulo_de_la_filmacion}", 
-            response_class=HTMLResponse)
-async def votos_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
+@router.get("/votos_titulo/{titulo_de_la_filmacion}")
+async def votos_titulo(titulo_de_la_filmacion: str) -> dict:
     """Retorna el titulo, el año, la cantidad de votos 
     y el promedio de los votos de una pelicula. Retorna 
     si la cantidad de votos es igual o mayor a 2000.
@@ -62,38 +55,28 @@ async def votos_titulo(titulo_de_la_filmacion: str) -> HTMLResponse:
         titulo (str): es un titulo de una filmacion.
         
     Returns:
-        HTMLResponse: es un texto con los resultados.
+        dict: es un texto con los resultados.
     """
-    (año, 
+    (titulo, 
+     año, 
      cantidad, 
-     promedio) = votos_titulo(titulo_de_la_filmacion)
+     promedio) = calcular_votos(titulo_de_la_filmacion)
     
     if cantidad >= 2000:
-        cantidad = str(cantidad)
-        promedio = str(promedio)
-        respuesta = (
-            "La película", 
-            titulo_de_la_filmacion, 
-            "fue estrenada en el año", 
-            año, 
-            ", tiene un total de", 
-            cantidad, 
-            "votos y su promedio es", 
-            promedio
-        )
+        respuesta = {
+            "Respuesta": (
+                f'La película {titulo} '
+                f'fue estrenada en el año {año}. '
+                f'Tiene un total de {cantidad} votos '
+                f'y su promedio es {promedio}.'
+                )
+        }
     else:
-        respuesta = (
-            "No se retorna valores.",
-            "La película", 
-            titulo_de_la_filmacion, 
-            "tiene menos de 2000 votos."
-        )
-    respuesta = ' '.join(respuesta)
-    respuesta = {
-        "Respuesta": respuesta
-    }
-    html_content = "<html><body>"
-    html_content += f"<p><strong>Respuesta:</strong> \n"
-    html_content += f"{respuesta['Respuesta']}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+        respuesta = {
+            "Respuesta": (
+                f'No se retorna valores '
+                f'porque la película {titulo} '
+                f'tiene menos de 2000 votos.'
+                )
+        }
+    return respuesta

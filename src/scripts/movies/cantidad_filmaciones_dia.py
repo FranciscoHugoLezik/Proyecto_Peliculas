@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
 
 from src.modules.movies.functions.cantidad_filmaciones_dia \
     import cantidad_filmaciones_dia as calcular_cantidad
@@ -14,8 +13,8 @@ async def default_cantidad_filmaciones_dia() -> dict:
     cuando no se proporciona un dia, en español, en la URL.
     
     Returns:
-        respuesta (HTMLResponse): Es un texto con la 
-        explicacion del proposito de la funcion y de su uso.
+        dict: Es un texto con la explicacion del 
+        proposito de la funcion y de su uso.
     """
     respuesta = {
         "Proposito": (
@@ -39,12 +38,13 @@ async def cantidad_filmaciones_dia(dia: str) -> dict:
         dia (str): es un dia en español.
         
     Returns:
-        respuesta (HTMLResponse): Es un texto con la 
+        dict: Es un texto con la 
         cantidad de filmaciones estrenadas en un dia 
         en particular.
     """
     cantidad = calcular_cantidad(dia)
     respuesta = {
-        "Respuesta": f'Fueron estrenadas {cantidad} películas en el día {dia}.'
+        "Respuesta": 
+            f'Fueron estrenadas {cantidad} películas en el día {dia}.'
     }
     return respuesta

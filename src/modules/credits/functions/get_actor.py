@@ -2,9 +2,12 @@ from typing import Tuple
 
 import pandas as pd
 
-from src.modules.others.constants import MOVIES
-from src.modules.credits.helpers.get_creditos import get_creditos
-from src.modules.credits.helpers.filtrar_con_retorno import filtrar_con_retorno
+from src.modules.others.constants \
+    import MOVIES
+from src.modules.credits.helpers.get_creditos \
+    import get_creditos
+from src.modules.credits.helpers.filtrar_con_retorno \
+    import filtrar_con_retorno
 
 
 def get_actor(nombre: str) -> Tuple[int, 
@@ -28,21 +31,36 @@ def get_actor(nombre: str) -> Tuple[int,
         participo, la cantidad de peliculas con retorno, 
         el retorno total y el retorno promedio.
     """
-    
-    
-    sus_creditos = get_creditos(nombre, 
-                                    'cast')
-    sus_peliculas = pd.merge(sus_creditos, 
-                             MOVIES, 
-                             on='movie_id')
-    con_retorno = filtrar_con_retorno(sus_peliculas)
+    sus_creditos = get_creditos(
+        nombre, 
+        'cast'
+        )
+    sus_peliculas = pd.merge(
+        sus_creditos, 
+        MOVIES, 
+        on='movie_id'
+        )
+    con_retorno = filtrar_con_retorno(
+        sus_peliculas
+        )
+    nombre = sus_creditos['name'].iloc[0]
     
     cantidad = len(sus_peliculas)
-    cantidad_con_retorno = len(con_retorno)
-    retorno_total = con_retorno['return'].sum().round(2)
-    retorno_promedio = con_retorno['return'].mean().round(2)
     
-    return(cantidad, 
-           cantidad_con_retorno, 
-           retorno_total, 
-           retorno_promedio)
+    cantidad_con_retorno = len(con_retorno)
+    
+    retorno_total = con_retorno['return'].sum()
+    retorno_total = retorno_total.round(2)
+    retorno_total = float(retorno_total)
+    
+    retorno_promedio = con_retorno['return'].mean()
+    retorno_promedio = retorno_promedio.round(2)
+    retorno_promedio = float(retorno_promedio)
+    
+    return(
+        nombre, 
+        cantidad, 
+        cantidad_con_retorno, 
+        retorno_total, 
+        retorno_promedio
+        )

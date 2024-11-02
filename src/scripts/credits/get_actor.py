@@ -1,33 +1,37 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
 
-from src.modules.credits.functions.get_actor import get_actor
+from src.modules.credits.functions.get_actor \
+    import get_actor as calcular_get_actor
 
 
 router = APIRouter()
 
 
-@router.get("/get_actor", 
-            response_class=HTMLResponse)
-async def default_get_actor() -> HTMLResponse:
+@router.get("/get_actor")
+async def default_get_actor() -> dict:
     """Retorna una explicacion de la funcion y de su uso 
     cuando no se proporciona el titulo de una filmacion 
     en la URL.
     
     Returns:
-        HTMLResponse: es un texto con la explicacion 
+        dict: es un texto con la explicacion 
         del proposito de la funcion y de su uso.
     """
     respuesta = {
-        "Proposito": """Retorna el nombre del actor, el total 
-                     de peliculas en las que participo, la 
-                     cantidad que tiene datos de retorno, el 
-                     total de retorno y su promedio.""", 
-        "Uso": """Tenes que agregarle a esta URL el 
-               nombre de un actor. La primera letra de cada 
-               nombre y apellido debe estar en mayúscula y el 
-               resto en minúscula. Por ejemplo: 
-               /actor/Tom Hanks""", 
+        "Proposito": (
+            "Retorna el nombre del actor, "
+            "el total de peliculas en las que "
+            "participo, la cantidad que tiene "
+            "datos de retorno, el total de retorno "
+            "y su promedio."
+            ), 
+        "Uso": (
+            "Tenes que agregarle a esta URL "
+            "el nombre de un actor. La primera letra "
+            "de cada nombre y apellido debe estar "
+            "en mayúscula y el resto en minúscula. "
+            "Por ejemplo: /actor/Tom Hanks"
+            ), 
         "Algunos actores disponibles": (
             "Tom Hanks", 
             "Tim Allen", 
@@ -41,16 +45,11 @@ async def default_get_actor() -> HTMLResponse:
             "Laurie Metcalf"
         )
     }
-    html_content = "<html><body>"
-    for key, value in respuesta.items():
-        html_content += f"<p><strong>{key}:</strong> {value}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+    return respuesta
 
 
-@router.get("/get_actor/{nombre_actor}", 
-            response_class=HTMLResponse)
-async def get_actor(nombre_actor: str) -> HTMLResponse:
+@router.get("/get_actor/{nombre_actor}")
+async def get_actor(nombre_actor: str) -> dict:
     """Obtiene el nombre del actor, la cantidad de 
     peliculas en las que participo, la cantidad 
     que tiene datos de retorno, el total de 
@@ -60,39 +59,25 @@ async def get_actor(nombre_actor: str) -> HTMLResponse:
         nombre (str): es el nombre de un actor.
         
     Returns:
-        HTMLResponse: es un texto con los resultados.
+        dict: es un texto con los resultados.
     """
-    (total_peliculas, 
-    total_con_retorno, 
-    total_retorno,
-    promedio_retorno) = await get_actor(nombre_actor)
+    (nombre, 
+     total_peliculas, 
+     total_con_retorno, 
+     total_retorno,
+     promedio_retorno) = calcular_get_actor(nombre_actor)
     
-    total_peliculas = str(total_peliculas)
-    total_con_retorno = str(total_con_retorno)
-    total_retorno = str(total_retorno)
-    promedio_retorno = str(promedio_retorno)
-    
-    respuesta = (
-        "El actor", 
-        nombre_actor, 
-        "ha participado en", 
-        total_peliculas, 
-        "peliculas.", 
-        "Hay", 
-        total_con_retorno, 
-        "peliculas con datos de retorno. "
-        "El actor logró un retorno total de", 
-        total_retorno, 
-        "y su promedio es de", 
-        promedio_retorno, 
-        "por pelicula."
-    )
-    respuesta = ' '.join(respuesta)
     respuesta = {
-        "Respuesta": respuesta
-    }
-    html_content = "<html><body>"
-    html_content += f"<p><strong>Respuesta:</strong> \n"
-    html_content += f"{respuesta['Respuesta']}</p>"
-    html_content += "</body></html>"
-    return (HTMLResponse(content=html_content))
+        "Respuesta": (
+            f'El actor {nombre} '
+            f'ha participado en {total_peliculas} ' 
+            f'peliculas. ' 
+            f'Hay {total_con_retorno} peliculas ' 
+            f'con datos de retorno. '
+            f'El actor logró un retorno total de ' 
+            f'{total_retorno} ' 
+            f'y su promedio es de {promedio_retorno} ' 
+            f'por pelicula.'
+            )
+        }
+    return respuesta
