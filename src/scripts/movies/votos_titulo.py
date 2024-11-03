@@ -10,14 +10,16 @@ router = APIRouter()
 @router.get("/votos_titulo/{titulo_de_la_filmacion}")
 async def votos_titulo(titulo_de_la_filmacion: str) -> dict:
     """Retorna el titulo, el año, la cantidad de votos 
-    y el promedio de los votos de una pelicula. Retorna 
+    y el promedio de los votos de una filmación. Retorna 
     si la cantidad de votos es igual o mayor a 2000.
     
-    Arg: \n
-        titulo (str): es un titulo de una filmacion.
+    Arg:
+    
+    titulo (str): es el título de una filmación.
         
-    Return: \n
-        dict: es un texto con los resultados.
+    Return:
+    
+    dict: es un texto con los resultados.
         
     Algunos títulos disponibles para probar: \n
         Toy Story 

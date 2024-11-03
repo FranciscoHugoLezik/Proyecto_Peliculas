@@ -9,16 +9,19 @@ router = APIRouter()
 
 @router.get("/get_actor/{nombre_actor}")
 async def get_actor(nombre_actor: str) -> dict:
-    """Obtiene el nombre del actor, la cantidad de 
-    peliculas en las que participo, la cantidad 
-    que tiene datos de retorno, el total de 
-    retorno y su promedio.
+    """Retorna el nombre del actor, la cantidad de 
+    filmaciones en las que participó, la cantidad de
+    filmaciones que tienen datos de retorno, el 
+    retorno total de sus filmaciones y el retorno 
+    promedio de sus filmaciones.
     
-    Arg: \n
-        nombre (str): es el nombre de un actor.
+    Arg:
+    
+    nombre (str): es el nombre de un actor.
         
-    Return: \n
-        dict: es un texto con los resultados.
+    Return:
+    
+    dict: es un texto con los resultados.
         
     Algunos actores disponibles: \n
         Tom Hanks 

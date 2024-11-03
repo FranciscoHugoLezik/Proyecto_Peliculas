@@ -9,16 +9,17 @@ router = APIRouter()
 
 @router.get("/cantidad_filmaciones_mes/{mes}")
 async def cantidad_filmaciones_mes(mes: str) -> dict:
-    """Retorna la cantidad de filmaciones que 
-    fueron estrenadas en un determinado mes.
+    """Retorna la cantidad acumulada de filmaciones 
+    que fueron estrenadas en un determinado mes, 
+    a lo largo del tiempo.
     
-    Arg: \n
-        mes (str): es un mes en español.
+    Arg: 
         
-    Return: \n
-        dict: es un texto con la cantidad de 
-        filmaciones estrenadas en un mes 
-        en particular.
+    mes (str): es un mes en español.
+        
+    Return:
+     
+    dict: es un texto con la respuesta.
     """
     mes, cantidad = calcular_cantidad(mes)
     respuesta = {

@@ -10,14 +10,14 @@ from src.scripts.movies import (
     score_titulo, 
     votos_titulo
     )
-from src.scripts import root
+from src.scripts import get_autor
 
 
 app = FastAPI()
 
 
 routers = (
-    root.router, 
+    get_autor.router, 
     cantidad_filmaciones_mes.router, 
     cantidad_filmaciones_dia.router, 
     score_titulo.router, 

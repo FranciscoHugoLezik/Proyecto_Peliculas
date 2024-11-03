@@ -9,18 +9,22 @@ router = APIRouter()
 
 @router.get("/get_director/{nombre_director}")
 async def get_director(nombre_director: str) -> dict:
-    """Obtiene el nombre del director, el total 
-    de peliculas que dirigio, la cantidad que 
-    tiene retorno registrado y el total de retorno. 
-    Ademas retorna el titulo de cada pelicula, 
-    la fecha de estreno, el retorno individual, 
-    el costo y la ganancia.
+    """Retorna el nombre del director, el cantidad de 
+    filmaciones que dirigió, la cantidad de filmaciones 
+    que tienen datos de retorno y el retorno total de 
+    sus filmaciones. 
+    Ademas retorna los datos de las filmaciones con 
+    datos de retorno. Los datos retornados son el título 
+    de cada filmación, su fecha de estreno, su retorno 
+    individual, su costo y su ganancia.
     
-    Arg: \n
-        nombre (str): es el nombre de un director.
+    Arg:
+    
+    nombre (str): es el nombre de un director.
         
-    Return: \n
-        dict: es un texto con los resultados.
+    Return:
+    
+    dict: es un texto con los resultados.
         
     Algunos directores disponibles: \n
         John Lasseter 

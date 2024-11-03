@@ -9,14 +9,16 @@ router = APIRouter()
 
 @router.get("/score_titulo/{titulo_de_la_filmacion}")
 async def score_titulo(titulo_de_la_filmacion: str) -> dict:
-    """Retorna el titulo, el año y la popularidad de 
-    una pelicula.
+    """Retorna el título, el año y la popularidad de 
+    una filmación.
     
-    Arg: \n
-        titulo (str): es un titulo de una filmacion.
+    Arg: 
+    
+    titulo (str): es el título de una filmación.
         
-    Return: \n
-        dict: es un texto con los resultados.
+    Return:
+    
+    dict: es un texto con los resultados.
         
     Algunos títulos disponibles para probar: \n
         Toy Story 
