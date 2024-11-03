@@ -15,10 +15,9 @@ def get_filmacion(titulo: str) -> pd.Series:
         pelicula.
     """
     titulo = titulo.lower()
-    movies = MOVIES.copy()
-    filmacion = movies[
-        movies['title'].str.lower() == titulo
-        ].copy()
+    filmacion = MOVIES[
+        MOVIES['title'].str.lower() == titulo
+        ].iloc[0].copy()
     filmacion = filmacion.squeeze()
     
     return(filmacion)
