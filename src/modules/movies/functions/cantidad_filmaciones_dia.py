@@ -15,6 +15,7 @@ def cantidad_filmaciones_dia(dia: str) -> int:
         int: es la cantidad de peliculas 
         estrenadas en el dia pedido.
     """
+    dia = dia.lower()
     dias_en_ingles = get_dias()
     cantidades = dias_en_ingles.value_counts()
     dia_en_ingles = get_dia_en_ingles(dia)
@@ -22,4 +23,4 @@ def cantidad_filmaciones_dia(dia: str) -> int:
     cantidad = cantidades[dia_en_ingles]
     cantidad = int(cantidad)
 
-    return (cantidad)
+    return (dia, cantidad)

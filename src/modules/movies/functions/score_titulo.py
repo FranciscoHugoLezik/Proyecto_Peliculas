@@ -19,8 +19,7 @@ def score_titulo(titulo: str) -> Tuple[str,
     filmacion = get_filmacion(titulo)
     titulo = filmacion['title']
     año = filmacion['release_year']
-    popularidad = float(
-        filmacion['popularity'].round(2))
+    popularidad = filmacion['popularity'].round(2)
     
     return (titulo, 
             año, 

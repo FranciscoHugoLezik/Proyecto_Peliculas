@@ -11,7 +11,6 @@ def get_dia_en_ingles(dia: str) -> str:
     Returns:
         str: es el dia en ingles.
     """
-    dia = dia.lower()
     dia_en_ingles = DIAS_EN_INGLES.get(dia)
     
     return(dia_en_ingles)

@@ -17,6 +17,7 @@ def cantidad_filmaciones_mes(mes: str) -> int:
         int: es la cantidad de peliculas 
         estrenadas en el mes pedido.
     """
+    mes = mes.lower()
     numeros_de_los_meses = get_meses()
     cantidades = numeros_de_los_meses.value_counts()
     numero_del_mes = get_numero_del_mes(mes)
@@ -24,4 +25,4 @@ def cantidad_filmaciones_mes(mes: str) -> int:
     cantidad = cantidades[numero_del_mes]
     cantidad = int(cantidad)
     
-    return (cantidad)
+    return (mes, cantidad)

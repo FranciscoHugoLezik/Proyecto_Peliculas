@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 
-from src.scripts.credits import (get_actor, 
-                                 get_director)
-from src.scripts.movies import (cantidad_filmaciones_dia, 
-                                cantidad_filmaciones_mes, 
-                                score_titulo, 
-                                votos_titulo)
-from src.scripts import (root)
+from src.scripts.credits import (
+    get_actor, 
+    get_director
+    )
+from src.scripts.movies import (
+    cantidad_filmaciones_dia, 
+    cantidad_filmaciones_mes, 
+    score_titulo, 
+    votos_titulo
+    )
+from src.scripts import root
 
 
 app = FastAPI()
+
 
 routers = (
     root.router, 

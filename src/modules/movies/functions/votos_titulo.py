@@ -22,8 +22,8 @@ def votos_titulo(titulo: str) -> Tuple[int,
     filmacion = get_filmacion(titulo)
     titulo = filmacion['title']
     año = filmacion['release_year']
-    cantidad = int(filmacion['vote_count'])
-    promedio = float(filmacion['vote_average'])
+    cantidad = filmacion['vote_count']
+    promedio = filmacion['vote_average']
     
     return (titulo, 
             año, 
