@@ -24,6 +24,6 @@ async def cantidad_filmaciones_dia(dia: str) -> dict:
     dia, cantidad = calcular_cantidad(dia)
     respuesta = {
         "Respuesta": 
-            f'Fueron estrenadas {cantidad} películas en el día {dia}.'
+            f'Fueron estrenadas {cantidad} filmaciones en el día {dia}.'
     }
     return respuesta

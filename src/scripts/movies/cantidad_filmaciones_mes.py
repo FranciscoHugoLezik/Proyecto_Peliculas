@@ -24,6 +24,6 @@ async def cantidad_filmaciones_mes(mes: str) -> dict:
     mes, cantidad = calcular_cantidad(mes)
     respuesta = {
         "Respuesta": 
-            f'Fueron estrenadas {cantidad} películas en el mes de {mes}.'
+            f'Fueron estrenadas {cantidad} filmaciones en el mes de {mes}.'
     }
     return respuesta

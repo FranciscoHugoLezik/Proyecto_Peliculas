@@ -41,7 +41,7 @@ async def votos_titulo(titulo_de_la_filmacion: str) -> dict:
     if cantidad >= 2000:
         respuesta = {
             "Respuesta": (
-                f'La película {titulo} '
+                f'La filmación {titulo} '
                 f'fue estrenada en el año {año}. '
                 f'Tiene un total de {cantidad} votos '
                 f'y su promedio es {promedio}.'

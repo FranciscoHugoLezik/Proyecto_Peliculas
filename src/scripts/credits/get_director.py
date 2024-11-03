@@ -47,15 +47,11 @@ async def get_director(nombre_director: str) -> dict:
     respuesta = {
         "Director": (
             f'El director {nombre} '
-            f'ha dirigido {total_peliculas} peliculas. '
-            f'Hay {total_con_retorno} peliculas con '
+            f'ha dirigido {total_peliculas} filmaciones. '
+            f'Hay {total_con_retorno} filmaciones con '
             f'retorno registrado. '
             f'El retorno total es {total_retorno}.' 
             ), 
-        "Peliculas_con_retorno": (
-            "Las peliculas, con retorno "  
-            "registrado, son las siguientes: "
-            ), 
-        "Peliculas": peliculas
+        "Las filmaciones con retorno son": peliculas
         }
     return respuesta

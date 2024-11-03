@@ -38,7 +38,7 @@ async def score_titulo(titulo_de_la_filmacion: str) -> dict:
     
     respuesta = {
         "Respuesta": (
-            f'La película {titulo} '
+            f'La filmación {titulo} '
             f'fue estrenada en el año {año} '
             f'y tiene un score de {score}'
             )

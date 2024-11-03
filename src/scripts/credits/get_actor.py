@@ -45,13 +45,13 @@ async def get_actor(nombre_actor: str) -> dict:
         "Respuesta": (
             f'El actor {nombre} '
             f'ha participado en {total_peliculas} ' 
-            f'peliculas. ' 
-            f'Hay {total_con_retorno} peliculas ' 
+            f'filmaciones. ' 
+            f'Hay {total_con_retorno} filmaciones ' 
             f'con datos de retorno. '
             f'El actor logró un retorno total de ' 
             f'{total_retorno} ' 
             f'y su promedio es de {promedio_retorno} ' 
-            f'por pelicula.'
+            f'por filmación.'
             )
         }
     return respuesta
