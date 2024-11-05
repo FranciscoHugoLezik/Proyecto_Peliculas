@@ -2,13 +2,21 @@
 <b>Proyecto MVP de un sistema de recomendación de películas</b>
 </h1>
 
-## Autor:
+## Datos del proyecto:
 
-Este proyecto es de autoría de Francisco Hugo Lezik.
+Autor: Francisco Hugo Lezik
 
-Mi correo es: franciscohugolezik@gmail.com
+Academia: Henry
 
-El URL de mi linkedin es: https://www.linkedin.com/in/francisco-hugo-lezik-7b4256220/
+Curso: Data Science Part Time
+
+Cohorte: 11
+
+Correo: franciscohugolezik@gmail.com
+
+URL de linkedin: https://www.linkedin.com/in/francisco-hugo-lezik-7b4256220/
+
+Página web: https://proyecto-peliculas-wnuw.onrender.com/docs
 
 ## Tabla de contenido
 
@@ -18,16 +26,12 @@ El URL de mi linkedin es: https://www.linkedin.com/in/francisco-hugo-lezik-7b425
 4. [Estructura](#estructura)
 5. [Ejecución](#ejecución)
 6. [Datos y Fuentes](#datos-y-fuentes)
-7. [Metodología](#metodología)
-8. [Resultados y Conclusiones](#resultados-y-conclusiones)
-9. [Contribución y Colaboración](#contribución-y-colaboración)
-10. [Licencia](#licencia)
 
 ## Introducción
 
-El objetivo de este proyecto de MVP (Minimum Viable Product) es crear un sistema de recomendación de películas. El objetivo es que este sistema recomiende películas similares a una película en particular vista por cada usuario particular. La cantidad de películas a recomendar son cinco. Estas películas deben ser similares en puntuación a la película usada para recomendar. Se mostraran sus títulos ordenadas de mayor puntaje a menor puntaje.
+El objetivo de este proyecto de MVP (Minimum Viable Product) es crear una aplicacion web o API, en Render, de un sistema de recomendación de películas. El objetivo es acceder a los datos guardados en los datasets a traves de seis endpoints.
 
-En primer lugar se crea una API con endpoints que satisfagan las siguientes necesidades de los usuarios:
+Los endpoints son:
 
 - La cantidad de filmaciones por mes.
 
@@ -48,18 +52,19 @@ Si el actor participo de 10 peliculas y 5 de ellas tienen el dato del retorno, e
 
 (2) El problema del anterior endpoint afecta tambien a este endpoint. Por lo tanto se decidio usar la solucion dada en el punto anterior (2).
 
-Por último se va a agregar un nuevo endpoint a la API que es el sistema de recomendación. 
+#
 
 ## Requisitos
 
-Use python 3.8.10 y las librerias necesarias estan en libraries.txt.
+Python 3.11.9
+Las librerías necesarias estan en venv_requirements.txt.
 
 #
 
 ## Instalación
 
 1. Clonar el repositorio: 
-    `git clone https://github.com/FranciscoHugoLezik/Proyecto_Peliculas.git` 
+    `git clone https://github.com/FranciscoHugoLezik/Proyecto_Peliculas/tree/branch_1` 
 
 2. Crear un entorno virtuak: `python -m venv venv`
 
@@ -68,7 +73,7 @@ Use python 3.8.10 y las librerias necesarias estan en libraries.txt.
 
     - macOS/Linux: `source venv/bin/activate`
 
-4. Instalar las dependencias: `pip install -r libraries.txt`
+4. Instalar las dependencias: `pip install -r venv_requirements.txt`
 
 La libreria requirements.txt es para Render.
 
@@ -78,83 +83,67 @@ La libreria requirements.txt es para Render.
 
 - `data/`: 
 
-En la carpeta data/ se guardan los archivos que son el resultado del proceso ETL de los archivos en crudo. A continuacion se lista el contenido:
+En la carpeta data/ se guardan los datasets procesados por ETL. A continuacion se lista el contenido:
 
-Carpeta __credits/__
+cast.parquet
 
-- cast_ETL.parquet
+crew.parquet
 
-- crew_ETL.parquet
-
-Carpeta __movies_dataset/__
-
-- belongs_to_collection_ETL.parquet
-
-- genres_ETL.parquet
-
-- movies_ETL.parquet
-
-- production_companies_ETL.parquet
-
-- production_countries_ETL.parquet
-
-- spoken_language_ETL.parquet
+movies_ETL.parquet
 
 #
 
 - `notebooks/`: 
 
-Contiene los archivos jupyter para el ETL de los archivos en crudo. Los archivos en crudo son extraidos de un repositorio en GitHub llamado Movies_data. Los archivos producidos por los ETL son alojados en las carpeta data. Cada ETL guarda el archivo en una ubicacion ya establecida. 
+Contiene el EDA y los ETL de los archivos en crudo. Los archivos en crudo son extraidos de un repositorio en GitHub llamado Movies_data. Los archivos producidos por los ETL son alojados en las carpeta data. Cada ETL guarda el archivo en una ubicacion ya establecida. 
 
 El link del repositorio Movies_data es:
 
 https://github.com/FranciscoHugoLezik/Movies_data.git
 
-Las carpetas que contiene son las siguientes:
+Contiene cuatro notebooks:
 
-Carpeta __ETL_credits/__ : Contiene el ETL de los archivos en crudo llamados cast_id.parquet y crew_id.parquet. Originalmente estaban en un archivo en crudo llamado credits.csv pero fueron separados y convertidos a parquet para poder guardarlos en github.
-
-Se hicieron dos ETL:
+- EDA.ipynb
 
 - ETL_cast_id.ipynb
 
 - ETL_crew_id.ipynb
 
-Carpeta __ETL_movies_dataset/__ : Contiene el ETL del archivo en crudo llamado movies_dataset.parquet.
-
-Se hicieron seis ETL:
-
-- ETL_belongs_to_collection.ipynb
-
-- ETL_genres.ipynb
-
 - ETL_movies.ipynb
-
-- ETL_production_companies.ipynb
-
-- ETL_production_countries.ipynb
-
-- ETL_spoken_languages.ipynb
-
-#
-
-- `reports/`: 
-
-Contiene los informes y visualizaciones generados.
 
 #
 
 - `src/`: 
 
-Contiene el código fuente del proyecto. Dentro se encuentran dos carpetas y un archivo main.py:
+Contiene el código fuente del proyecto. Dentro se encuentran dos carpetas y un archivo main.py que contiene la api:
 
-Carpeta __pycache__ : contiene archivos con el bytecode compilado de los módulos Python. Es generado automaticamente.
+* Carpeta __modules__ : contiene los modulos. Hay tres carpetas.
 
-Carpeta __Scrips__ : contiene otra pycache y un archivo script. El script es el siguiente:
+    * Carpeta __credits__: contiene dos carpetas.
 
-query_movies.py : Contiene las funciones que hacen el procesamiento requerido por los endpoints alojados en el main.py.
+        * Carpeta __functions__: contiene dos modulos: get_actor y get_director. Cada una tiene una funcion principal. Son importados por los endpoints get_actor y get_director, respectivamente.
 
-main.py : Contiene la API y los endpoints. Estos endpoints llaman a las funciones alojadas en el script query_movies.py para hacer el procesamiento.
+        * Carpeta __helpers__: contiene tres modulos auxiliares: filtrar_con_retorno, get_creditos y procesar_peliculas. Cada una tiene una funcion auxiliar. Son importados por los modulos de la carpeta functions.
+
+    * Carpeta __movies__: contiene dos carpetas.
+
+        * Carpeta __functions__: contiene cuatro modulos: cantidad_filmaciones_dia, cantidad_filmaciones_mes, score_titulo y votos_titulo. Cada una tiene una funcion principal. Son importados por los endpoints cantidad_filmaciones_dia, cantidad_filmaciones_mes, score_titulo y votos_titulo, respectivamente.
+
+        * Carpeta __helpers__: contiene cinco modulos auxiliares: get_dia_en_ingles, get_dias, get_filmacion, get_meses y get_numero_del_mes. Cada una tiene una funcion auxiliar. Son importados por los modulos de la carpeta functions.
+
+    * Carpeta __others__: ccntiene otros dos modulos auxiliares: constants y import_file. Una tiene constantes y la otra una funcion de importacion de datasets. Son importados por varios modulos.
+
+* Carpeta __scripts__ : contiene los scripts. Hay dos carpetas y un script. Este script suelto contiene los datos del autor de la página web.
+
+    * Carpeta __credits__: contiene dos scripts: get_actor y get_director. Son routers y son importados por la api del archivo main.py.
+
+    * Carpeta __movies__: contiene cuatro scripts: cantidad_filmaciones_dia, cantidad_filmaciones_mes, score_titulo y votos_titulo. Son routers y son importados por la api del archvo main.py.
+
+main.py : Contiene la API.
+
+#
+
+- `tests/`: contiene dos archivos py que testean las funciones auxiliares: credits_helpers y movies_helpers.
 
 #
 
@@ -170,7 +159,7 @@ Es el archivo donde esta la documentación del proyecto.
 
 #
 
-- `libraries.txt`: 
+- `venv_requirements.txt`: 
 
 Es el archivo que contiene las librerias que use en mi entorno virtual. Decidi tener este archivo separado porque Render me daba muchos problemas con las versiones de las librerias.
 
@@ -192,7 +181,7 @@ En la carpeta notebooks se encuentran los ETL. Se los puede ejecutar para produc
 
 En un principio los archivos en crudo iban a estar en la carpeta data/.
 
-El proyecto se carga en Render. Se usa la version gratuita que tiene un RAM de 512 Mb. Por este motivo se tuvo que poner en otro repositorio de github llamado Movies_data. Los archivos ETL descargan los archivos de ese repositorio. En el readme de ese repositorio explico el proceso que se tuvo que hacer para poder exportalos a GitHub.
+Como el proyecto se carga en Render y se usa la version gratuita, que tiene un RAM de 512 Mb, se tuvo que poner los archivos en crudo en otro repositorio, de github, llamado Movies_data. Los archivos ETL descargan los archivos de ese repositorio. En el readme de ese repositorio explico el proceso que se tuvo que hacer para poder exportalos a GitHub.
 
 El GitHub del repositorio de los archivos en crudo es:
 
@@ -200,34 +189,16 @@ https://github.com/FranciscoHugoLezik/Movies_data.git
 
 Datasets en crudo:
 
-__cast_id.parquet__ : originalmente dentro de credits.csv. Contiene los datos anidados de cada uno de los actores de cada pelicula.
+__cast.parquet__ : originalmente dentro de credits.csv. Contiene los datos anidados de cada uno de los actores de cada pelicula.
 
-__crew_id.parquet__ : originalmente dentro de credits.csv. Contiene los datos anidados de cada uno de los miembros del equipo de produccion de cada pelicula.
+__crew.parquet__ : originalmente dentro de credits.csv. Contiene los datos anidados de cada uno de los miembros del equipo de produccion de cada pelicula.
 
 __movies_dataset.parquet__ : originalmente era un archivo csv. Contiene los datos de cada pelicula.
 
-El proceso de ETL produjo 8 datasets almacenados como archivos parquet. Estan guardados en la carpeta data/:
+El proceso de ETL produjo 3 datasets almacenados como archivos parquet. Estan guardados en la carpeta data/:
 
-__cast_ETL.parquet__ : contiene los datos de los actores de forma individual. Se pueden repetir por el id de la pelicula si participaron en mas de una pelicula.
+__cast.parquet__ : contiene los datos de los actores de forma individual. Se pueden repetir por el id de la pelicula si participaron en mas de una pelicula.
 
-__crew_ETL.parquet__ : contiene los datos de los miembros del equipo de produccion de forma individual. Se pueden repetir por el id de la pelicula si participaron en mas de una pelicula.
+__crew.parquet__ : contiene los datos de los miembros del elenco de forma individual. Se pueden repetir por el id de la pelicula si participaron en mas de una pelicula.
 
-__movies_ETL.parquet__ : contiene los datos de cada pelicula sin las columnas de datos anidados.
-
-__belongs_to_collection_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada franquicia. Se puede repetir por el id de las peliculas si la franquicia tiene mas de una pelicula.
-
-__genres_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada tipo de genero. Se puede repetir por el id de las peliculas porque un genero tiene muchas peliculas.
-
-__production_companies_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada compañia cinematografica. Se puede repetir por el id de las peliculas porque una compañia cinematografica tiene muchas peliculas.
-
-__production_countries_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada pais en donde se produjo la pelicula. Se puede repetir por el id de las peliculas porque un país tiene muchas peliculas.
-
-__spoken_language_ETL.parquet__ : era una columna en el dataset movies_dataset. Contiene los datos de cada idioma hablado en cada pelicula. Se puede repetir por el id de las peliculas porque un país tiene muchas peliculas.
-
-# 
-
-## Metodología
-
-## Resultados y Conclusiones
-
-## Licencia
+__movies.parquet__ : contiene los datos de cada pelicula sin las columnas de datos anidados.
