@@ -16,7 +16,7 @@ async def get_project_autor() -> dict:
         "Proyecto": "Sistema de Recomendación de Películas", 
         "Autor": "Francisco Hugo Lezik",
         "Academia": "Henry", 
-        "Curso": "Data Science", 
+        "Curso": "Data Science Part Time", 
         "Cohorte": "11"
         }
     return respuesta

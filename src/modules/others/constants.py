@@ -2,7 +2,6 @@ from src.modules.others.import_file import importar_archivo
 
 
 MOVIES = importar_archivo('data', 
-                          'ETL', 
                           'movies.parquet')
 
 

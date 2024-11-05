@@ -21,7 +21,6 @@ def get_creditos(nombre: str,
     nombre = nombre.lower()
     dataset = importar_archivo(
         'data', 
-        'ETL', 
         f'{archivo}.parquet'
         )
     sus_creditos = dataset[
